@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String     @id
+  created_at     DateTime   @db.Timestamp(6)
+  token          String     @unique
+  email          String?
+  hashedPassword String?
+  sent_mails     Mail[]     @relation("sent")
+  received_mails Mail[]     @relation("received")
+  posts          Post[]
+  reactions      Reaction[]
+  reports        Report[]
+}
+
+model Post {
+  id         String         @id
+  created_at DateTime       @db.Timestamp(6)
+  author_id  String
+  visibility PostVisibility
+  content    String         @db.VarChar(1024)
+  annotation String?
+  author     User           @relation(fields: [author_id], references: [id])
+  reactions  Reaction[]
+}
+
+model Mail {
+  id          String   @id
+  created_at  DateTime @db.Timestamp(6)
+  author_id   String
+  receiver_id String?
+  content     String
+  author      User     @relation("sent", fields: [author_id], references: [id])
+  receiver    User?    @relation("received", fields: [receiver_id], references: [id])
+}
+
+model Report {
+  id         String     @id
+  created_at DateTime   @db.Timestamp(6)
+  author_id  String
+  type       ReportType
+  target_id  String
+  is_done    Boolean    @default(false)
+  author     User       @relation(fields: [author_id], references: [id])
+}
+
+model Reaction {
+  id         String   @id
+  created_at DateTime @db.Timestamp(6)
+  author_id  String
+  post_id    String
+  emoji      String
+  author     User     @relation(fields: [author_id], references: [id])
+  post       Post     @relation(fields: [post_id], references: [id])
+}
+
+enum PostVisibility {
+  public
+  private
+  realtime
+  announcement
+}
+
+enum ReportType {
+  Post
+  Mail
+}

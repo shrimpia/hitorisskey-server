@@ -3,25 +3,33 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Xeltica <xeltica@gmail.com>",
+  "type": "module",
   "license": "MIT",
   "scripts": {
-    "build": "run-p build:*",
-    "build:scripts": "tsc",
-    "build:views": "cpx -C src/views/** dist/views",
+    "build": "run-s tsc tsc-alias",
+    "tsc": "tsc",
+    "tsc-alias": "tsc-alias -p tsconfig.json",
+    "watch": "nodemon",
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@fastify/view": "^7.1.0",
     "@prisma/client": "^4.3.1",
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "fastify": "^4.6.0",
-    "pug": "^3.0.2"
+    "fastify-decorators": "^3.13.1",
+    "rndstr": "^1.0.0",
+    "tsconfig-paths": "^4.1.0",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.19",
     "@types/pug": "^2.0.6",
     "cpx": "^1.5.0",
+    "nodemon": "^2.0.20",
     "npm-run-all": "^4.1.5",
     "prisma": "^4.3.1",
+    "tsc-alias": "^1.7.0",
     "typescript": "^4.8.3"
   }
 }

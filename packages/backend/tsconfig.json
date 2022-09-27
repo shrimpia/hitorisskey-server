@@ -10,7 +10,7 @@
 		"declaration": false,
 		"sourceMap": false,
 		"target": "es2021",
-		"module": "CommonJS",
+		"module": "ESNext",
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"removeComments": false,
@@ -41,7 +41,6 @@
 			"esnext"
 		]
 	},
-	"compileOnSave": false,
 	"include": [
 		"./src/**/*.ts"
 	],

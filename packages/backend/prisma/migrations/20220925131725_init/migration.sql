@@ -1,13 +1,10 @@
 -- CreateEnum
-CREATE TYPE "PostVisibility" AS ENUM ('public', 'private', 'realtime', 'announcement');
-
--- CreateEnum
 CREATE TYPE "ReportType" AS ENUM ('Post', 'Mail');
 
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "token" TEXT NOT NULL,
     "email" TEXT,
     "hashedPassword" TEXT,
@@ -18,9 +15,9 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Post" (
     "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "author_id" TEXT NOT NULL,
-    "visibility" "PostVisibility" NOT NULL,
+    "channel" TEXT NOT NULL,
     "content" VARCHAR(1024) NOT NULL,
     "annotation" TEXT,
 
@@ -30,7 +27,7 @@ CREATE TABLE "Post" (
 -- CreateTable
 CREATE TABLE "Mail" (
     "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "author_id" TEXT NOT NULL,
     "receiver_id" TEXT,
     "content" TEXT NOT NULL,
@@ -41,7 +38,7 @@ CREATE TABLE "Mail" (
 -- CreateTable
 CREATE TABLE "Report" (
     "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "author_id" TEXT NOT NULL,
     "type" "ReportType" NOT NULL,
     "target_id" TEXT NOT NULL,
@@ -53,12 +50,22 @@ CREATE TABLE "Report" (
 -- CreateTable
 CREATE TABLE "Reaction" (
     "id" TEXT NOT NULL,
-    "created_at" TIMESTAMP NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "author_id" TEXT NOT NULL,
     "post_id" TEXT NOT NULL,
     "emoji" TEXT NOT NULL,
 
     CONSTRAINT "Reaction_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CustomChannel" (
+    "name" TEXT NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "display_name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "CustomChannel_pkey" PRIMARY KEY ("name")
 );
 
 -- CreateIndex

@@ -9,7 +9,7 @@ datasource db {
 
 model User {
   id             String     @id
-  created_at     DateTime   @db.Timestamp(6)
+  created_at     DateTime   @default(now()) @db.Timestamp()
   token          String     @unique
   email          String?
   hashedPassword String?
@@ -21,19 +21,19 @@ model User {
 }
 
 model Post {
-  id         String         @id
-  created_at DateTime       @db.Timestamp(6)
+  id         String     @id
+  created_at DateTime   @default(now()) @db.Timestamp()
   author_id  String
-  visibility PostVisibility
-  content    String         @db.VarChar(1024)
+  channel    String
+  content    String     @db.VarChar(1024)
   annotation String?
-  author     User           @relation(fields: [author_id], references: [id])
+  author     User       @relation(fields: [author_id], references: [id])
   reactions  Reaction[]
 }
 
 model Mail {
   id          String   @id
-  created_at  DateTime @db.Timestamp(6)
+  created_at  DateTime @default(now()) @db.Timestamp()
   author_id   String
   receiver_id String?
   content     String
@@ -43,7 +43,7 @@ model Mail {
 
 model Report {
   id         String     @id
-  created_at DateTime   @db.Timestamp(6)
+  created_at DateTime   @default(now()) @db.Timestamp()
   author_id  String
   type       ReportType
   target_id  String
@@ -51,9 +51,14 @@ model Report {
   author     User       @relation(fields: [author_id], references: [id])
 }
 
+enum ReportType {
+  Post
+  Mail
+}
+
 model Reaction {
   id         String   @id
-  created_at DateTime @db.Timestamp(6)
+  created_at DateTime @default(now()) @db.Timestamp()
   author_id  String
   post_id    String
   emoji      String
@@ -61,14 +66,9 @@ model Reaction {
   post       Post     @relation(fields: [post_id], references: [id])
 }
 
-enum PostVisibility {
-  public
-  private
-  realtime
-  announcement
-}
-
-enum ReportType {
-  Post
-  Mail
+model CustomChannel {
+  name String @id
+  created_at DateTime @default(now()) @db.Timestamp()
+  display_name String
+  description String
 }

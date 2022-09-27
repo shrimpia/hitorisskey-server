@@ -1,0 +1,9 @@
+{
+	"watch": [
+		"src",
+    "node_modules"
+	],
+  "verbose": true,
+	"ext": "ts",
+	"exec": "run-s build start"
+}

@@ -19,12 +19,12 @@ export default class SessionService {
    * @param {string} [token] - 認証トークン。
    * @return {Promise<User>} トークンに対応するユーザー情報。
    */
-  static getUserByTokenAsync(token: string): Promise<User> {
+  static async getUserByTokenAsync(token: string): Promise<User> {
     try {
-      return prisma.user.findUniqueOrThrow({
+      return await prisma.user.findUniqueOrThrow({
         where: {token},
       });
-    } catch (_) {
+    } catch (e) {
       throw new HitorisskeyError('INVALID_TOKEN');
     }
   }
@@ -39,7 +39,7 @@ export default class SessionService {
     const u = await prisma.user.findFirst({where: {email}});
     if (!u) throw new HitorisskeyError('NOT_FOUND');
     const hashedPassword = await this.hashPasswordAsync(password);
-    if (u.hashedPassword !== hashedPassword) throw new HitorisskeyError('NOT_FOUND');
+    if (!(await bcrypt.compare(password, hashedPassword))) throw new HitorisskeyError('NOT_FOUND');
     
     return u;
   }
@@ -76,5 +76,5 @@ export default class SessionService {
 
   private static readonly TOKEN_LENGTH = 64;
   private static readonly TOKEN_PATTERN = 'a-zA-Z0-9';
-  private static readonly HASH_SALT_ROUND = 32;
+  private static readonly HASH_SALT_ROUND = 10;
 }

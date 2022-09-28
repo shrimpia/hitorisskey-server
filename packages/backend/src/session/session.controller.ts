@@ -23,7 +23,7 @@ export default class SessionController extends ControllerBase {
 
   @POST('/login')
   async loginAsync({body}: FastifyRequest<{Body: {email: string, password: string}}>, reply: FastifyReply) {
-    if (('email' in body) || ('password' in body)) throw new HitorisskeyError('MISSING_PARAMS');
+    if (!body || !body.email || !body.password) throw new HitorisskeyError('MISSING_PARAMS');
     
     const u = await SessionService.loginAsync(body.email, body.password);
     reply.send(this.convertUser(u));
@@ -32,7 +32,7 @@ export default class SessionController extends ControllerBase {
   @POST('/signup')
   async signupAsync(req: FastifyRequest<{Body: {email: string, password: string}}>, reply: FastifyReply) {
     const user = await this.getSessionUserAsync(req);
-    if (('email' in req.body) || ('password' in req.body)) throw new HitorisskeyError('MISSING_PARAMS');
+    if (!req.body || !req.body.email || !req.body.password) throw new HitorisskeyError('MISSING_PARAMS');
     
     const u = await SessionService.signupAsync(user, req.body.email, req.body.password);
     reply.send(this.convertUser(u));

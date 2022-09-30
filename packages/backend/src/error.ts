@@ -4,6 +4,8 @@ export const errors = {
   missingParams: 'MISSING_PARAMS',
   notFound: 'NOT_FOUND',
   emailDuplicated: 'EMAIL_DUPLICATED',
+  noSuchChannel: 'NO_SUCH_CHANNEL',
+  contentTooLong: 'CONTENT_TOO_LONG',
   notImplemented: 'NOT_IMPLEMENTED',
 } as const;
 

@@ -20,7 +20,8 @@
     "fastify-decorators": "^3.13.1",
     "rndstr": "^1.0.0",
     "tsconfig-paths": "^4.1.0",
-    "ulid": "^2.3.0"
+    "ulid": "^2.3.0",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/node": "^18.7.19",

@@ -11,7 +11,7 @@ import UserService from "@/user/user.service.js";
 export default class SessionController extends ControllerBase {
   @GET()
   async getAsync(req: FastifyRequest, reply: FastifyReply) {
-    const user = await this.getSessionUserAsync(req);
+    const user = await this.getSessionUserAsync(req, true);
     reply.send(this.convertUser(user));
   }
 
@@ -31,7 +31,7 @@ export default class SessionController extends ControllerBase {
 
   @POST('/signup')
   async signupAsync(req: FastifyRequest<{Body: {email: string, password: string}}>, reply: FastifyReply) {
-    const user = await this.getSessionUserAsync(req);
+    const user = await this.getSessionUserAsync(req, true);
     if (!req.body || !req.body.email || !req.body.password) throw new HitorisskeyError('MISSING_PARAMS');
     
     const u = await SessionService.signupAsync(user, req.body.email, req.body.password);

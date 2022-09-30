@@ -1,29 +1,17 @@
-import { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import {
-  BrowserRouter as Router,
-  useRoutes,
-} from 'react-router-dom';
-import {
-  RecoilRoot,
-} from 'recoil';
-import routes from '~react-pages';
-
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 
-const App = () => {
-  return (
-    <RecoilRoot>
-      <Suspense fallback={<p>Loading...</p>}>
-        {useRoutes(routes)}
-      </Suspense>
-    </RecoilRoot>
-  )
-};
+import { render } from 'solid-js/web';
+import { Router, useRoutes } from 'solid-app-router';
+import routes from '~solid-pages';
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.getElementById('app'),
+render(
+  () => {
+    const Routes = useRoutes(routes);
+    return (
+      <Router>
+        <Routes />
+      </Router>
+    );
+  },
+  document.getElementById('app') as HTMLElement,
 );

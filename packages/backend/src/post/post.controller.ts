@@ -10,23 +10,23 @@ import { createPostParam, CreatePostParam } from "@/post/models/create-post-para
 @Controller('/post')
 export default class PostController extends ControllerBase {
   @GET('/:id')
-  async getPostAsync(req: FastifyRequest<{Params: {id: string}}>) {
+  async readAsync(req: FastifyRequest<{Params: {id: string}}>) {
     const session = await this.getSessionUserAsync(req, false);
-    return this.convertPost(await PostService.getPostAsync(req.params.id, session));
+    return this.filter(await PostService.getPostAsync(req.params.id, session));
   }
 
   @GET('/channel/:channel')
-  async getChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}}>) {
+  async readChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}}>) {
     const session = await this.getSessionUserAsync(req, true);
-    return (await PostService.getChannelPostsAsync(session, req.params.channel)).map(this.convertPost);
+    return (await PostService.getChannelPostsAsync(session, req.params.channel)).map(this.filter);
   }
 
   @POST()
-  async createPostAsync(req: FastifyRequest<{Body: CreatePostParam}>) {
+  async createAsync(req: FastifyRequest<{Body: CreatePostParam}>) {
     if (!createPostParam.safeParse(req.body).success) throw new HitorisskeyError('MISSING_PARAMS');
     const session = await this.getSessionUserAsync(req, true);
 
-    return this.convertPost(await PostService.createPostAsync(session, {
+    return this.filter(await PostService.createPostAsync(session, {
       content: req.body.content,
       annotation: req.body.annotation,
       channel: req.body.channel,
@@ -34,12 +34,12 @@ export default class PostController extends ControllerBase {
   }
 
   @DELETE('/:id')
-  async deletePostAsync(req: FastifyRequest<{Params: {id: string}}>) {
+  async deleteAsync(req: FastifyRequest<{Params: {id: string}}>) {
     const session = await this.getSessionUserAsync(req, true);
     throw new HitorisskeyError('NOT_IMPLEMENTED');
   }
 
-  private convertPost(post: Post) {
+  private filter(post: Post) {
     return {
       id: post.id,
       channel: post.channel,

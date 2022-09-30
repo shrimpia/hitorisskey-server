@@ -10,15 +10,15 @@ import UserService from "@/user/user.service.js";
 @Controller('/session')
 export default class SessionController extends ControllerBase {
   @GET()
-  async getAsync(req: FastifyRequest, reply: FastifyReply) {
+  async readAsync(req: FastifyRequest, reply: FastifyReply) {
     const user = await this.getSessionUserAsync(req, true);
-    reply.send(this.convertUser(user));
+    reply.send(this.filter(user));
   }
 
   @POST('/start')
   async startAsync(req: FastifyRequest, reply: FastifyReply) {
     const user = await UserService.createUserAsync();
-    reply.send(this.convertUser(user));
+    reply.send(this.filter(user));
   }
 
   @POST('/login')
@@ -26,7 +26,7 @@ export default class SessionController extends ControllerBase {
     if (!body || !body.email || !body.password) throw new HitorisskeyError('MISSING_PARAMS');
     
     const u = await SessionService.loginAsync(body.email, body.password);
-    reply.send(this.convertUser(u));
+    reply.send(this.filter(u));
   }
 
   @POST('/signup')
@@ -35,10 +35,10 @@ export default class SessionController extends ControllerBase {
     if (!req.body || !req.body.email || !req.body.password) throw new HitorisskeyError('MISSING_PARAMS');
     
     const u = await SessionService.signupAsync(user, req.body.email, req.body.password);
-    reply.send(this.convertUser(u));
+    reply.send(this.filter(u));
   }
 
-  private convertUser(user: User) {
+  private filter(user: User) {
     return {
       id: user.id,
       created_at: user.created_at,

@@ -1,0 +1,11 @@
+.layout-index-welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  > .inner {
+    max-width: 800px;
+    width: 100%;
+  }
+}

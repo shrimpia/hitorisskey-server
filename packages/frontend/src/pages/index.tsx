@@ -1,16 +1,14 @@
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import { debugState } from '../states/debugState';
+import { Component, Show } from "solid-js";
+import { IndexSesson as IndexSession } from "../components/layouts/index-session";
+import { IndexWelcome } from "../components/layouts/index-welcome";
+import { session } from "../store/session";
 
-export default function index() {
-  const [count, setCount] = useRecoilState(debugState);
+const Index: Component = () => {
   return (
-    <div className="card ma-4">
-      <div className="body">
-        <h1>Hello</h1>
-        <h2>Count = {count}</h2>
-        <button className="btn primary mt-2" onClick={() => setCount(v => v + 1)}>Increment</button>
-      </div>
-    </div>
-  )
+    <Show when={session.token} fallback={<IndexWelcome />}>
+      <IndexSession />
+    </Show>
+  );
 }
+
+export default Index;

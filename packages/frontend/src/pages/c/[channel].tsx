@@ -1,18 +1,13 @@
 import { useParams } from "solid-app-router";
 import { Component, createEffect, For, onMount } from "solid-js";
 import { updateClientState } from "../../store/client";
-
-const channelNameMap = {
-  private: 'プライベートルーム',
-  public: 'みんなのつぶやき',
-  realtime: 'みんなの広場',
-};
+import { $t } from "../../text";
 
 const Channel: Component = () => {
   const param = useParams();
 
   createEffect(() => {
-    updateClientState({ title: param.channel });
+    updateClientState({ title: ($t.$channels as Record<string, string>)[param.channel] ?? param.channel });
   });
 
   return (

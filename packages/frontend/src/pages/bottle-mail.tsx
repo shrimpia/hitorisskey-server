@@ -1,10 +1,10 @@
 import { Component, onMount } from "solid-js";
-import { MainLayout } from "../components/layouts/main";
 import { updateClientState } from "../store/client";
+import { $t } from "../text";
 
 const BottleMail: Component = () => {
   onMount(() => {
-    updateClientState({ title: 'ボトルメール' });
+    updateClientState({ title: $t.bottleMail });
   });
 
   return (

@@ -1,10 +1,10 @@
 import { Component, onMount } from "solid-js";
-import { MainLayout } from "../components/layouts/main";
 import { updateClientState } from "../store/client";
+import { $t } from "../text";
 
 const Announcements: Component = () => {
   onMount(() => {
-    updateClientState({ title: 'お知らせ' });
+    updateClientState({ title: $t.announcements });
   });
   return (
     <p>TBD</p>

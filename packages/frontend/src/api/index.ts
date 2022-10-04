@@ -1,4 +1,4 @@
-import { CreatePostParam } from "../components/create-post";
+import { CreatePostParam } from "./params/create-post";
 import { session } from "../store/session";
 import { Post } from "./models/post";
 import { User } from "./models/user";

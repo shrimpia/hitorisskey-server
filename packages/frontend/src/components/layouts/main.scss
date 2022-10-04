@@ -1,0 +1,40 @@
+.layout-main {
+  position: relative;
+  $sidebarWidth: 256px;
+  > .hs-sidebar {
+    position: fixed;
+    background-color: var(--bg);
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: $sidebarWidth;
+    height: 100vh;
+    border-right: 1px solid var(--tone-5);
+    padding: var(--margin);
+    > .hs-sidebar-title {
+      font-size: 150%;
+      color: var(--dimmed);
+      margin: 0;
+    }
+  }
+  > .hs-main {
+    position: relative;
+    > .hs-titlebar {
+      position: sticky;
+      background-color: var(--bg);
+      z-index: 10000;
+      left: $sidebarWidth;
+      right: 0;
+      top: 0;
+      border-bottom: 1px solid var(--tone-5);
+      > .hs-titlebar-title-container {
+        padding: var(--margin);
+        > .hs-titlebar-title {
+          font-size: 100%;
+          margin: 0;
+        }
+      }
+    }
+    margin-left: $sidebarWidth;
+  }
+}

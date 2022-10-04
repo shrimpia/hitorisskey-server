@@ -6,7 +6,7 @@ import './index-welcome.scss';
 
 type WelcomeState = 'initial' | 'createNew' | 'loginForm';
 
-export const IndexWelcome: Component = () => {
+export const IndexWelcomeTemplate: Component = () => {
   const [state, setState] = createSignal<WelcomeState>('initial');
   const [email, setEmail] = createSignal('');
   const [password, setPassword] = createSignal('');
@@ -19,7 +19,7 @@ export const IndexWelcome: Component = () => {
   });
 
   return (
-    <div class="layout-index-welcome">
+    <div class="template-index-welcome">
       <div class="inner pa-2">
         <h1>ひとりすきー</h1>
         <p class="text-dimmed mb-5">なにかをつぶやきたい。けど、素性は知られたくない。</p>

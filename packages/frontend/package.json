@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
     "sass": "^1.55.0",
     "solid-app-router": "^0.4.2",
     "solid-js": "^1.5.7",

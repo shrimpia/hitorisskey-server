@@ -1,19 +1,20 @@
 import { Component, createSignal, Show } from "solid-js";
 import { Post } from "../../api/models/post";
+import { FormattedTextView } from "./primitives/formatted-text-view";
 
 export type PostProp = {
   post: Post;
 };
 
-export const PostView: Component<PostProp> = (p) => {
-  const [isOpenCw, setOpenCw] = createSignal(false); 
+export const PostView: Component<PostProp> = ({post}) => {
+  const body = <FormattedTextView children={post.content}/>;
   return (
     <div class="card hs-post">
       <div class="body">
-        <Show when={p.post.annotation} fallback={<p>{p.post.content}</p>}>
+        <Show when={post.annotation} fallback={body}>
           <details>
-            <summary>{p.post.annotation}</summary>
-            {p.post.content}
+            <summary><FormattedTextView inline children={post.annotation} /></summary>
+            {body}
           </details>
         </Show>
         <div class="hstack mt-2">

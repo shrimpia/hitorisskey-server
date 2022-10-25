@@ -54,7 +54,7 @@ export const MainLayout: ParentComponent<MainLayoutProp> = (p) => {
             </h1>
           </div>
         </div>
-        <div class="container">
+        <div class="container hs-container">
           {p.children}
         </div>
       </div>

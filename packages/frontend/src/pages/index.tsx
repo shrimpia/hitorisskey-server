@@ -47,7 +47,7 @@ const Index: Component = () => {
             <p>{$t.$welcome.$createNew.description}</p>
             <div class="hstack mt-2">
               <button class="btn primary" onClick={startNew}>{$t.$welcome.$createNew.ok}</button>
-              <button class="btn outline primary" onClick={() => setState('initial')}>{$t.$welcome.$createNew.cancel}</button>
+              <button class="btn primary outline" onClick={() => setState('initial')}>{$t.$welcome.$createNew.cancel}</button>
             </div>
           </Match>
           <Match when={state() === 'loginForm'}>

@@ -1,79 +1,70 @@
 import { CreatePostParam } from "./params/create-post";
-import { session } from "../store/session";
 import { Post } from "./models/post";
 import { User } from "./models/user";
+import { $get, $post, $delete } from "./primitives";
 
-const API_ENDPOINT = 'http://localhost:3000/v1/';
-
-export const $get = <T = unknown>(endpoint: string, query: Record<string, unknown> = {}): Promise<T> => {
-  const q = Object.entries(query).map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
-  const url = API_ENDPOINT + endpoint + (q ? '?' + q : '');
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
-  } : {};
-  return fetch(url, {headers}).then(res => res.json());
-};
-
-export const $post = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => {
-  const bodyJson = JSON.stringify(body);
-  const url = API_ENDPOINT + endpoint;
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
-  } : {};
-  return fetch(url, {
-    headers,
-    method: 'POST',
-    body: bodyJson,
-  }).then(res => res.json());
-};
-
-
-export const $delete = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => {
-  const bodyJson = JSON.stringify(body);
-  const url = API_ENDPOINT + endpoint;
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
-  } : {};
-  return fetch(url, {
-    headers,
-    method: 'DELETE',
-    body: bodyJson,
-  }).then(res => res.json());
-};
-
-
-export const $put = (endpoint: string, body: Record<string, unknown> = {}) => {
-  const bodyJson = JSON.stringify(body);
-  const url = API_ENDPOINT + endpoint;
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
-  } : {};
-  return fetch(url, {
-    headers,
-    method: 'PUT',
-    body: bodyJson,
-  }).then(res => res.json());
-};
-
+/**
+ * ひとりすきー API。
+ */
 export const api = {
+  /**
+   * アカウント API。
+   */
   session: {
-    getAsync: () => $get<User>('session'),
+    /**
+     * セッション情報を取得します。
+     */
+    readAsync: () => $get<User>('session'),
 
+    /**
+     * アカウントを新規作成します。
+     */
     startAsync: () => $post<User>('session/start'),
     
+    /**
+     * メールアドレスとパスワードを用いて、アカウントにログインします。
+     * @param email - メールアドレス
+     * @param password - パスワード
+     */
     loginAsync: (email: string, password: string) => $post<User>('session/login', {
       email, password,
     }),
     
+    /**
+     * メールアドレスとパスワードを現在のアカウントに設定します。
+     * @param email - メールアドレス
+     * @param password - パスワード
+     */
     signupAsync: (email: string, password: string) => $post<User>('session/signup', {
       email, password,
     }),
   },
 
+  /**
+   * つぶやき API。
+   */
   post: {
-    getAsync: (id: string) => $get<Post>(`post/${id}`),
-    getChannelPostsAsync: (channel: string) => $get<Post>(`post/channel/${channel}`),
+    /**
+     * つぶやきを取得します。
+     * @param id - つぶやき ID。
+     */
+    readAsync: (id: string) => $get<Post>(`post/${id}`),
+    /**
+     * チャンネルの投稿を全取得します。
+     * @param channel - チャンネル ID。
+     */
+    readChannelPostsAsync: (channel: string) => $get<Post[]>(`post/channel/${channel}`),
+
+    /**
+     * つぶやきを作成します。
+     * @param args - つぶやき。
+     */
     createAsync: (args: CreatePostParam) => $post<Post>('post', args),
+
+    /**
+     * 指定したつぶやきを削除します。
+     * @param id - つぶやき ID。
+     */
     deleteAsync: (id: string) => $delete<Post>(`post/${id}`),
   },
 };

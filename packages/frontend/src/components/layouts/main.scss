@@ -21,12 +21,13 @@
     position: relative;
     > .hs-titlebar {
       position: sticky;
-      background-color: var(--bg);
       z-index: 10000;
       left: $sidebarWidth;
       right: 0;
       top: 0;
       border-bottom: 1px solid var(--tone-5);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       > .hs-titlebar-title-container {
         padding: var(--margin);
         > .hs-titlebar-title {
@@ -34,6 +35,10 @@
           margin: 0;
         }
       }
+    }
+    > .hs-container {
+      margin: 0 auto;
+      width: 100%;
     }
     margin-left: $sidebarWidth;
   }

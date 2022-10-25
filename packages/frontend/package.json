@@ -13,6 +13,7 @@
     "sass": "^1.55.0",
     "solid-app-router": "^0.4.2",
     "solid-js": "^1.5.7",
+    "solid-styled-components": "^0.28.5",
     "xeltica-ui": "xeltica/design-system"
   },
   "devDependencies": {

@@ -1,7 +1,14 @@
 import { useParams } from "solid-app-router";
-import { Component, createEffect, For, onMount } from "solid-js";
+import { Component, createEffect } from "solid-js";
+import { styled } from "solid-styled-components";
+import { ChannelView } from "../../components/views/channel-view";
 import { updateClientState } from "../../store/client";
 import { $t } from "../../text";
+
+const Container = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`;
 
 const Channel: Component = () => {
   const param = useParams();
@@ -11,7 +18,9 @@ const Channel: Component = () => {
   });
 
   return (
-    <p>あ</p>
+    <Container>
+      <ChannelView channel={param.channel} />
+    </Container>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Link } from "solid-app-router";
-import { Component, For } from "solid-js";
+import { Component, For, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 
 type FontAwesomeIconType = string;
@@ -20,13 +20,14 @@ export type MenuItem = {
   iconClass: IconClassString;
   label: string;
   danger?: boolean;
+  disabled?: boolean;
   href?: string;
   to?: string;
   onClick?: () => void;
 };
 
 export type MenuGroup = {
-  title: string;
+  title?: string;
   items: MenuItem[];
 };
 
@@ -50,7 +51,7 @@ export const MenuView: Component<MenuViewProp> = (p) => {
 const MenuGroupView: Component<{item: MenuGroup, onClick?: VoidFunction}> = (p) => {
   return (
     <section>
-      <h1>{p.item.title}</h1>
+      <Show when={p.item.title}><h1>{p.item.title}</h1></Show>
       <For each={p.item.items} children={it => <MenuItemView item={it} onClick={p.onClick} />} />
     </section>
   );
@@ -63,7 +64,7 @@ const MenuItemView: Component<{item: MenuItem, onClick?: VoidFunction}> = (p) =>
     if (p.item.onClick) p.item.onClick();
   };
   return (
-    <Dynamic component={tag()} href={p.item.to ?? p.item.href} onClick={onClickItem} class={`item ${p.item.danger ? 'text-danger' : ''}`} role="listitem">
+    <Dynamic component={tag()} href={p.item.to ?? p.item.href} onClick={onClickItem} class={`item ${p.item.danger ? 'text-danger' : ''} ${p.item.disabled ? 'disabled' : ''}`} role="listitem">
       <i class={`icon ${p.item.iconClass} ${p.item.danger ? 'text-danger' : ''}`} />
       {p.item.label}
     </Dynamic>

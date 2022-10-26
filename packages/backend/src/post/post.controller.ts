@@ -1,4 +1,4 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyRequest } from "fastify";
 import { Controller, DELETE, GET, POST } from "fastify-decorators";
 import { Post, User } from "@prisma/client";
 
@@ -6,6 +6,7 @@ import { ControllerBase } from "@/controller-base.js";
 import PostService from "@/post/post.service.js";
 import { HitorisskeyError } from "@/error.js";
 import { createPostParam, CreatePostParam } from "@/post/models/create-post-param.js";
+import { paginationQuery, PaginationQuery } from "./models/pagination-query.js";
 
 @Controller('/post')
 export default class PostController extends ControllerBase {
@@ -16,9 +17,29 @@ export default class PostController extends ControllerBase {
   }
 
   @GET('/channel/:channel')
-  async readChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}}>) {
+  async readChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}, Querystring: PaginationQuery}>) {
     const session = await this.getSessionUserAsync(req, true);
-    return (await PostService.getChannelPostsAsync(session, req.params.channel)).map(p => this.filter(p, session));
+    switch (req.params.channel) {
+      case 'public': {
+        return (await PostService.getPublicChannelPostsAsync(session)).map(p => this.filter(p, session));
+      }
+      case 'private': {
+        const q = paginationQuery.safeParse(req.query);
+        if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+        const {cursor, limit} = q.data;
+        return (await PostService.getPrivateChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      }
+      case 'realtime': {
+        const q = paginationQuery.safeParse(req.query);
+        if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+        const {cursor, limit} = q.data;
+        return (await PostService.getRealtimeChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      }
+      default: {
+        // TODO: カスタムチャンネルをサポートする
+        throw new HitorisskeyError('MISSING_PARAMS');
+      }
+    }
   }
 
   @POST()

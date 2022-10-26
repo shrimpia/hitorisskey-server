@@ -1,9 +1,9 @@
 import { Post, User } from "@prisma/client";
+import { ulid } from "ulid";
 
 import prisma from "@/prisma.js";
 import { HitorisskeyError } from "@/error.js";
 import { CreatePostParam } from "./models/create-post-param.js";
-import { ulid } from "ulid";
 
 export default class PostService {
   /**
@@ -25,15 +25,53 @@ export default class PostService {
   }
 
   /**
-   * チャンネル投稿を取得します。
+   * プライベートルームチャンネルの投稿を取得します。
+   * @param {User} user - 投稿を取得するユーザー
+   * @param {string} cursor - ページネーションの基点。
+   * @param {number} limit - 取得数。
+   * @returns {Promise<Post[]>} 投稿一覧。
+   */
+  static async getPrivateChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<Post[]> {
+    return prisma.post.findMany({
+      where: {
+        channel: 'private',
+        author_id: user.id,
+      },
+      orderBy: { created_at: 'desc' },
+      cursor: cursor ? {id: cursor} : undefined,
+      skip: cursor ? 1 : 0,
+      take: limit,
+    });
+  }
+
+  /**
+   * みんなのつぶやきチャンネルの投稿を取得します。
    * @param {User} user - 投稿を取得するユーザー
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getChannelPostsAsync(user: User, channel: string): Promise<Post[]> {
+  static async getPublicChannelPostsAsync(user: User): Promise<Post[]> {
     return prisma.post.findMany({
-      where: { channel },
+      where: { channel: 'public' },
       orderBy: { created_at: 'desc' },
-      take: 20,
+      take: 100,
+    });
+  }
+
+  /**
+   * なう！広場チャンネルの投稿を取得します。
+   * @param {User} user - 投稿を取得するユーザー
+   * @param {string} cursor - ページネーションの基点。
+   * @param {number} limit - 取得数。
+   * @returns {Promise<Post[]>} 投稿一覧。
+   */
+  static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<Post[]> {
+    // TODO 24時間以内に留める
+    return prisma.post.findMany({
+      where: { channel: 'realtime' },
+      orderBy: { created_at: 'desc' },
+      cursor: cursor ? {id: cursor} : undefined,
+      skip: cursor ? 1 : 0,
+      take: limit,
     });
   }
 

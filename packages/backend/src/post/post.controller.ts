@@ -36,7 +36,12 @@ export default class PostController extends ControllerBase {
   @DELETE('/:id')
   async deleteAsync(req: FastifyRequest<{Params: {id: string}}>) {
     const session = await this.getSessionUserAsync(req, true);
-    throw new HitorisskeyError('NOT_IMPLEMENTED');
+
+    await PostService.deletePostAsync(req.params.id, session);
+    
+    return {
+      ok: true,
+    };
   }
 
   private filter(post: Post, user?: User | null) {

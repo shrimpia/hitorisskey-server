@@ -61,6 +61,15 @@ export default class PostService {
     });
   }
 
+  static async deletePostAsync(postId: string, user: User): Promise<void> {
+    // これがエラーにならない（=投稿が存在し、userのノートである)→投稿を削除できる
+    await this.getPostAsync(postId, user);
+
+    await prisma.post.delete({
+      where: {id: postId}
+    });
+  }
+
   static readonly BUILTIN_CHANNELS = {
     private: 'private',
     public: 'public',

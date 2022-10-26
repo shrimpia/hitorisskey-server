@@ -1,4 +1,5 @@
 import { Component, createSignal, Show } from "solid-js";
+import { api } from "../../api";
 import { Post } from "../../api/models/post";
 import { openMenu } from "../../store/popup-menu";
 import { MenuDefinition } from "./menu-view";
@@ -18,6 +19,9 @@ export const PostView: Component<PostProp> = (p) => {
         label: '削除',
         danger: true,
         iconClass: 'fas fa-trash-alt fa-fw',
+        onClick() {
+          api.post.deleteAsync(p.post.id);
+        },
       });
     }
     return m;

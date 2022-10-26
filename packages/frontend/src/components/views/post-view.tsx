@@ -10,20 +10,35 @@ export type PostProp = {
 };
 
 export const PostView: Component<PostProp> = (p) => {
-  const body = () => <FormattedTextView children={p.post.content}/>;
+  const body = () => <div class="pa-2"><FormattedTextView children={p.post.content}/></div>;
 
   const menu = () => {
     const m: MenuDefinition = [];
     if (p.post.isMine) {
       m.push({
-        label: '削除',
-        danger: true,
-        iconClass: 'fas fa-trash-alt fa-fw',
-        onClick() {
-          api.post.deleteAsync(p.post.id);
-        },
+        items: [{
+          label: '削除',
+          danger: true,
+          iconClass: 'fas fa-trash-alt fa-fw',
+          onClick() {
+            api.post.deleteAsync(p.post.id);
+          },
+        }, {
+          label: '公開範囲を変更…',
+          iconClass: 'fas fa-lock fa-fw',
+          disabled: true,
+        }]
       });
     }
+    m.push({
+      items: [{
+        label: 'このつぶやきを通報…',
+        iconClass: 'fas fa-exclamation-circle fa-fw',
+        onClick() {
+          alert('wip');
+        },
+      }]
+    })
     return m;
   }; 
 

@@ -9,24 +9,18 @@ export type ChannelViewProp = {
   channel: string;
 };
 
-const List = styled.div`
-  > * + * {
-    border-top: 1px solid var(--bg);
-  }
-`;
-
 export const ChannelView: Component<ChannelViewProp> = (p) => {
   const [posts, {refetch}] = createResource(() => p.channel, ch => api.post.readChannelPostsAsync(ch));
   
   return (
     <>
-      <List class="vgroup">
+      <div class="vstack slim">
         <Suspense fallback={<LoadingView />}>
             <For each={posts()} children={item => (
               <PostView post={item} />
             )}/>
         </Suspense>
-      </List>
+      </div>
       <PostComposerView channel={p.channel} onCreatePost={() => refetch()} />
     </>
   );

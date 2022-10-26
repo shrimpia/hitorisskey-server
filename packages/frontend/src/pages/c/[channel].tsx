@@ -19,6 +19,7 @@ const Channel: Component = () => {
 
   return (
     <Container>
+      <p class="text-dimmed mb-4 text-bold">{($t.$channelDescriptions as Record<string, string>)[param.channel]}</p>
       <ChannelView channel={param.channel} />
     </Container>
   );

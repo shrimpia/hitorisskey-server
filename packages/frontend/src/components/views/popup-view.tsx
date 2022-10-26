@@ -18,7 +18,7 @@ const Backdrop = styled.div`
 `;
 
 export const PopupView: ParentComponent<PopupViewProp> = (p) => {
-  const style = createMemo(() => `position: fixed; z-index:9999999; left: ${p.x}px; top:${p.y}px`);
+  const style = createMemo(() => `position: fixed; z-index:9999999; left: ${p.x}px; top:${p.y}px; min-width: 200px;`);
 
   const onClickBackdrop = () => {
     if (!p.denyBackdropClick && p.onClose) p.onClose();

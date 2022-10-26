@@ -7,6 +7,10 @@ import routes from '~solid-pages';
 import { MainLayout } from './components/layouts/main';
 import { createEffect } from 'solid-js';
 import { session } from './store/session';
+import { getAppRef } from './misc/ref';
+import { PopupView } from './components/views/popup-view';
+import { closeMenu, popupMenuState } from './store/popup-menu';
+import { MenuView } from './components/views/menu-view';
 
 const Inner = () => {
   const location = useLocation();
@@ -20,11 +24,18 @@ const Inner = () => {
   });
 
   return (
-    <Show when={location.pathname !== '/'} fallback={<Routes />}>
-      <MainLayout>
-        <Routes />
-      </MainLayout>
-    </Show>
+    <>
+      <Show when={location.pathname !== '/'} fallback={<Routes />}>
+        <MainLayout>
+          <Routes />
+        </MainLayout>
+      </Show>
+      <PopupView show={popupMenuState.show} x={popupMenuState.x} y={popupMenuState.y} onClose={() => closeMenu()}>
+        <div class="pa-1">
+          <MenuView items={popupMenuState.items ?? []} onClick={() => closeMenu()} />
+        </div>
+      </PopupView>
+    </>
   );
 };
 
@@ -32,4 +43,4 @@ render(() => (
   <Router>
     <Inner />
   </Router>
-), document.getElementById('app') as HTMLElement);
+), getAppRef());

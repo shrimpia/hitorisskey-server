@@ -1,6 +1,6 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { Controller, DELETE, GET, POST } from "fastify-decorators";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 
 import { ControllerBase } from "@/controller-base.js";
 import PostService from "@/post/post.service.js";
@@ -12,13 +12,13 @@ export default class PostController extends ControllerBase {
   @GET('/:id')
   async readAsync(req: FastifyRequest<{Params: {id: string}}>) {
     const session = await this.getSessionUserAsync(req, false);
-    return this.filter(await PostService.getPostAsync(req.params.id, session));
+    return this.filter(await PostService.getPostAsync(req.params.id, session), session);
   }
 
   @GET('/channel/:channel')
   async readChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}}>) {
     const session = await this.getSessionUserAsync(req, true);
-    return (await PostService.getChannelPostsAsync(session, req.params.channel)).map(this.filter);
+    return (await PostService.getChannelPostsAsync(session, req.params.channel)).map(p => this.filter(p, session));
   }
 
   @POST()
@@ -39,12 +39,13 @@ export default class PostController extends ControllerBase {
     throw new HitorisskeyError('NOT_IMPLEMENTED');
   }
 
-  private filter(post: Post) {
+  private filter(post: Post, user?: User | null) {
     return {
       id: post.id,
       channel: post.channel,
       content: post.content,
       annotation: post.annotation,
+      isMine: user != null && user.id === post.author_id,
     };
   }
 }

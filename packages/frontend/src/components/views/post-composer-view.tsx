@@ -1,8 +1,9 @@
 import { Component, createMemo, createSignal, For } from "solid-js";
+import { Portal } from "solid-js/web";
 import { css, styled } from "solid-styled-components";
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
-import { annotationTemplates } from "../../misc/annotationTemplates";
+import { annotationTemplates } from "../../misc/annotation-templates";
 
 export type PostComposerView = {
   channel: string;

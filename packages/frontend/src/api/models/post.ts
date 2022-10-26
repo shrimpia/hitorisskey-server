@@ -3,4 +3,5 @@ export interface Post {
   channel: string;
   content: string;
   annotation: string | null;
+  isMine: boolean;
 }

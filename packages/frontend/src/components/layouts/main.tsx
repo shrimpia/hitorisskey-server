@@ -14,6 +14,7 @@ export const MainLayout: ParentComponent<MainLayoutProp> = (p) => {
     <div class="layout-main">
       <div class="hs-sidebar">
         <h1 class="hs-sidebar-title">{$t.hitorisskey}</h1>
+        <aside class="text-75 text-dimmed text-right">(Closed BETA)</aside>
         <div class="menu large mt-2">
           <section>
             <h1>{$t.channels}</h1>

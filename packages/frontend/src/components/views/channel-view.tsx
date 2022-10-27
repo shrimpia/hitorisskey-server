@@ -16,6 +16,7 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   let paginationTriggerRef: HTMLDivElement | undefined = undefined;
 
   const paginationObserver = new IntersectionObserver((e) => {
+    if (p.channel === 'public') return;
     if (!e[0].isIntersecting) return;
     if (posts.loading) return;
     setPageLoading(true);
@@ -29,7 +30,6 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
 
   onMount(() => {
     if (!paginationTriggerRef) return;
-    if (p.channel === 'public') return;
     paginationObserver.observe(paginationTriggerRef);
   });
 

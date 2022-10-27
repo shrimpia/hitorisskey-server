@@ -4,6 +4,7 @@ import { css, styled } from "solid-styled-components";
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
 import { annotationTemplates } from "../../misc/annotation-templates";
+import { $t } from "../../text";
 
 export type PostComposerView = {
   channel: string;
@@ -46,7 +47,12 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 		});
 	};
 
-  return (
+	const onKeyPressTextArea = (e: KeyboardEvent) => {
+		if ((e.key !== 'Enter' || !(e.ctrlKey || e.metaKey))) return;
+		post();
+	}; 
+
+	return (
     <div class={`card pa-2 fix-bottom-right-3 shadow-2 ${pcStyle}`}>
 				{isEnableCw() ? (
 					<div class="hstack dense">

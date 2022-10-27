@@ -11,14 +11,20 @@ export type PopupViewProp = {
   onClose?: () => void;
 };
 
-const Backdrop = styled.div`
-  position: fixed;
-  inset: 0;
-  z-index: 10000000;
-`;
-
 export const PopupView: ParentComponent<PopupViewProp> = (p) => {
-  const style = createMemo(() => `position: fixed; z-index:9999999; left: ${p.x}px; top:${p.y}px; min-width: 200px;`);
+  const style = createMemo(() => `left: ${p.x}px; top: ${p.y}px`);
+
+  const Backdrop = styled.div`
+    position: fixed;
+    inset: 0;
+    z-index: 10000000;
+  `;
+  
+  const Card = styled.div`
+    position: fixed;
+    z-index: 9999999;
+    min-width: 200px;
+  `;
 
   const onClickBackdrop = () => {
     if (!p.denyBackdropClick && p.onClose) p.onClose();
@@ -28,9 +34,9 @@ export const PopupView: ParentComponent<PopupViewProp> = (p) => {
     <Show when={p.show}>
       <Portal mount={getPopupRef()}>
         <Backdrop onClick={onClickBackdrop}>
-          <div class="card shadow-4" style={style()} onClick={e => e.stopPropagation()}>
+          <Card class="card shadow-4" style={style()} onClick={e => e.stopPropagation()}>
             {p.children}
-          </div>
+          </Card>
         </Backdrop>
       </Portal>
     </Show>

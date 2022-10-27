@@ -1,5 +1,6 @@
 import { Post, User } from "@prisma/client";
 import { ulid } from "ulid";
+import dayjs from "dayjs";
 
 import prisma from "@/prisma.js";
 import { HitorisskeyError } from "@/error.js";
@@ -66,8 +67,14 @@ export default class PostService {
    */
   static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<Post[]> {
     // TODO 24時間以内に留める
+    const b24h = dayjs().subtract(24, 'h').toDate();
     return prisma.post.findMany({
-      where: { channel: 'realtime' },
+      where: {
+        channel: 'realtime',
+        created_at: {
+          gte: b24h,
+        },
+      },
       orderBy: { created_at: 'desc' },
       cursor: cursor ? {id: cursor} : undefined,
       skip: cursor ? 1 : 0,

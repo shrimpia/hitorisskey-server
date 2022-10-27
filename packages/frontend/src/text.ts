@@ -7,6 +7,7 @@ export const $t = {
   settings: '設定',
   email: 'メールアドレス',
   password: 'パスワード',
+  about: 'ひとりすきーについて',
   $welcome: {
     subTitle: 'なにかをつぶやきたい。けど、素性は知られたくない。',
     createNew: '新しくはじめる',

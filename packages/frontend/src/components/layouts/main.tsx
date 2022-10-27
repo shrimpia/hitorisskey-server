@@ -6,10 +6,10 @@ import { $t } from "../../text";
 import './main.scss';
 
 export type MainLayoutProp = {
+
 };
 
 export const MainLayout: ParentComponent<MainLayoutProp> = (p) => {
-
   return (
     <div class="layout-main">
       <div class="hs-sidebar">
@@ -31,13 +31,17 @@ export const MainLayout: ParentComponent<MainLayoutProp> = (p) => {
             </NavLink>
           </section>
           <section>
+            <NavLink href="/bottle-mail" class="item" activeClass="active">
+              <span class="icon i fas fa-envelope fa-fw"></span>
+              {$t.bottleMail}
+            </NavLink>
             <NavLink href="/announcements" class="item" activeClass="active">
               <span class="icon i fas fa-bell fa-fw"></span>
               {$t.announcements}
             </NavLink>
-            <NavLink href="/bottle-mail" class="item" activeClass="active">
-              <span class="icon i fas fa-envelope fa-fw"></span>
-              {$t.bottleMail}
+            <NavLink href="/about" class="item" activeClass="active">
+              <span class="icon i fas fa-info-circle fa-fw"></span>
+              {$t.about}
             </NavLink>
             <NavLink href="/settings" class="item" activeClass="active">
               <span class="icon i fas fa-cog fa-fw"></span>

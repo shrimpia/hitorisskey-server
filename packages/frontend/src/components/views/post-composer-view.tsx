@@ -1,6 +1,6 @@
 import { Component, createMemo, createSignal, For } from "solid-js";
-import { Portal } from "solid-js/web";
 import { css, styled } from "solid-styled-components";
+
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
 import { annotationTemplates } from "../../misc/annotation-templates";
@@ -8,16 +8,16 @@ import { $t } from "../../text";
 
 export type PostComposerView = {
   channel: string;
-	onCreatePost?: (post: Post) => void;
+  onCreatePost?: (post: Post) => void;
 };
 
 const pcStyle = css`
-	max-width: 640px;
-	width: 100%;
+  max-width: 640px;
+  width: 100%;
 `;
 
 const Textarea = styled.textarea`
-	height: 7em;
+  height: 7em;
 `;
 
 export const PostComposerView: Component<PostComposerView> = (p) => {
@@ -69,7 +69,7 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 				)}
 				<Textarea class="input-field mt-1" placeholder={$t.$postComposerView.placeholder} disabled={isProcessing()} value={content()} onInput={e => setContent(e.currentTarget.value)} onKeyDown={onKeyPressTextArea} />
 				<div class="hstack dense f-right f-middle mt-1">
-					<div class="text-bold mr-1 text-75">{lengthRemaining()}</div>
+					<div class="text-bold mr-1">{lengthRemaining()}</div>
 					<button class="btn primary" disabled={!canPost() || isProcessing()} onClick={post}>
             {isProcessing() ? $t.$postComposerView.posting : $t.$postComposerView.post}
 					</button>

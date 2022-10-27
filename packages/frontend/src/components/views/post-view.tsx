@@ -1,4 +1,5 @@
-import { Component, createSignal, Show } from "solid-js";
+import { Component, Show } from "solid-js";
+
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
 import { openMenu } from "../../store/popup-menu";

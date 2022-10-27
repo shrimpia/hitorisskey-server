@@ -1,5 +1,6 @@
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import './global.scss';
 
 import { render, Show } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from 'solid-app-router';

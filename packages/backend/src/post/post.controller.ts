@@ -51,7 +51,7 @@ export default class PostController extends ControllerBase {
       content: req.body.content,
       annotation: req.body.annotation,
       channel: req.body.channel,
-    }));
+    }), session);
   }
 
   @DELETE('/:id')

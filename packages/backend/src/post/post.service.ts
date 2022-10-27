@@ -51,11 +51,13 @@ export default class PostService {
    * @returns {Promise<Post[]>} 投稿一覧。
    */
   static async getPublicChannelPostsAsync(user: User): Promise<Post[]> {
-    return prisma.post.findMany({
+    const fetchedPosts = await prisma.post.findMany({
       where: { channel: 'public' },
       orderBy: { created_at: 'desc' },
       take: 100,
     });
+    this.shuffle(fetchedPosts);
+    return fetchedPosts.slice(0, 20);
   }
 
   /**
@@ -120,4 +122,11 @@ export default class PostService {
     public: 'public',
     realtime: 'realtime',
    } as const;
+
+  private static shuffle(arr: unknown[]) {
+    for (let i = arr.length - 1; i >= 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
 }

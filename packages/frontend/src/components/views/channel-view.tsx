@@ -1,4 +1,4 @@
-import { Component, createResource, For, Suspense } from "solid-js";
+import { Component, createEffect, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
 import { styled } from "solid-styled-components";
 import { api } from "../../api";
 import { PostComposerView } from "./post-composer-view";
@@ -10,7 +10,38 @@ export type ChannelViewProp = {
 };
 
 export const ChannelView: Component<ChannelViewProp> = (p) => {
-  const [posts, {refetch}] = createResource(() => p.channel, ch => api.post.readChannelPostsAsync(ch));
+  const [posts, {mutate}] = createResource(() => p.channel, ch => api.post.readChannelPostsAsync(ch));
+  const [isPageLoading, setPageLoading] = createSignal(false);
+  const [cursor, setCursor] = createSignal<string | undefined>(undefined);
+  let paginationTriggerRef: HTMLDivElement | undefined = undefined;
+
+  const paginationObserver = new IntersectionObserver((e) => {
+    if (!e[0].isIntersecting) return;
+    if (posts.loading) return;
+    setPageLoading(true);
+    api.post.readChannelPostsAsync(p.channel, cursor()).then((p) => {
+      mutate(posts => [...(posts ?? []), ...p]);
+      setPageLoading(false);
+    });
+  }, {
+    threshold: 1.0
+  });
+
+  onMount(() => {
+    if (!paginationTriggerRef) return;
+    if (p.channel === 'public') return;
+    paginationObserver.observe(paginationTriggerRef);
+  });
+
+  onCleanup(() => {
+    paginationObserver.disconnect();
+  });
+
+  createEffect(() => {
+    const p = posts();
+    if (!p) return;
+    setCursor(p[p.length - 1].id);
+  });
   
   return (
     <>
@@ -20,8 +51,13 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
               <PostView post={item} />
             )}/>
         </Suspense>
+        <div ref={paginationTriggerRef} class="pa-2">
+          <Show when={isPageLoading()}><LoadingView /></Show>
+        </div>
       </div>
-      <PostComposerView channel={p.channel} onCreatePost={() => refetch()} />
+      <PostComposerView channel={p.channel} onCreatePost={(p) => {
+        mutate(posts => [p, ...(posts ?? [])]);
+      }} />
     </>
   );
 };

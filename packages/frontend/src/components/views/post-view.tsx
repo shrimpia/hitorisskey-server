@@ -2,6 +2,7 @@ import { Component, createSignal, Show } from "solid-js";
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
 import { openMenu } from "../../store/popup-menu";
+import { $t } from "../../text";
 import { MenuDefinition } from "./menu-view";
 import { FormattedTextView } from "./primitives/formatted-text-view";
 
@@ -17,14 +18,14 @@ export const PostView: Component<PostProp> = (p) => {
     if (p.post.isMine) {
       m.push({
         items: [{
-          label: '削除',
+          label: $t.$postView.delete,
           danger: true,
           iconClass: 'fas fa-trash-alt fa-fw',
           onClick() {
             api.post.deleteAsync(p.post.id);
           },
         }, {
-          label: '公開範囲を変更…',
+          label: $t.$postView.changeVisibility,
           iconClass: 'fas fa-lock fa-fw',
           disabled: true,
         }]
@@ -32,7 +33,7 @@ export const PostView: Component<PostProp> = (p) => {
     }
     m.push({
       items: [{
-        label: 'このつぶやきを通報…',
+        label: $t.$postView.report,
         iconClass: 'fas fa-exclamation-circle fa-fw',
         onClick() {
           alert('wip');

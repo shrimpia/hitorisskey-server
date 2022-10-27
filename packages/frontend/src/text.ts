@@ -34,4 +34,16 @@ export const $t = {
     private: 'このチャンネルでのつぶやきは、あなた以外に表示されません。誰にも見られたくないことを書き残しましょう。',
     realtime: 'このチャンネルには、24時間以内のリアルタイムなつぶやきを投稿できます。今起きていることについて、リアルタイムに会話しましょう。'
   },
+  $postComposerView: {
+    annotation: '注釈',
+    hideContent: '投稿内容を伏せる',
+    placeholder: '好きなことを書きましょう。',
+    post: '投稿する',
+    posting: '投稿中…',
+  },
+  $postView: {
+    delete: '削除',
+    changeVisibility: '公開範囲を変更…',
+    report: 'このつぶやきを通報…',
+  },
 } as const;

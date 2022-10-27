@@ -8,7 +8,7 @@ const $handle = async (res: Response) => {
 };
 
 const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: string): Promise<any> => {
-  const q = Object.entries(query).map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
+  const q = Object.entries(query).filter(([_, v]) => v).map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
   const url = API_ENDPOINT + endpoint + (q ? '?' + q : '');
   const headers: HeadersInit = session.token ? {
     'Authorization': `Bearer ${session.token}`,

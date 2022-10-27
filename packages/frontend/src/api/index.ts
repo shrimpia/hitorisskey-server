@@ -23,8 +23,8 @@ export const api = {
     
     /**
      * メールアドレスとパスワードを用いて、アカウントにログインします。
-     * @param email - メールアドレス
-     * @param password - パスワード
+     * @param {string} email - メールアドレス
+     * @param {string} password - パスワード
      */
     loginAsync: (email: string, password: string) => $post<User>('session/login', {
       email, password,
@@ -32,8 +32,8 @@ export const api = {
     
     /**
      * メールアドレスとパスワードを現在のアカウントに設定します。
-     * @param email - メールアドレス
-     * @param password - パスワード
+     * @param {string} email - メールアドレス
+     * @param {string} password - パスワード
      */
     signupAsync: (email: string, password: string) => $post<User>('session/signup', {
       email, password,
@@ -46,14 +46,16 @@ export const api = {
   post: {
     /**
      * つぶやきを取得します。
-     * @param id - つぶやき ID。
+     * @param {string} id - つぶやき ID。
      */
     readAsync: (id: string) => $get<Post>(`post/${id}`),
     /**
      * チャンネルの投稿を全取得します。
-     * @param channel - チャンネル ID。
+     * @param {string} channel - チャンネル ID。
+     * @param {string?} cursor - ページネーション カーソル。
+     * @param {number?} limit - 取得数。
      */
-    readChannelPostsAsync: (channel: string) => $get<Post[]>(`post/channel/${channel}`),
+    readChannelPostsAsync: (channel: string, cursor?: string, limit?: number) => $get<Post[]>(`post/channel/${channel}`, { cursor, limit }),
 
     /**
      * つぶやきを作成します。

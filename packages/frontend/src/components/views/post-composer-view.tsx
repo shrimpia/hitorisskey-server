@@ -51,21 +51,21 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 				{isEnableCw() ? (
 					<div class="hstack dense">
 						<button class="btn flat pa-1 mr-1" onClick={() => setEnableCw(false)} disabled={isProcessing()}><i class="fas fa-times"/></button>
-						<input type="text" list="cwTemplates" class="input-field" placeholder="注釈" disabled={isProcessing()} value={annotation()} onInput={e => setAnnotation(e.currentTarget.value)} />
+						<input type="text" list="cwTemplates" class="input-field" placeholder={$t.$postComposerView.annotation} disabled={isProcessing()} value={annotation()} onInput={e => setAnnotation(e.currentTarget.value)} />
             <datalist id="cwTemplates">
 							<For each={annotationTemplates} children={c => <option value={c} />} />
             </datalist>
 					</div>
 				) : (
 					<button class="btn flat text-left px-1 text-dimmed" onClick={() => setEnableCw(true)} disabled={isProcessing()}>
-						<i class="fas fa-eye-slash"/> 投稿内容を伏せる
+						<i class="fas fa-eye-slash"/> {$t.$postComposerView.hideContent}
 					</button>
 				)}
-				<Textarea class="input-field mt-1" placeholder="好きなことを書きましょう。" disabled={isProcessing()} value={content()} onInput={e => setContent(e.currentTarget.value)} />
+				<Textarea class="input-field mt-1" placeholder={$t.$postComposerView.placeholder} disabled={isProcessing()} value={content()} onInput={e => setContent(e.currentTarget.value)} onKeyDown={onKeyPressTextArea} />
 				<div class="hstack dense f-right f-middle mt-1">
 					<div class="text-bold mr-1 text-75">{lengthRemaining()}</div>
 					<button class="btn primary" disabled={!canPost() || isProcessing()} onClick={post}>
-            {isProcessing() ? '投稿中…' : '投稿する'}
+            {isProcessing() ? $t.$postComposerView.posting : $t.$postComposerView.post}
 					</button>
 				</div>
     </div>

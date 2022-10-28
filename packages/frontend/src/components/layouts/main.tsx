@@ -33,7 +33,7 @@ export const MainLayout: ParentComponent = (p) => {
             </h1>
           </div>
         </Titlebar>
-        <div class="container hs-container">
+        <div class="container">
           {p.children}
         </div>
       </Main>

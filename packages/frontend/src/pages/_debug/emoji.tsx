@@ -1,14 +1,13 @@
-import { Component, createEffect, onMount } from "solid-js";
+import { Component } from "solid-js";
 
 import { EmojiView } from "../../components/views/primitives/emoji-view";
-import { updateClientState } from "../../store/client";
+import { useTitle } from "../../hooks/use-title";
 
 const DebugLoading: Component = () => {
-  createEffect(() => {
-    updateClientState({ title: 'Debug :: EmojiView' });
-  });
-
-  const text = '';
+  useTitle([{
+    label: 'Debug',
+    link: '/_debug',
+  }, 'EmojiView']);
 
   return (
     <div class="text-200">

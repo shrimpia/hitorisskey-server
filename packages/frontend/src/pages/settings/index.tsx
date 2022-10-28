@@ -1,46 +1,46 @@
 import { Link } from "solid-app-router";
-import { Component, onMount } from "solid-js";
+import { Component } from "solid-js";
 import { styled } from "solid-styled-components";
-import { MainLayout } from "../components/layouts/main";
-import { updateClientState } from "../store/client";
-import { $t } from "../text";
+
+import { useTitle } from "../../hooks/use-title";
+import { $t } from "../../text";
 
 const Settings: Component = () => {
-  onMount(() => {
-    updateClientState({title: $t.settings});
-  });
+  useTitle($t.settings);
+
   const Menu = styled.div`
     max-width: 1024px;
     margin: 0 auto;
   `;
+
   return (
     <Menu class="list-form">
       <Link class="item" href="/settings/display">
         <i class="icon fas fa-palette" />
         <div class="body">
-          <h1>表示設定</h1>
-          <p class="desc">テーマ、アクセントカラー、文字サイズ</p>
+          <h1>{$t.$settings.display}</h1>
+          <p class="desc">{$t.$settings.displayDescription}</p>
         </div>
       </Link>
-      <Link class="item" href="/settings/accounts">
+      <Link class="item" href="/settings/account">
         <i class="icon fas fa-circle-user" />
         <div class="body">
-          <h1>アカウント設定</h1>
-          <p class="desc">メールアドレス、二要素認証</p>
+          <h1>{$t.$settings.account}</h1>
+          <p class="desc">{$t.$settings.accountDescription}</p>
         </div>
       </Link>
       <Link class="item" href="/settings/privacy">
         <i class="icon fas fa-lock" />
         <div class="body">
-          <h1>プライバシー設定</h1>
-          <p class="desc">ワードミュート</p>
+          <h1>{$t.$settings.privacy}</h1>
+          <p class="desc">{$t.$settings.privacyDescription}</p>
         </div>
       </Link>
       <button class="item text-danger" disabled>
         <i class="icon fas fa-right-from-bracket" />
         <div class="body">
-          <h1>ログアウト</h1>
-          <p class="desc">アカウントにメールアドレスを登録していないため、ログアウトできません。</p>
+          <h1>{$t.$settings.logout}</h1>
+          <p class="desc">{$t.$settings.logoutDescription}</p>
         </div>
       </button>
     </Menu>

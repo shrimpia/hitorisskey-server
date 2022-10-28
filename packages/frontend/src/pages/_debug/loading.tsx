@@ -1,12 +1,12 @@
-import { Component, createEffect, onMount } from "solid-js";
+import { Component } from "solid-js";
 import { LoadingView } from "../../components/views/primitives/loading-view";
-import { updateClientState } from "../../store/client";
+import { useTitle } from "../../hooks/use-title";
 
 const DebugLoading: Component = () => {
-
-  createEffect(() => {
-    updateClientState({ title: 'Debug :: LoadingView' });
-  });
+  useTitle([{
+    label: 'Debug',
+    link: '/_debug',
+  }, 'LoadingView']);
 
   return (
     <LoadingView />

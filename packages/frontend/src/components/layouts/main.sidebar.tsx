@@ -1,6 +1,7 @@
 import { NavLink } from "solid-app-router";
-import { Component } from "solid-js";
+import { Component, Show } from "solid-js";
 import { styled } from "solid-styled-components";
+import { IS_DEVELOPMENT } from "../../global-const";
 import { $t } from "../../text";
 
 export type MainLayoutSidebarProp = {
@@ -60,6 +61,12 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
             <span class="icon i fas fa-info-circle fa-fw"></span>
             {$t.about}
           </NavLink>
+          <Show when={IS_DEVELOPMENT}>
+            <NavLink href="/_debug" class="item" activeClass="active">
+              <span class="icon i fas fa-wand-sparkles fa-fw"></span>
+              Debug
+            </NavLink>
+          </Show>
           <NavLink href="/settings" class="item" activeClass="active">
             <span class="icon i fas fa-cog fa-fw"></span>
             {$t.settings}

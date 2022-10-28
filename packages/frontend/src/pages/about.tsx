@@ -1,11 +1,9 @@
-import { Component, onMount } from "solid-js";
-import { updateClientState } from "../store/client";
+import { Component } from "solid-js";
+import { useTitle } from "../hooks/use-title";
 import { $t } from "../text";
 
 const BottleMail: Component = () => {
-  onMount(() => {
-    updateClientState({ title: $t.about });
-  });
+  useTitle($t.about);
 
   return (
     <article>

@@ -1,7 +1,15 @@
 import { Component } from "solid-js";
-import { MenuDefinition, MenuView } from "../../components/views/menu-view";
+
+import { MenuView } from "../../components/views/menu-view";
+import { useTitle } from "../../hooks/use-title";
+import { MenuDefinition } from "../../misc/menu-definition";
 
 const DebugMenu: Component = () => {
+  useTitle([{
+    label: 'Debug',
+    link: '/_debug',
+  }, 'MenuView']);
+
   const items: MenuDefinition = [{
     label: 'りんご',
     iconClass: 'fas fa-apple-whole fa-fw',

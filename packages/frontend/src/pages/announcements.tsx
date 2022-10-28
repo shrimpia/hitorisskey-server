@@ -1,11 +1,11 @@
-import { Component, onMount } from "solid-js";
-import { updateClientState } from "../store/client";
+import { Component } from "solid-js";
+
+import { useTitle } from "../hooks/use-title";
 import { $t } from "../text";
 
 const Announcements: Component = () => {
-  onMount(() => {
-    updateClientState({ title: $t.announcements });
-  });
+  useTitle($t.announcements);
+
   return (
     <p>TBD</p>
   );

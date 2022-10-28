@@ -1,8 +1,9 @@
 import { ParentComponent } from "solid-js";
-import { styled } from "solid-styled-components";
-
+import { css, styled } from "solid-styled-components";
 import { clientState } from "../../store/client";
+
 import { MainLayoutSidebar } from "./main.sidebar";
+import { MainLayoutTitle } from "./main.title";
 
 export const MainLayout: ParentComponent = (p) => {
   const SIDEBAR_WIDTH = 256;
@@ -22,6 +23,11 @@ export const MainLayout: ParentComponent = (p) => {
     -webkit-backdrop-filter: blur(24px);
   `;
 
+  const notFullViewStyle = css`
+    max-width: 800px;
+    margin: 0 auto;
+  `;
+
   return (
     <div class="relative">
       <MainLayoutSidebar width={SIDEBAR_WIDTH} />
@@ -29,11 +35,11 @@ export const MainLayout: ParentComponent = (p) => {
         <Titlebar>
           <div class="pa-2">
             <h1 class="text-100 ma-0">
-              {clientState.title}
+              <MainLayoutTitle />
             </h1>
           </div>
         </Titlebar>
-        <div class="container">
+        <div class="container" classList={{[notFullViewStyle]: !clientState.fullView}}>
           {p.children}
         </div>
       </Main>

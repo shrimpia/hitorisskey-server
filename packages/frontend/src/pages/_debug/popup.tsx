@@ -1,15 +1,17 @@
-import { Component, createEffect, createSignal, onMount, onCleanup, batch } from "solid-js";
+import { Component, createSignal, onMount, onCleanup, batch } from "solid-js";
+
 import { PopupView } from "../../components/views/popup-view";
-import { updateClientState } from "../../store/client";
+import { useTitle } from "../../hooks/use-title";
 
 const DebugPopup: Component = () => {
+  useTitle([{
+    label: 'Debug',
+    link: '/_debug',
+  }, 'PopupView']);
+
   const [x, setX] = createSignal(0);
   const [y, setY] = createSignal(0);
   const [show, setShow] = createSignal(false);
-
-  createEffect(() => {
-    updateClientState({ title: 'Debug :: DebugPopup' });
-  });
 
   const onClick = (e: MouseEvent) => {
     if (!e.shiftKey) return;

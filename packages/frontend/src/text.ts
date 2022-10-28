@@ -56,5 +56,16 @@ export const $t = {
     privacyDescription: 'ワードミュート',
     logout: 'ログアウト',
     logoutDescription: 'アカウントにメールアドレスを登録していないため、ログアウトできません。',
+    initialize: '初期値に戻す',
+    $display: {
+      theme: 'テーマ',
+      $theme: {
+        light: 'ライトテーマ',
+        dark: 'ダークテーマ',
+        system: 'システム設定に準ずる',
+      },
+      accentColor: 'アクセントカラー',
+      fontSize: '文字サイズ',
+    },
   },
 } as const;

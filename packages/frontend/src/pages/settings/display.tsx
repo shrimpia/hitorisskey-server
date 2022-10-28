@@ -58,7 +58,6 @@ const SettingsDisplay: Component = () => {
 							<ColorInput class="shadow-2" type="radio" color={c} value={c} checked={c === clientState.accentColor} onChange={e => updateClientState({accentColor: e.currentTarget.value as DesignSystemColor})} />
             )} />
 					</div>
-          <button class="btn primary">{$t.$settings.initialize}</button>
         </div>
       </div>
       <div class="card">
@@ -72,6 +71,13 @@ const SettingsDisplay: Component = () => {
           )} />
         </div>
       </div>
+      <button class="btn primary ml-auto" onClick={() => {
+        updateClientState({
+          fontSize: 16,
+          accentColor: 'green',
+          theme: 'system',
+        });
+      }}>{$t.$settings.initialize}</button>
     </div>
   );
 };

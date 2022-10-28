@@ -55,7 +55,7 @@ export const $t = {
     privacy: 'プライバシー設定',
     privacyDescription: 'ワードミュート',
     logout: 'ログアウト',
-    logoutDescription: 'アカウントにメールアドレスを登録していないため、ログアウトできません。',
+    logoutDisabled: 'アカウントにメールアドレスを登録していないため、ログアウトできません。',
     initialize: '初期値に戻す',
     $display: {
       theme: 'テーマ',

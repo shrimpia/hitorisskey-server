@@ -36,11 +36,11 @@ const Settings: Component = () => {
           <p class="desc">{$t.$settings.privacyDescription}</p>
         </div>
       </Link>
-      <button class="item text-danger" disabled>
+      <button class="item" disabled>
         <i class="icon fas fa-right-from-bracket" />
         <div class="body">
           <h1>{$t.$settings.logout}</h1>
-          <p class="desc">{$t.$settings.logoutDescription}</p>
+          <p class="desc">{$t.$settings.logoutDisabled}</p>
         </div>
       </button>
     </Menu>

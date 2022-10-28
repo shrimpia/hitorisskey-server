@@ -2,9 +2,9 @@ import { Component, Show } from "solid-js";
 
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
+import { MenuDefinition } from "../../misc/menu-definition";
 import { openMenu } from "../../store/popup-menu";
 import { $t } from "../../text";
-import { MenuDefinition } from "./menu-view";
 import { FormattedTextView } from "./primitives/formatted-text-view";
 
 export type PostProp = {

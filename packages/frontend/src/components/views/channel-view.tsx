@@ -1,5 +1,5 @@
 import { Component, createEffect, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
-import { styled } from "solid-styled-components";
+
 import { api } from "../../api";
 import { PostComposerView } from "./post-composer-view";
 import { PostView } from "./post-view";

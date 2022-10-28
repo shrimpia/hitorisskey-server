@@ -1,6 +1,6 @@
 import { Component, createEffect, onMount } from "solid-js";
 
-import { EmojiView } from "../../components/views/emoji-view";
+import { EmojiView } from "../../components/views/primitives/emoji-view";
 import { updateClientState } from "../../store/client";
 
 const DebugLoading: Component = () => {

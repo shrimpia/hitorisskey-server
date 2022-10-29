@@ -12,7 +12,7 @@ export type PostProp = {
 };
 
 export const PostView: Component<PostProp> = (p) => {
-  const body = () => <div class="pa-2"><FormattedTextView children={p.post.content}/></div>;
+  const body = () => <FormattedTextView children={p.post.content}/>;
 
   const menu = () => {
     const m: MenuDefinition = [];

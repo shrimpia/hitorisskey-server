@@ -33,10 +33,17 @@ const [clientState, updateClientState] = createStore({
   title: '' as TitleProp,
   fullView: false,
   lastChannel: 'public',
+	isMobile: false,
   theme: (localStorage.getItem('theme') ?? 'system') as ThemeProp,
   accentColor: (localStorage.getItem('accentColor') ?? 'green') as DesignSystemColor,
   fontSize: Number(localStorage.getItem('fontSize') ?? '16'),
 });
+
+export const updateMobile = () => {
+	updateClientState({ isMobile: document.documentElement.clientWidth < 1000 });
+};
+
+updateMobile();
 
 createEffect(() => localStorage.setItem('theme', clientState.theme));
 

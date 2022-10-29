@@ -9,27 +9,14 @@ export type MainLayoutSidebarProp = {
 };
 
 export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
-  const Sidebar = styled.div`
-    position: fixed;
-    background-color: var(--bg);
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    border-right: 1px solid var(--tone-5);
-    padding: var(--margin);
-  `;
-
   const SidebarTitle = styled.h1`
     font-size: 150%;
     color: var(--dimmed);
     margin: 0;
   `;
 
-  const sidebarStyle = `width: ${p.width}px`; 
-
   return (
-    <Sidebar style={sidebarStyle}>
+    <>
       <SidebarTitle>{$t.hitorisskey}</SidebarTitle>
       <aside class="text-75 text-dimmed text-right">(Closed BETA)</aside>
       <div class="menu large mt-2">
@@ -73,6 +60,6 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
           </NavLink>
         </section>
       </div>
-    </Sidebar>
+    </>
   );
 };

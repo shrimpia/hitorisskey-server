@@ -1,4 +1,4 @@
-import { createEffect } from 'solid-js';
+import { createEffect, onCleanup, onMount } from 'solid-js';
 import { createGlobalStyles } from 'solid-styled-components';
 import { render, Show } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from 'solid-app-router';
@@ -15,7 +15,7 @@ import routes from '~solid-pages';
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './global.scss';
-import { clientState } from './store/client';
+import { clientState, updateClientState, updateMobile } from './store/client';
 import { useTheme } from './hooks/use-theme';
 
 
@@ -48,6 +48,18 @@ const Inner = () => {
     if (location.pathname !== '/' && !session.token) {
       navigate('/');
     }
+  });
+
+  const onResize = () => {
+    updateMobile();
+  };
+
+  onMount(() => {
+    window.addEventListener('resize', onResize);
+  });
+
+  onCleanup(() => {
+    window.removeEventListener('resize', onResize);
   });
   
   useTheme();

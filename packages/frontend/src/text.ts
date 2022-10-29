@@ -35,6 +35,9 @@ export const $t = {
     private: 'このチャンネルでのつぶやきは、あなた以外に表示されません。誰にも見られたくないことを書き残しましょう。',
     realtime: 'このチャンネルには、24時間以内のリアルタイムなつぶやきを投稿できます。今起きていることについて、リアルタイムに会話しましょう。'
   },
+  $channelView: {
+    noSuchPosts: 'まだつぶやきが投稿されていません。何かつぶやいてみませんか？',
+  },
   $postComposerView: {
     annotation: '注釈',
     hideContent: '投稿内容を伏せる',
@@ -49,7 +52,7 @@ export const $t = {
   },
   $settings: {
     display: '表示設定',
-    displayDescription: 'テーマ、アクセントカラー、文字サイズ',
+    displayDescription: 'テーマ、アクセントカラー、…',
     account: 'アカウント設定',
     accountDescription: 'メールアドレス、二要素認証',
     privacy: 'プライバシー設定',

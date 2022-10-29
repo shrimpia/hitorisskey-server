@@ -1,6 +1,7 @@
 import { Component, createEffect, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
 
 import { api } from "../../api";
+import { $t } from "../../text";
 import { PostComposerView } from "./post-composer-view";
 import { PostView } from "./post-view";
 import { LoadingView } from "./primitives/loading-view";
@@ -39,7 +40,7 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
 
   createEffect(() => {
     const p = posts();
-    if (!p) return;
+    if (!p || p.length === 0) return;
     setCursor(p[p.length - 1].id);
   });
   
@@ -50,6 +51,9 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
             <For each={posts()} children={item => (
               <PostView post={item} />
             )}/>
+            <Show when={posts()?.length === 0}>
+              <p class="text-dimmed">{$t.$channelView.noSuchPosts}</p>
+            </Show>
         </Suspense>
         <div ref={paginationTriggerRef} class="pa-2">
           <Show when={isPageLoading()}><LoadingView /></Show>

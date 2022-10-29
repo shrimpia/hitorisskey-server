@@ -1,4 +1,4 @@
-import { ParentComponent } from "solid-js";
+import { createSignal, ParentComponent, Show } from "solid-js";
 import { css, styled } from "solid-styled-components";
 import { clientState } from "../../store/client";
 
@@ -6,10 +6,27 @@ import { MainLayoutSidebar } from "./main.sidebar";
 import { MainLayoutTitle } from "./main.title";
 
 export const MainLayout: ParentComponent = (p) => {
+  const [isDrawerOpen, setDrawerOpen] = createSignal(false);
+
   const SIDEBAR_WIDTH = 256;
 
-  const Main = styled.div`
-    margin-left: ${SIDEBAR_WIDTH}px;
+  const SidebarColumn = styled.div`
+    position: fixed;
+    background-color: var(--bg);
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid var(--tone-5);
+    padding: var(--margin);
+  `;
+
+  const Drawer = styled.div`
+    z-index: 1000000;
+  `;
+
+  const Main = styled.div<{isMobile: boolean}>`
+    margin-left: ${p => p.isMobile ? 0 : SIDEBAR_WIDTH}px;
   `;
 
   const Titlebar = styled.div`  
@@ -30,9 +47,28 @@ export const MainLayout: ParentComponent = (p) => {
 
   return (
     <div class="relative">
-      <MainLayoutSidebar width={SIDEBAR_WIDTH} />
-      <Main class="relative">
-        <Titlebar>
+      <Show when={!clientState.isMobile}>
+        <SidebarColumn style={`width: ${SIDEBAR_WIDTH}px`}>
+          <MainLayoutSidebar width={SIDEBAR_WIDTH} />
+        </SidebarColumn>
+      </Show>
+      <Show when={clientState.isMobile}>
+        <Drawer class={`drawer-container ${isDrawerOpen() ? 'active' : ''}`} onClick={() => setDrawerOpen(false)}>
+          <div class="backdrop"></div>
+          <div class="drawer">
+            <div class="pa-2">
+              <MainLayoutSidebar width={SIDEBAR_WIDTH} />
+            </div>
+          </div>
+        </Drawer>
+      </Show>
+      <Main isMobile={clientState.isMobile} class="relative">
+        <Titlebar class="flex">
+          <Show when={clientState.isMobile}>
+            <button class="btn flat ml-2" onClick={() => setDrawerOpen(true)}>
+              <i class="fas fa-bars"></i>
+            </button>
+          </Show>
           <div class="pa-2">
             <h1 class="text-100 ma-0">
               <MainLayoutTitle />

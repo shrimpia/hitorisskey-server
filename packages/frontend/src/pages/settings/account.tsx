@@ -1,6 +1,8 @@
-import { Component } from "solid-js";
+import { Component, createMemo, Show } from "solid-js";
+import { EmailPasswordRegisterForm } from "../../components/views/domain/settings/EmailPasswordRegisterForm";
 
 import { useTitle } from "../../hooks/use-title";
+import { session } from "../../store/session";
 import { $t } from "../../text";
 
 const SettingsAccount: Component = () => {
@@ -9,8 +11,31 @@ const SettingsAccount: Component = () => {
     link: '/settings',
   }, $t.$settings.account]);
 
+  const isRequiredEmailPassword = createMemo(() => session.user !== null && session.user.email === null);
+
   return (
-    <p>wip</p>
+    <div class="vstack">
+      <Show when={isRequiredEmailPassword()}>
+        <EmailPasswordRegisterForm />
+      </Show>
+      <Show when={!isRequiredEmailPassword()}>
+        <div class="card pa-2">
+          <h2>メール設定</h2>
+          <p>メールアドレスは既に登録されています。</p>
+          <label class="input-field">
+            メールアドレス
+            <input type="email" readOnly value={session.user?.email ?? ''} />
+          </label>
+        </div>
+      </Show>
+      <div class="card pa-2">
+        <h2>二要素認証</h2>
+        <div class="alert bg-danger">
+          <i class="icon fas fa-exclamation-circle"></i>
+          メールアドレスとパスワードを認証していないため、二要素認証を設定できません。
+        </div>
+      </div>
+    </div>
   );
 };
 

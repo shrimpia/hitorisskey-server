@@ -6,36 +6,39 @@ import { ControllerBase } from "@/controller-base.js";
 import { HitorisskeyError } from "@/error.js";
 import SessionService from "@/session/session.service.js";
 import UserService from "@/user/user.service.js";
+import { emailPasswordParam, EmailPasswordParam } from "./models/email-password-param.js";
 
 @Controller('/session')
 export default class SessionController extends ControllerBase {
   @GET()
   async readAsync(req: FastifyRequest, reply: FastifyReply) {
     const user = await this.getSessionUserAsync(req, true);
-    reply.send(this.filter(user));
+    return this.filter(user);
   }
 
   @POST('/start')
   async startAsync(req: FastifyRequest, reply: FastifyReply) {
     const user = await UserService.createUserAsync();
-    reply.send(this.filter(user));
+    return this.filter(user);
   }
 
   @POST('/login')
-  async loginAsync({body}: FastifyRequest<{Body: {email: string, password: string}}>, reply: FastifyReply) {
-    if (!body || !body.email || !body.password) throw new HitorisskeyError('MISSING_PARAMS');
+  async loginAsync(req: FastifyRequest<{Body: EmailPasswordParam}>, reply: FastifyReply) {
+    const body = emailPasswordParam.safeParse(req.body);
+    if (!body.success) throw new HitorisskeyError('MISSING_PARAMS');
     
-    const u = await SessionService.loginAsync(body.email, body.password);
-    reply.send(this.filter(u));
+    const u = await SessionService.loginAsync(body.data.email, body.data.password);
+    return this.filter(u);
   }
 
   @POST('/signup')
-  async signupAsync(req: FastifyRequest<{Body: {email: string, password: string}}>, reply: FastifyReply) {
+  async signupAsync(req: FastifyRequest<{Body: EmailPasswordParam}>, reply: FastifyReply) {
     const user = await this.getSessionUserAsync(req, true);
-    if (!req.body || !req.body.email || !req.body.password) throw new HitorisskeyError('MISSING_PARAMS');
+    const body = emailPasswordParam.safeParse(req.body);
+    if (!body.success) throw new HitorisskeyError('MISSING_PARAMS');
     
-    const u = await SessionService.signupAsync(user, req.body.email, req.body.password);
-    reply.send(this.filter(u));
+    const u = await SessionService.signupAsync(user, body.data.email, body.data.password);
+    return this.filter(u);
   }
 
   private filter(user: User) {

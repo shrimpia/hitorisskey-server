@@ -52,7 +52,6 @@ const SettingsDisplay: Component = () => {
       <div class="card">
         <div class="body">
           <h3>{$t.$settings.$display.accentColor}</h3>
-
 					<div class="hstack slim wrap mb-2">
             <For each={designSystemColors} children={c => (
 							<ColorInput class="shadow-2" type="radio" color={c} value={c} checked={c === clientState.accentColor} onChange={e => updateClientState({accentColor: e.currentTarget.value as DesignSystemColor})} />

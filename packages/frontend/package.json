@@ -14,14 +14,14 @@
     "emoji-unicode": "^2.0.1",
     "sass": "^1.55.0",
     "solid-app-router": "^0.4.2",
-    "solid-js": "^1.5.7",
+    "solid-js": "^1.6.0",
     "solid-styled-components": "^0.28.5",
     "xeltica-ui": "xeltica/design-system"
   },
   "devDependencies": {
-    "typescript": "^4.6.4",
-    "vite": "^3.1.0",
+    "typescript": "^4.8.4",
+    "vite": "^3.2.1",
     "vite-plugin-pages": "^0.26.0",
-    "vite-plugin-solid": "^2.3.9"
+    "vite-plugin-solid": "^2.3.10"
   }
 }

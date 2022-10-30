@@ -10,10 +10,12 @@ const $handle = async (res: Response) => {
 const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: string): Promise<any> => {
   const q = Object.entries(query).filter(([_, v]) => v).map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
   const url = API_ENDPOINT + endpoint + (q ? '?' + q : '');
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
-  } : {};
+  };
+  if (session.token) {
+    headers['Authorization'] = `Bearer ${session.token}`;
+  }
   return fetch(url, {
     method,
     headers,
@@ -23,13 +25,15 @@ const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: s
 const $fetchBody = (endpoint: string, body: Record<string, unknown>, method: string): Promise<any> => {
   const bodyJson = JSON.stringify(body);
   const url = API_ENDPOINT + endpoint;
-  const headers: HeadersInit = session.token ? {
-    'Authorization': `Bearer ${session.token}`,
+  const headers: HeadersInit = {
     'Content-Type': 'application/json',
-  } : {};
+  };
+  if (session.token) {
+    headers['Authorization'] = `Bearer ${session.token}`;
+  }
   return fetch(url, {
+    method,
     headers,
-    method: method,
     body: bodyJson,
   }).then($handle);
 };

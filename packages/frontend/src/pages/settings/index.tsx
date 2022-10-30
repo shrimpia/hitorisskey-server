@@ -1,8 +1,9 @@
 import { Link } from "solid-app-router";
-import { Component } from "solid-js";
+import { Component, Show } from "solid-js";
 import { styled } from "solid-styled-components";
 
 import { useTitle } from "../../hooks/use-title";
+import { session, setSession } from "../../store/session";
 import { $t } from "../../text";
 
 const Settings: Component = () => {
@@ -12,6 +13,12 @@ const Settings: Component = () => {
     max-width: 1024px;
     margin: 0 auto;
   `;
+
+  const logout = () => {
+    if (confirm('ログアウトしますか？')) {
+      setSession({token: null});
+    }
+  };
 
   return (
     <Menu class="list-form">
@@ -36,11 +43,13 @@ const Settings: Component = () => {
           <p class="desc">{$t.$settings.privacyDescription}</p>
         </div>
       </Link>
-      <button class="item" disabled>
+      <button class="item" disabled={session.user?.email === null} onClick={logout}>
         <i class="icon fas fa-right-from-bracket" />
         <div class="body">
           <h1>{$t.$settings.logout}</h1>
-          <p class="desc">{$t.$settings.logoutDisabled}</p>
+          <Show when={session.user?.email === null}>
+            <p class="desc">{$t.$settings.logoutDisabled}</p>
+          </Show>
         </div>
       </button>
     </Menu>

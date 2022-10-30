@@ -23,6 +23,9 @@ export const refetchUser = async () => {
 createEffect(() => {
   if (session.token) {
     refetchUser();
+    localStorage.setItem('token', session.token);
+  } else {
+    localStorage.removeItem('token');
   }
 });
 

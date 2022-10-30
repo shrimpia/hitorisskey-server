@@ -22,10 +22,21 @@ const Index: Component = () => {
   });
 
   const startNew = () => api.session.startAsync().then((res) => {
-    localStorage.setItem('token', res.token);
     setSession({
       token: res.token,
     });
+  });
+
+  const login = () => api.session.loginAsync(email(), password()).then(res => {
+    setSession({
+      token: res.token,
+    });
+  }).catch((e) => {
+    if (e instanceof Error && e.message === 'NOT_FOUND') {
+      alert('ログインに失敗しました。メールアドレスおよびパスワードが正しいかお確かめの上、再試行してください。');
+    } else {
+      alert('通信エラーです。もう一度お試しください。');
+    }
   });
 
   return (
@@ -65,7 +76,7 @@ const Index: Component = () => {
                 {$t.password}
                 <input type="password" value={password()} onInput={e => setPassword(e.currentTarget.value)} />
               </label>
-              <button class="btn primary mt-4 text-center ml-auto">{$t.$welcome.$login.ok}</button>
+              <button class="btn primary mt-4 text-center ml-auto" onClick={login}>{$t.$welcome.$login.ok}</button>
             </div>            
             <button class="btn outline primary mt-2" onClick={() => setState('initial')}>{$t.$welcome.$login.cancel}</button>
           </Match>

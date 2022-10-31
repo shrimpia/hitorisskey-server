@@ -4,7 +4,7 @@ import { render, Show } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from 'solid-app-router';
 
 import { MainLayout } from './components/layouts/main';
-import { session } from './store/session';
+import { refetchUser, session } from './store/session';
 import { getAppRef } from './misc/ref';
 import { PopupView } from './components/views/popup-view';
 import { closeMenu, popupMenuState } from './store/popup-menu';
@@ -17,6 +17,8 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './global.scss';
 import { clientState, updateClientState, updateMobile } from './store/client';
 import { useTheme } from './hooks/use-theme';
+import { app } from './store/app';
+import { LoadingView } from './components/views/primitives/loading-view';
 
 
 const GlobalStyle = createGlobalStyles`
@@ -50,6 +52,17 @@ const Inner = () => {
     }
   });
 
+
+  // ユーザーを取得
+  createEffect(() => {
+    if (session.token) {
+      refetchUser();
+      localStorage.setItem('token', session.token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  });
+
   const onResize = () => {
     updateMobile();
   };
@@ -65,7 +78,7 @@ const Inner = () => {
   useTheme();
 
   return (
-    <>
+    <Show when={app.meta} fallback={<LoadingView />}>
       <GlobalStyle fontSize={clientState.fontSize} accentColor={clientState.accentColor} />
       <Show when={location.pathname !== '/'} fallback={<Routes />}>
         <MainLayout>
@@ -77,7 +90,7 @@ const Inner = () => {
           <MenuView items={popupMenuState.items ?? []} onClick={() => closeMenu()} />
         </div>
       </PopupView>
-    </>
+    </Show>
   );
 };
 

@@ -19,16 +19,6 @@ export const refetchUser = async () => {
   }
 };
 
-// ユーザーを取得
-createEffect(() => {
-  if (session.token) {
-    refetchUser();
-    localStorage.setItem('token', session.token);
-  } else {
-    localStorage.removeItem('token');
-  }
-});
-
 export {
   session,
   setSession,

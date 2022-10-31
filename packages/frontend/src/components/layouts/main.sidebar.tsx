@@ -2,6 +2,7 @@ import { NavLink } from "solid-app-router";
 import { Component, Show } from "solid-js";
 import { styled } from "solid-styled-components";
 import { IS_DEVELOPMENT } from "../../global-const";
+import { app } from "../../store/app";
 import { $t } from "../../text";
 
 export type MainLayoutSidebarProp = {
@@ -18,7 +19,9 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
   return (
     <>
       <SidebarTitle>{$t.hitorisskey}</SidebarTitle>
-      <aside class="text-75 text-dimmed text-right">(Closed BETA)</aside>
+      <Show when={app.meta?.isClosedBeta}>
+        <aside class="text-75 text-dimmed text-right">(Closed BETA)</aside>
+      </Show>
       <div class="menu large mt-2">
         <section>
           <h1>{$t.channels}</h1>
@@ -44,14 +47,22 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
             <span class="icon i fas fa-bell fa-fw"></span>
             {$t.announcements}
           </NavLink>
-          <NavLink href="/about" class="item" activeClass="active">
-            <span class="icon i fas fa-info-circle fa-fw"></span>
-            {$t.about}
-          </NavLink>
           <Show when={IS_DEVELOPMENT}>
             <NavLink href="/_debug" class="item" activeClass="active">
               <span class="icon i fas fa-wand-sparkles fa-fw"></span>
               Debug
+            </NavLink>
+          </Show>
+        </section>
+        <section>
+          <NavLink href="/about" class="item" activeClass="active">
+            <span class="icon i fas fa-info-circle fa-fw"></span>
+            {$t.about}
+          </NavLink>
+          <Show when={app.meta?.isClosedBeta}>
+            <NavLink href="/beta/feedback" class="item" activeClass="active">
+              <span class="icon i fas fa-laugh fa-fw"></span>
+              フィードバック
             </NavLink>
           </Show>
           <NavLink href="/settings" class="item" activeClass="active">

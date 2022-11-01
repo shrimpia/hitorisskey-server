@@ -1,0 +1,19 @@
+{
+    "name": "\u3072\u3068\u308a\u3059\u304d\u30fc",
+    "short_name": "\u3072\u3068\u308a\u3059\u304d\u30fc",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

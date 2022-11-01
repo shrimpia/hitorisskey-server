@@ -2,6 +2,7 @@ import { Component, createEffect, createMemo, createSignal, onMount, Show } from
 
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
+import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
 import { MenuDefinition } from "../../misc/menu-definition";
 import { openMenu } from "../../store/popup-menu";
 import { $t } from "../../text";
@@ -27,7 +28,13 @@ export const PostView: Component<PostProp> = (p) => {
           danger: true,
           iconClass: 'fas fa-trash-alt fa-fw',
           onClick() {
-            api.post.deleteAsync(p.post.id);
+            if (confirm('本当にこのつぶやきを削除しますか？')) {
+              api.post.deleteAsync(p.post.id).then(() => {
+                hitorisskeyEventTarget.dispatchEvent(new HitorisskeyEvent('postDelete', {
+                  detail: { id: p.post.id }
+                }));
+              });
+            }
           },
         }, {
           label: $t.$postView.changeVisibility,

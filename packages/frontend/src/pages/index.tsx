@@ -14,6 +14,7 @@ const Index: Component = () => {
   const [state, setState] = createSignal<WelcomeState>('initial');
   const [email, setEmail] = createSignal('');
   const [password, setPassword] = createSignal('');
+
   const navigate = useNavigate();
 
   createEffect(() => {

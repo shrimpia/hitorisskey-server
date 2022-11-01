@@ -66,19 +66,19 @@ export const EmailPasswordRegisterForm: Component = () => {
       <label class="input-field">
         メールアドレス
         { /* Note: use:model がエラーになってるけど動く 私は悪くないので放置します */ }
-        <input type="email" autocomplete="email" use:model={[email, setEmail]} />
+        <input type="email" autocomplete="email" use:model={[email, setEmail]} disabled={isRegistering()} />
       </label>
       <label class="input-field">
         パスワード
-        <input type="password" autocomplete="new-password" use:model={[password, setPassword]} onInput={() => validatePassword()} />
+        <input type="password" autocomplete="new-password" use:model={[password, setPassword]} disabled={isRegistering()} onInput={() => validatePassword()} />
         <Show when={passwordErrorMessage()}><span class="text-red">{passwordErrorMessage()}</span></Show>
       </label>
       <label class="input-field">
         パスワード（確認用）
-        <input type="password" autocomplete="new-password" use:model={[passwordConfimation, setPasswordConfimation]} onInput={() => validatePasswordConfirmation()} />
+        <input type="password" autocomplete="new-password" use:model={[passwordConfimation, setPasswordConfimation]} disabled={isRegistering()} onInput={() => validatePasswordConfirmation()} />
         <Show when={passwordConfirmationErrorMessage()}><span class="text-red">{passwordConfirmationErrorMessage()}</span></Show>
       </label>
-      <button type="button" class="btn primary mt-2" disabled={!canRegister()} onClick={register}>登録する</button>
+      <button type="button" class="btn primary mt-2" disabled={!canRegister() || isRegistering()} onClick={register}>登録する</button>
     </form>
   );
 };

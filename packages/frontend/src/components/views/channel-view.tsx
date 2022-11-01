@@ -1,6 +1,8 @@
 import { Component, createEffect, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
 
 import { api } from "../../api";
+import { useEvent } from "../../hooks/use-event";
+import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
 import { $t } from "../../text";
 import { PostComposerView } from "./post-composer-view";
 import { PostView } from "./post-view";
@@ -28,6 +30,16 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   }, {
     threshold: 1.0
   });
+
+  const onDeletePost = (e: HitorisskeyEvent<'postDelete'>) => {
+    mutate(posts => posts?.filter(p => p.id !== e.detail.id));
+  };
+
+  const onUpdatePost = (e: HitorisskeyEvent<'postUpdate'>) => {
+  };
+
+  useEvent('postUpdate', onUpdatePost);
+  useEvent('postDelete', onDeletePost);
 
   onMount(() => {
     if (!paginationTriggerRef) return;

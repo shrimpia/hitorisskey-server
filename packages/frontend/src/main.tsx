@@ -19,6 +19,7 @@ import routes from '~solid-pages';
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './global.scss';
+import { useWindowEvent } from './hooks/use-event';
 
 const GlobalStyle = createGlobalStyles`
   html {
@@ -66,14 +67,8 @@ const Inner = () => {
     updateMobile();
   };
 
-  onMount(() => {
-    window.addEventListener('resize', onResize);
-  });
+  useWindowEvent('resize', onResize);
 
-  onCleanup(() => {
-    window.removeEventListener('resize', onResize);
-  });
-  
   useTheme();
 
   return (

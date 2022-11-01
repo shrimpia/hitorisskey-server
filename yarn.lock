@@ -421,6 +421,11 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
+"@mizdra/strictly-typed-event-target@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@mizdra/strictly-typed-event-target/-/strictly-typed-event-target-2.0.0.tgz#e30daa2bfe2b15e85b0ae68c0106249cb3c8c01b"
+  integrity sha512-HpAbTU9GS40bJg46//4TeBnO2Wda4KNs0HJVp3ueULdNFyZq2cLMoQdn2I2UyCE67gKs61TIeuwzxZ1ahfCjJQ==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"

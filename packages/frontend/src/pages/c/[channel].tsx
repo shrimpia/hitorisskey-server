@@ -1,4 +1,4 @@
-import { useParams } from "solid-app-router";
+import { useParams } from "@solidjs/router";
 import { Component, createEffect, createMemo } from "solid-js";
 
 import { ChannelView } from "../../components/views/channel-view";
@@ -9,9 +9,7 @@ import { $t } from "../../text";
 const Channel: Component = () => {
   const param = useParams();
 
-  createEffect(() => {
-    updateClientState({ title: ($t.$channels as Record<string, string>)[param.channel] ?? param.channel });
-  });
+  useTitle(() => ($t.$channels as Record<string, string>)[param.channel] ?? param.channel);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { Link } from "solid-app-router";
+import { Link } from "@solidjs/router";
 import { Component, createEffect, createMemo, For, Match, Show, Switch } from "solid-js";
 import { styled } from "solid-styled-components";
 import { clientState, TitleObject } from "../../store/client";

@@ -14,8 +14,6 @@ export type PostProp = {
 
 export const PostView: Component<PostProp> = (p) => {
   const [isVisibleReactionPicker, setVisibleReactionPicker] = createSignal(false);
-  let reactionButtonRef: HTMLElement | undefined = undefined;
-
   const [reactionViewLocation, setReactionViewLocation] = createSignal([0, 0]);
 
   const body = () => <FormattedTextView children={p.post.content}/>;
@@ -51,18 +49,14 @@ export const PostView: Component<PostProp> = (p) => {
   }; 
 
   const onClickReact = (e: MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setReactionViewLocation([rect.left, rect.bottom + 8]);
     setVisibleReactionPicker(true);
   };
 
   const onClickMore = (e: MouseEvent) => {
     openMenu(menu(), e.currentTarget as HTMLElement);
   };
-
-  onMount(() => {
-    if (!reactionButtonRef) return;
-    const rect = reactionButtonRef.getBoundingClientRect();
-    setReactionViewLocation([rect.left, rect.bottom + 8]);
-  });
 
   return (
     <div class="card hs-post">
@@ -74,7 +68,7 @@ export const PostView: Component<PostProp> = (p) => {
           </details>
         </Show>
         <div class="hstack mt-2">
-          <button ref={reactionButtonRef} class="btn flat" onClick={onClickReact}>
+          <button class="btn flat" onClick={onClickReact}>
             <i class="far fa-face-smile"></i>
           </button>
           <button class="btn flat" onClick={onClickMore}>

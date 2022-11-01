@@ -1,4 +1,4 @@
-import { NavLink } from "solid-app-router";
+import { NavLink } from "@solidjs/router";
 import { Component, Show } from "solid-js";
 import { styled } from "solid-styled-components";
 import { IS_DEVELOPMENT } from "../../global-const";

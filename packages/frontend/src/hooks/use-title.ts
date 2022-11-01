@@ -1,8 +1,8 @@
-import { createEffect, onCleanup, onMount } from "solid-js";
+import { Accessor, createEffect } from "solid-js";
 import { TitleProp, updateClientState } from "../store/client";
 
-export const useTitle = (title: TitleProp) => {
+export const useTitle = (title: TitleProp | Accessor<TitleProp>) => {
   createEffect(() => {
-    updateClientState({ title });
+    updateClientState({ title: typeof title === 'function' ? title() : title });
   });
 };

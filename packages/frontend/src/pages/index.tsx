@@ -1,11 +1,12 @@
-import { useNavigate } from "solid-app-router";
 import { Component, createEffect, createSignal, Match, Show, Switch } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+
 import { api } from "../api";
 import { session, setSession } from "../store/session";
 import { clientState } from "../store/client";
+import { $t } from "../text";
 
 import './index.scss';
-import { $t } from "../text";
 
 type WelcomeState = 'initial' | 'createNew' | 'loginForm';
 

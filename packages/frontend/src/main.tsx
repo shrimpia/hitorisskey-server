@@ -1,7 +1,7 @@
 import { createEffect, onCleanup, onMount } from 'solid-js';
 import { createGlobalStyles } from 'solid-styled-components';
 import { render, Show } from 'solid-js/web';
-import { Router, useLocation, useNavigate, useRoutes } from 'solid-app-router';
+import { Router, useLocation, useNavigate, useRoutes } from '@solidjs/router';
 
 import { MainLayout } from './components/layouts/main';
 import { refetchUser, session } from './store/session';
@@ -9,17 +9,16 @@ import { getAppRef } from './misc/ref';
 import { PopupView } from './components/views/popup-view';
 import { closeMenu, popupMenuState } from './store/popup-menu';
 import { MenuView } from './components/views/menu-view';
+import { clientState, updateMobile } from './store/client';
+import { useTheme } from './hooks/use-theme';
+import { app } from './store/app';
+import { LoadingView } from './components/views/primitives/loading-view';
 
 import routes from '~solid-pages';
 
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './global.scss';
-import { clientState, updateClientState, updateMobile } from './store/client';
-import { useTheme } from './hooks/use-theme';
-import { app } from './store/app';
-import { LoadingView } from './components/views/primitives/loading-view';
-
 
 const GlobalStyle = createGlobalStyles`
   html {

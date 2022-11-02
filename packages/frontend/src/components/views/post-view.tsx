@@ -48,7 +48,7 @@ export const PostView: Component<PostProp> = (p) => {
         label: $t.$postView.report,
         iconClass: 'fas fa-exclamation-circle fa-fw',
         onClick() {
-          alert('wip');
+          alert('開発中');
         },
       }]
     })
@@ -63,6 +63,10 @@ export const PostView: Component<PostProp> = (p) => {
 
   const onClickMore = (e: MouseEvent) => {
     openMenu(menu(), e.currentTarget as HTMLElement);
+  };
+
+  const onChooseEmoji = (emoji: string) => {
+    
   };
 
   return (
@@ -88,10 +92,7 @@ export const PostView: Component<PostProp> = (p) => {
         y={reactionViewLocation()[1]}
         show={isVisibleReactionPicker()}
         onClose={() => setVisibleReactionPicker(false)}
-        onChoose={(e) => {
-          setVisibleReactionPicker(false);
-          console.log(e);
-        }}
+        onChoose={onChooseEmoji}
         />
     </div>
   );

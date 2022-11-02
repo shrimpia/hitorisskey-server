@@ -34,15 +34,17 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
             {$t.$channels.private}
           </NavLink>
           <NavLink href="/c/realtime" end class="item" activeClass="active">
-            <span class="icon i fas fa-comment-dots fa-fw"></span>
+            <span class="icon i fas fa-tower-broadcast fa-fw"></span>
             {$t.$channels.realtime}
           </NavLink>
         </section>
-        <section>
+        {/* <section>
           <NavLink href="/bottle-mail" class="item" activeClass="active">
             <span class="icon i fas fa-envelope fa-fw"></span>
             {$t.bottleMail}
           </NavLink>
+        </section> */}
+        <section>
           <NavLink href="/announcements" class="item" activeClass="active">
             <span class="icon i fas fa-bell fa-fw"></span>
             {$t.announcements}
@@ -53,8 +55,6 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
               Debug
             </NavLink>
           </Show>
-        </section>
-        <section>
           <NavLink href="/about" class="item" activeClass="active">
             <span class="icon i fas fa-info-circle fa-fw"></span>
             {$t.about}

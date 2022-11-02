@@ -1,4 +1,4 @@
-import { createEffect, onCleanup, onMount } from 'solid-js';
+import { createEffect, ErrorBoundary } from 'solid-js';
 import { createGlobalStyles } from 'solid-styled-components';
 import { render, Show } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from '@solidjs/router';
@@ -71,12 +71,24 @@ const Inner = () => {
 
   useTheme();
 
+  const _Routes = () => (
+    <ErrorBoundary fallback={(e: Error, reset) => (
+      <>
+        <h2>エラーが発生しました。</h2>
+        <p>技術情報: <b>{e.name}</b> ({e.message})</p>
+        <button class="btn primary" onClick={reset}>再読み込み</button>
+      </>
+    )}>
+      <Routes />
+    </ErrorBoundary>
+  );
+
   return (
     <Show when={app.meta} fallback={<LoadingView />}>
       <GlobalStyle fontSize={clientState.fontSize} accentColor={clientState.accentColor} />
-      <Show when={location.pathname !== '/'} fallback={<Routes />}>
+      <Show when={location.pathname !== '/'} fallback={<_Routes />}>
         <MainLayout>
-          <Routes />
+          <_Routes />
         </MainLayout>
       </Show>
       <PopupView show={popupMenuState.show} x={popupMenuState.x} y={popupMenuState.y} onClose={() => closeMenu()}>

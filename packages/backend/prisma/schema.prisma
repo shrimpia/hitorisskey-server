@@ -8,16 +8,25 @@ datasource db {
 }
 
 model User {
-  id             String     @id
-  created_at     DateTime   @default(now()) @db.Timestamp()
-  token          String     @unique
-  email          String?
-  hashedPassword String?
-  sent_mails     Mail[]     @relation("sent")
-  received_mails Mail[]     @relation("received")
-  posts          Post[]
-  reactions      Reaction[]
-  reports        Report[]
+  id              String     @id
+  created_at      DateTime   @default(now()) @db.Timestamp()
+  token           String     @unique
+  email           String?
+  hashed_password String?
+  role            Role       @default(User)
+  is_banned       Boolean    @default(false)
+  is_silenced     Boolean    @default(false)
+  sent_mails      Mail[]     @relation("sent")
+  received_mails  Mail[]     @relation("received")
+  posts           Post[]
+  reactions       Reaction[]
+  reports         Report[]
+}
+
+enum Role {
+  User
+  Moderator
+  Admin
 }
 
 model Post {
@@ -67,8 +76,8 @@ model Reaction {
 }
 
 model CustomChannel {
-  name String @id
-  created_at DateTime @default(now()) @db.Timestamp()
+  name         String   @id
+  created_at   DateTime @default(now()) @db.Timestamp()
   display_name String
-  description String
+  description  String
 }

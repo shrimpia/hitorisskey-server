@@ -51,7 +51,10 @@ export const ReactionPickerView: Component<ReactionPickerViewProp> = (p) => {
       <div class="pa-1 text-dimmed">絵文字を選択してください。</div>
       <ButtonGrid class="pa-1">
         <For each={emojis} children={e => (
-          <EmojiButton class="btn flat pa-0 text-150" onClick={() => p.onChoose(e)}>
+          <EmojiButton class="btn flat pa-0 text-150" onClick={() => {
+            p.onChoose(e);
+            p.onClose();
+          }}>
             <EmojiView emoji={e} />
           </EmojiButton>
         )} />

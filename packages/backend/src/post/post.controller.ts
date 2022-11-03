@@ -7,6 +7,8 @@ import PostService from "@/post/post.service.js";
 import { HitorisskeyError } from "@/error.js";
 import { createPostParam, CreatePostParam } from "@/post/models/create-post-param.js";
 import { paginationQuery, PaginationQuery } from "./models/pagination-query.js";
+import { addReactionParam, AddReactionParam } from "./models/add-reaction-param.js";
+import { PostWithReactions } from "./models/post-with-reactions.js";
 
 @Controller('/post')
 export default class PostController extends ControllerBase {
@@ -65,12 +67,33 @@ export default class PostController extends ControllerBase {
     };
   }
 
-  private filter(post: Post, user?: User | null) {
+  @POST('/:id/reactions')
+  async addReactionAsync(req: FastifyRequest<{Params: {id: string}, Body: AddReactionParam}>) {
+    if (!addReactionParam.safeParse(req.body).success) throw new HitorisskeyError('MISSING_PARAMS');
+    const session = await this.getSessionUserAsync(req, true);
+
+    await PostService.addReactionAsync(session, req.params.id, req.body.emoji);
+    return this.filter(await PostService.getPostAsync(req.params.id, session), session);
+  }
+
+  @DELETE('/:id/reactions')
+  async removeReactionAsync(req: FastifyRequest<{Params: {id: string}}>) {
+    const session = await this.getSessionUserAsync(req, true);
+
+    await PostService.removeReactionAsync(session, req.params.id);
+    return this.filter(await PostService.getPostAsync(req.params.id, session), session);
+  }
+
+  private filter(post: PostWithReactions, user?: User | null) {
     return {
       id: post.id,
       channel: post.channel,
       content: post.content,
       annotation: post.annotation,
+      reactions: post.reactions.map(r => ({
+        emoji: r.emoji,
+        isMine: user != null && user.id === r.author_id,
+      })),
       isMine: user != null && user.id === post.author_id,
     };
   }

@@ -1,10 +1,11 @@
-import { Post, User } from "@prisma/client";
+import { Post, Reaction, User } from "@prisma/client";
 import { ulid } from "ulid";
 import dayjs from "dayjs";
 
 import prisma from "@/prisma.js";
 import { HitorisskeyError } from "@/error.js";
 import { CreatePostParam } from "./models/create-post-param.js";
+import { PostWithReactions } from "./models/post-with-reactions.js";
 
 export default class PostService {
   /**
@@ -14,8 +15,13 @@ export default class PostService {
    * @param {User | null} user - つぶやきを取得するユーザー
    * @return {Promise<Post>} 投稿
    */
-  static async getPostAsync(postId: string, user: User | null): Promise<Post> {
-    const post = await prisma.post.findUnique({where: {id: postId}});
+  static async getPostAsync(postId: string, user: User | null): Promise<PostWithReactions> {
+    const post = await prisma.post.findUnique({
+      where: {id: postId},
+      include: {
+        reactions: true,
+      }
+    });
     if (!post) throw new HitorisskeyError('NOT_FOUND');
 
     if (post.channel === this.BUILTIN_CHANNELS.private) {
@@ -32,11 +38,14 @@ export default class PostService {
    * @param {number} limit - 取得数。
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getPrivateChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<Post[]> {
+  static async getPrivateChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
     return prisma.post.findMany({
       where: {
         channel: 'private',
-        author_id: user.id,
+        author_id: user.id
+      },
+      include: {
+        reactions: true,
       },
       orderBy: { created_at: 'desc' },
       cursor: cursor ? {id: cursor} : undefined,
@@ -50,9 +59,12 @@ export default class PostService {
    * @param {User} user - 投稿を取得するユーザー
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getPublicChannelPostsAsync(user: User): Promise<Post[]> {
+  static async getPublicChannelPostsAsync(user: User): Promise<PostWithReactions[]> {
     const fetchedPosts = await prisma.post.findMany({
       where: { channel: 'public' },
+      include: {
+        reactions: true,
+      },
       orderBy: { created_at: 'desc' },
       take: 100,
     });
@@ -67,7 +79,7 @@ export default class PostService {
    * @param {number} limit - 取得数。
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<Post[]> {
+  static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
     // TODO 24時間以内に留める
     const b24h = dayjs().subtract(24, 'h').toDate();
     return prisma.post.findMany({
@@ -77,6 +89,9 @@ export default class PostService {
           gte: b24h,
         },
       },
+      include: {
+        reactions: true,
+      },
       orderBy: { created_at: 'desc' },
       cursor: cursor ? {id: cursor} : undefined,
       skip: cursor ? 1 : 0,
@@ -84,7 +99,7 @@ export default class PostService {
     });
   }
 
-  static async createPostAsync(user: User, post: CreatePostParam): Promise<Post> {
+  static async createPostAsync(user: User, post: CreatePostParam): Promise<PostWithReactions> {
     const channels: string[] = Object.values(this.BUILTIN_CHANNELS);
     // カスタムチャンネルの一覧も流し込む
     channels.push(...(await prisma.customChannel.findMany({
@@ -104,6 +119,9 @@ export default class PostService {
         channel: post.channel,
         content: post.content,
         annotation: post.annotation,
+      },
+      include: {
+        reactions: true,
       }
     });
   }
@@ -114,6 +132,47 @@ export default class PostService {
 
     await prisma.post.delete({
       where: {id: postId}
+    });
+  }
+
+  static async getReactionByUserAsync(user: User, id: string): Promise<Reaction> {
+    const reaction = await prisma.reaction.findFirst({
+      where: {
+        author_id: user.id,
+        post_id: id,
+      },
+    });
+    if (!reaction) throw new HitorisskeyError('NOT_FOUND');
+
+    return reaction;
+  }
+
+  static async addReactionAsync(user: User, id: string, emoji: string): Promise<void> {
+    const reactionCount = await prisma.reaction.count({
+      where: {
+        author_id: user.id,
+        post_id: id,
+      },
+    });
+    if (reactionCount > 0) {
+      await this.removeReactionAsync(user, id);
+    }
+    await prisma.reaction.create({
+      data: {
+        id: ulid(),
+        emoji,
+        author_id: user.id,
+        post_id: id,
+      },
+    });
+  }
+
+  static async removeReactionAsync(user: User, id: string): Promise<void> {
+    const reaction = await this.getReactionByUserAsync(user, id);
+    await prisma.reaction.deleteMany({
+      where: {
+        id: reaction.id,
+      },
     });
   }
 

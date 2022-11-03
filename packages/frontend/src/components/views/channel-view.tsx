@@ -36,6 +36,8 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   };
 
   const onUpdatePost = (e: HitorisskeyEvent<'postUpdate'>) => {
+    const {id, diff} = e.detail;
+    mutate(posts => posts?.map(p => p.id !== id ? p : {...p, ...diff}));
   };
 
   useEvent('postUpdate', onUpdatePost);

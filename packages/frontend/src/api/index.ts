@@ -64,14 +64,33 @@ export const api = {
 
     /**
      * つぶやきを作成します。
-     * @param args - つぶやき。
+     * @param {CreatePostParam} args - つぶやき。
      */
     createAsync: (args: CreatePostParam) => $post<Post>('post', args),
 
     /**
      * 指定したつぶやきを削除します。
-     * @param id - つぶやき ID。
+     * @param {string} id - つぶやき ID。
      */
     deleteAsync: (id: string) => $delete<Post>(`post/${id}`),
+
+    /**
+     * リアクション API。
+     */
+    reactions: {
+      /**
+       * リアクションを追加します。
+       * @param {string} postId - つぶやき ID。
+       * @param {string} emoji - リアクション絵文字。
+       */
+      addAsync: (postId: string, emoji: string) => $post<Post>(`post/${postId}/reactions`, {
+        emoji,
+      }),
+      /**
+       * リアクションを削除します。
+       * @param {string} postId - つぶやき ID。
+       */
+      removeAsync: (postId: string) => $delete<Post>(`post/${postId}/reactions`),
+    },
   },
 };

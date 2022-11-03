@@ -1,16 +1,24 @@
-import { Component, createEffect, createMemo, createSignal, onMount, Show } from "solid-js";
+import { Component, createEffect, createMemo, createSignal, For, onMount, Show } from "solid-js";
+import { styled } from "solid-styled-components";
 
 import { api } from "../../api";
 import { Post } from "../../api/models/post";
+import { Reaction } from "../../api/models/Reaction";
+import { useEvent } from "../../hooks/use-event";
 import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
 import { MenuDefinition } from "../../misc/menu-definition";
 import { openMenu } from "../../store/popup-menu";
 import { $t } from "../../text";
+import { EmojiView } from "./primitives/emoji-view";
 import { FormattedTextView } from "./primitives/formatted-text-view";
 import { ReactionPickerView } from "./reaction-picker-view";
 
 export type PostProp = {
   post: Post;
+};
+
+type GroupedReaction = Reaction & {
+  count: number;
 };
 
 export const PostView: Component<PostProp> = (p) => {
@@ -53,7 +61,32 @@ export const PostView: Component<PostProp> = (p) => {
       }]
     })
     return m;
-  }; 
+  };
+
+  const reactions = createMemo(() => p.post.reactions.reduce((prev, current) => {
+    const group = prev.find(g => g.emoji === current.emoji);
+    if (group) {
+      group.count++;
+      if (current.isMine) group.isMine = true;
+    } else {
+      prev.push({
+        ...(current),
+        count: 1,
+      });
+    }
+    return prev;
+  }, [] as GroupedReaction[]));
+
+  const emitPostReactionsUpdate = (post: Post) => {
+    hitorisskeyEventTarget.dispatchEvent(new HitorisskeyEvent('postUpdate', {
+      detail: {
+        id: post.id,
+        diff: {
+          reactions: post.reactions,
+        },
+      },
+    }));
+  }
 
   const onClickReact = (e: MouseEvent) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -66,19 +99,36 @@ export const PostView: Component<PostProp> = (p) => {
   };
 
   const onChooseEmoji = (emoji: string) => {
-    
+    api.post.reactions.addAsync(p.post.id, emoji).then(emitPostReactionsUpdate);
+  };
+
+  const onClickReactionButton = (reaction: GroupedReaction) => {
+    if (reaction.isMine) {
+      api.post.reactions.removeAsync(p.post.id).then(emitPostReactionsUpdate);
+    } else {
+      api.post.reactions.addAsync(p.post.id, reaction.emoji).then(emitPostReactionsUpdate);
+    }
   };
 
   return (
     <div class="card hs-post">
-      <div class="body">
+      <div class="body vstack">
         <Show when={p.post.annotation} fallback={body()}>
           <details>
             <summary><FormattedTextView inline children={p.post.annotation} /></summary>
             {body()}
           </details>
         </Show>
-        <div class="hstack mt-2">
+        <Show when={p.post.reactions.length > 0}>
+          <div class="hstack slim">
+            <For each={reactions()} children={r => (
+              <button class="btn pa-1" classList={{primary: r.isMine}} onClick={() => onClickReactionButton(r)}>
+                <EmojiView emoji={r.emoji} /> {r.count}
+              </button>
+            )} />
+          </div>
+        </Show>
+        <div class="hstack">
           <button class="btn flat" onClick={onClickReact}>
             <i class="far fa-face-smile"></i>
           </button>

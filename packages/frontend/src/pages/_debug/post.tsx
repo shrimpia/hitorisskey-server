@@ -15,6 +15,7 @@ const DebugNote: Component = () => {
     channel: 'public',
     annotation: null,
     isMine: false,
+    reactions: [],
   };
 
   return (

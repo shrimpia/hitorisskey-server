@@ -71,6 +71,7 @@ const SettingsDisplay: Component = () => {
         </div>
       </div>
       <button class="btn primary ml-auto" onClick={() => {
+        if (!confirm('この操作を行うと、設定したテーマが失われます。本当に続行しますか？')) return;
         updateClientState({
           fontSize: 16,
           accentColor: 'green',

@@ -25,6 +25,22 @@ export const PostView: Component<PostProp> = (p) => {
   const [isVisibleReactionPicker, setVisibleReactionPicker] = createSignal(false);
   const [reactionViewLocation, setReactionViewLocation] = createSignal([0, 0]);
 
+  const ReactionView = styled.button<{active: boolean}>`
+    border-radius: var(--radius);
+    color: ${p => p.active ? 'var(--hs-reaction-fg-active)' : 'var(--hs-reaction-fg)'};
+    padding: 6px 8px;
+    background: ${p => p.active ? 'var(--hs-reaction-bg-active)' : 'var(--hs-reaction-bg)'};
+    ${p => p.active ? `
+    > img {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    ` : ''}
+
+    &:hover {
+      background: ${p => p.active ? 'var(--hs-reaction-bg-active-hover)' : 'var(--hs-reaction-bg-hover)'};
+    }
+  `;
+
   const body = () => <FormattedTextView children={p.post.content}/>;
 
   const menu = () => {
@@ -122,9 +138,9 @@ export const PostView: Component<PostProp> = (p) => {
         <Show when={p.post.reactions.length > 0}>
           <div class="hstack slim">
             <For each={reactions()} children={r => (
-              <button class="btn pa-1" classList={{primary: r.isMine}} onClick={() => onClickReactionButton(r)}>
+              <ReactionView class="clickable" active={r.isMine} onClick={() => onClickReactionButton(r)}>
                 <EmojiView emoji={r.emoji} /> {r.count}
-              </button>
+              </ReactionView>
             )} />
           </div>
         </Show>

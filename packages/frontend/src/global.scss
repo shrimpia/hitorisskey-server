@@ -3,4 +3,19 @@ html {
 }
 body {
   font-family: "Koruri", sans-serif;
+  --hs-reaction-bg: var(--gray-2);
+  --hs-reaction-fg: var(--black);
+  --hs-reaction-bg-active: var(--primary-4);
+  --hs-reaction-fg-active: var(--primary-fg);
+  --hs-reaction-bg-hover: var(--gray-3);
+  --hs-reaction-bg-active-hover: var(--primary-5);
+
+  &.dark {
+    --hs-reaction-bg: var(--gray-18);
+    --hs-reaction-fg: var(--white);
+    --hs-reaction-bg-active: var(--primary-8);
+    --hs-reaction-fg-active: var(--primary-fg);
+    --hs-reaction-bg-hover: var(--gray-16);
+    --hs-reaction-bg-active-hover: var(--primary-6);
+  }
 }

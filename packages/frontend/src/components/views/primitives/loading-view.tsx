@@ -54,13 +54,13 @@ export const LoadingView: Component<LoadingViewProp> = (p) => {
   `;
 
   const Part1 = styled(Base)`
-    animation: ${() => scaleOut} ${() => DURATION}s infinite ease-out;
+    animation: ${scaleOut} ${DURATION.toString()}s infinite ease-out;
   `;
   const Part2 = styled(Base)`
-    animation: ${() => scaleOut} ${() => DURATION}s infinite ease-out calc(${() => DELAY}s * 2);
+    animation: ${scaleOut} ${DURATION.toString()}s infinite ease-out calc(${() => DELAY}s * 2);
   `;
   const Part3 = styled(Base)`
-    animation: ${() => scaleOut} ${() => DURATION}s infinite ease-out calc(${() => DELAY}s * 4);
+    animation: ${scaleOut} ${DURATION.toString()}s infinite ease-out calc(${() => DELAY}s * 4);
   `;
 
 return (

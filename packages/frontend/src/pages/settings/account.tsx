@@ -21,20 +21,23 @@ const SettingsAccount: Component = () => {
       <Show when={!isRequiredEmailPassword()}>
         <div class="card pa-2">
           <h2>メール設定</h2>
-          <p>メールアドレスは既に登録されています。</p>
+          <p class="text-dimmed mb-1">メールアドレスは既に登録されています。</p>
           <label class="input-field">
             メールアドレス
-            <input type="email" readOnly value={session.user?.email ?? ''} />
+            <input type="email" disabled value={session.user?.email ?? ''} />
           </label>
+          <div class="alert mt-2 bg-info">
+            メールアドレスおよびパスワードの再設定機能は、現在開発中です。
+          </div>
         </div>
       </Show>
-      <div class="card pa-2">
+      {/* <div class="card pa-2">
         <h2>二要素認証</h2>
         <div class="alert bg-danger">
           <i class="icon fas fa-exclamation-circle"></i>
           メールアドレスとパスワードを認証していないため、二要素認証を設定できません。
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

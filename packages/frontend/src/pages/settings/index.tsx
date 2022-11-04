@@ -36,13 +36,13 @@ const Settings: Component = () => {
           <p class="desc">{$t.$settings.accountDescription}</p>
         </div>
       </Link>
-      <Link class="item" href="/settings/privacy">
+      {/* <Link class="item" href="/settings/privacy">
         <i class="icon fas fa-lock" />
         <div class="body">
           <h1>{$t.$settings.privacy}</h1>
           <p class="desc">{$t.$settings.privacyDescription}</p>
         </div>
-      </Link>
+      </Link> */}
       <button class="item" disabled={session.user?.email === null} onClick={logout}>
         <i class="icon fas fa-right-from-bracket" />
         <div class="body">

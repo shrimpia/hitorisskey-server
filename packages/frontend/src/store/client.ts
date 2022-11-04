@@ -37,6 +37,7 @@ const [clientState, updateClientState] = createStore({
   theme: (localStorage.getItem('theme') ?? 'system') as ThemeProp,
   accentColor: (localStorage.getItem('accentColor') ?? 'green') as DesignSystemColor,
   fontSize: Number(localStorage.getItem('fontSize') ?? '16'),
+	isDebugMode: Boolean(localStorage.getItem('debug')),
 });
 
 export const updateMobile = () => {

@@ -38,6 +38,10 @@ const SettingsDisplay: Component = () => {
 
   return (
     <div class="vstack">
+      <div class="alert bg-primary">
+        <i class="icon fas fa-info-circle" />
+        これらの設定は端末に保存されます。
+      </div>
       <div class="card">
         <div class="body vstack">
           <h1>{$t.$settings.$display.theme}</h1>

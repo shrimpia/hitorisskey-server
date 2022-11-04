@@ -56,7 +56,7 @@ export const $t = {
     display: '表示設定',
     displayDescription: 'テーマ、アクセントカラー、…',
     account: 'アカウント設定',
-    accountDescription: 'メールアドレス、二要素認証',
+    accountDescription: 'メールアドレスとパスワードの登録',
     privacy: 'プライバシー設定',
     privacyDescription: 'ワードミュート',
     logout: 'ログアウト',

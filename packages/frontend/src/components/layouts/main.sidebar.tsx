@@ -1,8 +1,8 @@
 import { NavLink } from "@solidjs/router";
 import { Component, Show } from "solid-js";
 import { styled } from "solid-styled-components";
-import { IS_DEVELOPMENT } from "../../global-const";
 import { app } from "../../store/app";
+import { clientState } from "../../store/client";
 import { $t } from "../../text";
 
 export type MainLayoutSidebarProp = {
@@ -49,7 +49,7 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
             <span class="icon i fas fa-bell fa-fw"></span>
             {$t.$channels.announce}
           </NavLink>
-          <Show when={IS_DEVELOPMENT}>
+          <Show when={clientState.isDebugMode}>
             <NavLink href="/_debug" class="item" activeClass="active">
               <span class="icon i fas fa-wand-sparkles fa-fw"></span>
               Debug

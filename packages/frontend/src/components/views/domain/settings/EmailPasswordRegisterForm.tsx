@@ -13,7 +13,6 @@ export const EmailPasswordRegisterForm: Component = () => {
   const [passwordConfimation, setPasswordConfimation] = createSignal('');
   const [isRegistering, setRegistering] = createSignal(false);
 
-
   const [passwordErrorMessage, setPasswordErrorMessage] = createSignal<string | null>(null);
   const [passwordConfirmationErrorMessage, setPasswordConfirmationErrorMessage] = createSignal<string | null>(null);
   

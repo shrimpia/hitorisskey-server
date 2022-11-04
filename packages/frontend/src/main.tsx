@@ -21,9 +21,12 @@ import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 const GlobalStyle = createGlobalStyles`
+  html {
+    font-size: ${props => props.fontSize}px;
+  }
+
   body {
     font-family: "Koruri", sans-serif;
-
     --primary: var(--${props => props.accentColor});
     --primary-1: var(--${props => props.accentColor}-1);
     --primary-2: var(--${props => props.accentColor}-2);

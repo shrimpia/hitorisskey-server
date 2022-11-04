@@ -72,7 +72,7 @@ model Reaction {
   post_id    String
   emoji      String
   author     User     @relation(fields: [author_id], references: [id])
-  post       Post     @relation(fields: [post_id], references: [id])
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
 }
 
 model CustomChannel {
@@ -80,4 +80,9 @@ model CustomChannel {
   created_at   DateTime @default(now()) @db.Timestamp()
   display_name String
   description  String
+}
+
+model Invitation {
+  code    String  @id
+  is_used Boolean @default(false)
 }

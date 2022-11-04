@@ -18,10 +18,12 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
 
   return (
     <>
-      <SidebarTitle>{$t.hitorisskey}</SidebarTitle>
-      <Show when={app.meta?.isClosedBeta}>
-        <aside class="text-75 text-dimmed text-right">(Closed BETA)</aside>
-      </Show>
+      <SidebarTitle>
+        {$t.hitorisskey}
+        <Show when={app.meta?.isClosedBeta}>
+          <span class="text-100 ml-1 text-dimmed">(β)</span>
+        </Show>
+      </SidebarTitle>
       <div class="menu large mt-2">
         <section>
           <h1>{$t.channels}</h1>

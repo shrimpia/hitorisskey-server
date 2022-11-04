@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, Match, Switch } from "solid-js";
+import { Component, createEffect, createSignal, Match, Show, Switch } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 
 import { api } from "../api";
@@ -6,6 +6,7 @@ import { session, setSession } from "../store/session";
 import { clientState } from "../store/client";
 import { $t } from "../text";
 import { styled } from "solid-styled-components";
+import { app } from "../store/app";
 
 type WelcomeState = 'initial' | 'createNew' | 'loginForm';
 
@@ -55,7 +56,12 @@ const Index: Component = () => {
   return (
     <Root>
       <Inner class="pa-2">
-        <h1>{$t.hitorisskey}</h1>
+        <h1>
+          {$t.hitorisskey}
+          <Show when={app.meta?.isClosedBeta}>
+            <span class="text-dimmed ml-1 text-125">(β)</span>
+          </Show>
+        </h1>
         <p class="text-dimmed mb-5">{$t.$welcome.subTitle}</p>
         <Switch>
           <Match when={state() === 'initial'}>

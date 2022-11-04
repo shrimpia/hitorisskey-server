@@ -14,8 +14,9 @@ export type ChannelViewProp = {
 };
 
 export const ChannelView: Component<ChannelViewProp> = (p) => {
-  const [posts, {mutate}] = createResource(() => p.channel, ch => api.post.readChannelPostsAsync(ch));
+  const [posts, {mutate, refetch}] = createResource(() => p.channel, ch => api.post.readChannelPostsAsync(ch));
   const [isPageLoading, setPageLoading] = createSignal(false);
+  const [refetchTimer, setRefetchTimer] = createSignal(0);
   const [cursor, setCursor] = createSignal<string | undefined>(undefined);
   let paginationTriggerRef: HTMLDivElement | undefined = undefined;
 
@@ -39,6 +40,16 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   const onUpdatePost = (e: HitorisskeyEvent<'postUpdate'>) => {
     const {id, diff} = e.detail;
     mutate(posts => posts?.map(p => p.id !== id ? p : {...p, ...diff}));
+  };
+
+  const onClickRefetchButton = async () => {
+    const res = refetch();
+    if (res && !Array.isArray(res)) await res;
+    setRefetchTimer(5);
+    while (refetchTimer() > 0) {
+      await new Promise(res => setTimeout(res, 1000));
+      setRefetchTimer(p => p - 1);
+    }
   };
 
   const noSuchMessage = createMemo(() => p.channel === 'announce' ? $t.$channelView.noSuchAnnouncements : $t.$channelView.noSuchPosts);
@@ -65,6 +76,10 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   return (
     <>
       <div class="vstack slim">
+        <button class="btn link ml-auto" disabled={posts.loading || refetchTimer() > 0} onClick={onClickRefetchButton}>
+          <i class="fas fa-rotate fa-fw mr-1" />
+          {refetchTimer() > 0 ? refetchTimer() : '更新する'}
+        </button>
         <Suspense fallback={<LoadingView />}>
             <For each={posts()} children={item => (
               <PostView post={item} />

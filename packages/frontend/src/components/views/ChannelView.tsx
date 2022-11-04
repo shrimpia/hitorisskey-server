@@ -5,9 +5,9 @@ import { useEvent } from "../../hooks/use-event";
 import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
 import { session } from "../../store/session";
 import { $t } from "../../text";
-import { PostComposerView } from "./post-composer-view";
-import { PostView } from "./post-view";
-import { LoadingView } from "./primitives/loading-view";
+import { PostComposerView } from "./PostComposerView";
+import { PostView } from "./PostView";
+import { LoadingView } from "./primitives/LoadingView";
 
 export type ChannelViewProp = {
   channel: string;

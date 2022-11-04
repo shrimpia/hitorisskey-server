@@ -11,16 +11,6 @@ export type PostComposerView = {
   onCreatePost?: (post: Post) => void;
 };
 
-const pcStyle = css`
-  max-width: 640px;
-  width: calc(100% - 48px);
-	z-index: 1000000;
-`;
-
-const Textarea = styled.textarea`
-  height: 7em;
-`;
-
 export const PostComposerView: Component<PostComposerView> = (p) => {
   const [isEnableCw, setEnableCw] = createSignal(false);
 	const [content, setContent] = createSignal('');
@@ -28,6 +18,16 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 	const lengthRemaining = createMemo(() => 1024 - content().length);
 	const canPost = createMemo(() => (!isEnableCw() || annotation().length > 0) && content().length > 0 && content().length <= 1024);
 	const [isProcessing, setProcessing] = createSignal(false);
+
+	const pcStyle = css`
+		max-width: 640px;
+		width: calc(100% - 48px);
+		z-index: 1000000;
+	`;
+	
+	const Textarea = styled.textarea`
+		height: 7em;
+	`;
 
 	const post = () => {
 		setProcessing(true);

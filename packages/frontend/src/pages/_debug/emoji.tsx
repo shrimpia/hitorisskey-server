@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 
-import { EmojiView } from "../../components/views/primitives/emoji-view";
+import { EmojiView } from "../../components/views/primitives/EmojiView";
 import { useTitle } from "../../hooks/use-title";
 
 const DebugLoading: Component = () => {

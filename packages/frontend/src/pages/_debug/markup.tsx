@@ -1,5 +1,5 @@
 import { Component, createMemo, createSignal } from "solid-js";
-import { FormattedTextView } from "../../components/views/primitives/formatted-text-view";
+import { FormattedTextView } from "../../components/views/primitives/FormattedTextView";
 
 import { model } from "../../directives/model";
 import { useTitle } from "../../hooks/use-title";

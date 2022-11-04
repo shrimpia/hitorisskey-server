@@ -3,16 +3,16 @@ import { createGlobalStyles } from 'solid-styled-components';
 import { render, Show } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from '@solidjs/router';
 
-import { MainLayout } from './components/layouts/main';
+import { MainLayout } from './components/layouts/MainLayout';
 import { refetchUser, session } from './store/session';
 import { getAppRef } from './misc/ref';
-import { PopupView } from './components/views/popup-view';
+import { PopupView } from './components/views/PopupView';
 import { closeMenu, popupMenuState } from './store/popup-menu';
-import { MenuView } from './components/views/menu-view';
+import { MenuView } from './components/views/MenuView';
 import { clientState, updateMobile } from './store/client';
 import { useTheme } from './hooks/use-theme';
 import { app } from './store/app';
-import { LoadingView } from './components/views/primitives/loading-view';
+import { LoadingView } from './components/views/primitives/LoadingView';
 
 import routes from '~solid-pages';
 

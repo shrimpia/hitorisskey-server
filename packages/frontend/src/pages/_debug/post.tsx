@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
 import { Post } from "../../api/models/post";
-import { PostView } from "../../components/views/post-view";
+import { PostView } from "../../components/views/PostView";
 import { useTitle } from "../../hooks/use-title";
 
 const DebugNote: Component = () => {

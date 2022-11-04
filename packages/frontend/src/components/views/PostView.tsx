@@ -10,9 +10,9 @@ import { MenuDefinition } from "../../misc/menu-definition";
 import { openMenu } from "../../store/popup-menu";
 import { session } from "../../store/session";
 import { $t } from "../../text";
-import { EmojiView } from "./primitives/emoji-view";
-import { FormattedTextView } from "./primitives/formatted-text-view";
-import { ReactionPickerView } from "./reaction-picker-view";
+import { EmojiView } from "./primitives/EmojiView";
+import { FormattedTextView } from "./primitives/FormattedTextView";
+import { ReactionPickerView } from "./ReactionPickerView";
 
 export type PostProp = {
   post: Post;

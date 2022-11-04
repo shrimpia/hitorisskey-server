@@ -1,6 +1,6 @@
 import { Component, createSignal, onMount, onCleanup, batch } from "solid-js";
 
-import { PopupView } from "../../components/views/popup-view";
+import { PopupView } from "../../components/views/PopupView";
 import { useTitle } from "../../hooks/use-title";
 
 const DebugPopup: Component = () => {

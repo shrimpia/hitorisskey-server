@@ -1,8 +1,8 @@
 import { Component, createMemo, For } from "solid-js";
 import { styled } from "solid-styled-components";
 
-import { PopupView } from "./popup-view";
-import { EmojiView } from "./primitives/emoji-view";
+import { PopupView } from "./PopupView";
+import { EmojiView } from "./primitives/EmojiView";
 
 export type ReactionPickerViewProp = {
   show: boolean;

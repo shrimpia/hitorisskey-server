@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { LoadingView } from "../../components/views/primitives/loading-view";
+import { LoadingView } from "../../components/views/primitives/LoadingView";
 import { useTitle } from "../../hooks/use-title";
 
 const DebugLoading: Component = () => {

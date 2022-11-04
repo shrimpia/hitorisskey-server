@@ -2,8 +2,8 @@ import { createSignal, ParentComponent, Show } from "solid-js";
 import { css, styled } from "solid-styled-components";
 import { clientState } from "../../store/client";
 
-import { MainLayoutSidebar } from "./main.sidebar";
-import { MainLayoutTitle } from "./main.title";
+import { MainLayoutSidebar } from "./MainLayoutSidebar";
+import { MainLayoutTitle } from "./MainLayoutTitle";
 
 export const MainLayout: ParentComponent = (p) => {
   const [isDrawerOpen, setDrawerOpen] = createSignal(false);

@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
-import { MenuView } from "../../components/views/menu-view";
+import { MenuView } from "../../components/views/MenuView";
 
-import { EmojiView } from "../../components/views/primitives/emoji-view";
+import { EmojiView } from "../../components/views/primitives/EmojiView";
 import { useTitle } from "../../hooks/use-title";
 import { MenuDefinition } from "../../misc/menu-definition";
 

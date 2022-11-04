@@ -1,8 +1,8 @@
 import { Component, createMemo, For, Match, Switch } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { parse } from "../../../misc/markup";
-import { EmojiView } from "./emoji-view";
-import { UrlView } from "./url-view";
+import { EmojiView } from "./EmojiView";
+import { UrlView } from "./UrlView";
 
 export type FormattedTextViewProp = {
   children: string | null;

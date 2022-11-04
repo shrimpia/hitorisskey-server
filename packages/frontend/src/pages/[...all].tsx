@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { styled } from "solid-styled-components";
 
 import { useTitle } from "../hooks/use-title";
-import { PostView } from "../components/views/post-view";
+import { PostView } from "../components/views/PostView";
 import { Post } from "../api/models/post";
 
 const NotFound: Component = () => {

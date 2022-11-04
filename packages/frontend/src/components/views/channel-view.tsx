@@ -62,10 +62,6 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
     setCursor(p[p.length - 1].id);
   });
 
-  createEffect(() => {
-    console.log(p.channel);
-  });
-  
   return (
     <>
       <div class="vstack slim">

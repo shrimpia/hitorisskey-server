@@ -20,7 +20,6 @@ export const EmailPasswordRegisterForm: Component = () => {
   const canRegister = createMemo(() => isNotEmptyAll(email(), password(), passwordConfimation()) && password().length >= 8 && password() === passwordConfimation());
 
   const validatePassword = () => {
-    console.log('validate password');
     if (!password()) {
       setPasswordErrorMessage('パスワードを入力してください。');
     } else if (password().length < 8) {

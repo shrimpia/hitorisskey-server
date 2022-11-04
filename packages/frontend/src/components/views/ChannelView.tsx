@@ -78,7 +78,7 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
       <div class="vstack slim">
         <button class="btn link ml-auto" disabled={posts.loading || refetchTimer() > 0} onClick={onClickRefetchButton}>
           <i class="fas fa-rotate fa-fw mr-1" />
-          {refetchTimer() > 0 ? refetchTimer() : '更新する'}
+          {refetchTimer() > 0 ? refetchTimer() : $t.reload}
         </button>
         <Suspense fallback={<LoadingView />}>
             <For each={posts()} children={item => (

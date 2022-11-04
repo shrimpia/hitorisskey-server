@@ -13,20 +13,17 @@ import { clientState, updateMobile } from './store/client';
 import { useTheme } from './hooks/use-theme';
 import { app } from './store/app';
 import { LoadingView } from './components/views/primitives/LoadingView';
+import { useWindowEvent } from './hooks/use-event';
 
 import routes from '~solid-pages';
 
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
-import './global.scss';
-import { useWindowEvent } from './hooks/use-event';
 
 const GlobalStyle = createGlobalStyles`
-  html {
-    font-size: ${props => props.fontSize}px;
-  }
-
   body {
+    font-family: "Koruri", sans-serif;
+
     --primary: var(--${props => props.accentColor});
     --primary-1: var(--${props => props.accentColor}-1);
     --primary-2: var(--${props => props.accentColor}-2);
@@ -38,6 +35,22 @@ const GlobalStyle = createGlobalStyles`
     --primary-8: var(--${props => props.accentColor}-8);
     --primary-9: var(--${props => props.accentColor}-9);
     --primary-10: var(--${props => props.accentColor}-10);
+
+    --hs-reaction-bg: var(--gray-2);
+    --hs-reaction-fg: var(--black);
+    --hs-reaction-bg-active: var(--primary-4);
+    --hs-reaction-fg-active: var(--primary-fg);
+    --hs-reaction-bg-hover: var(--gray-3);
+    --hs-reaction-bg-active-hover: var(--primary-5);
+
+    &.dark {
+      --hs-reaction-bg: var(--gray-18);
+      --hs-reaction-fg: var(--white);
+      --hs-reaction-bg-active: var(--primary-8);
+      --hs-reaction-fg-active: var(--primary-fg);
+      --hs-reaction-bg-hover: var(--gray-16);
+      --hs-reaction-bg-active-hover: var(--primary-6);
+    }
   }
 `;
 

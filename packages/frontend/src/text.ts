@@ -7,6 +7,9 @@ export const $t = {
   settings: '設定',
   email: 'メールアドレス',
   password: 'パスワード',
+  passwordConfirmation: 'パスワード（確認用）',
+  register: '登録する',
+  reload: '再読み込み',
   about: 'ひとりすきーについて',
   $welcome: {
     subTitle: 'なにかをつぶやきたい。けど、素性は知られたくない。',
@@ -63,6 +66,7 @@ export const $t = {
     logoutDisabled: 'アカウントにメールアドレスを登録していないため、ログアウトできません。',
     initialize: '初期値に戻す',
     $display: {
+      alertInfo: 'これらの設定は端末に保存されます。',
       theme: 'テーマ',
       $theme: {
         light: 'ライトテーマ',
@@ -70,7 +74,17 @@ export const $t = {
         system: 'システム設定に準ずる',
       },
       accentColor: 'アクセントカラー',
+      accentColorDescription: 'ボタンやアイコンなど、様々な場所で使われる色を選択します。',
       fontSize: '文字サイズ',
+    },
+    $account: {
+      emailSettings: 'メール設定',
+      emailSettingsDescription: 'メールアドレスとパスワードの登録がなくてもひとりすきーをご利用いただけますが、登録することで、他の端末からログインしたり、ブラウザのデータを消去した場合にアカウントを復元したりできます。',
+      emailAlreadyRegistered: 'メールアドレスは既に登録されています。',
+
+    },
+    $email: {
+      
     },
   },
 } as const;

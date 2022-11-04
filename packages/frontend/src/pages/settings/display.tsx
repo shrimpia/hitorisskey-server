@@ -40,7 +40,7 @@ const SettingsDisplay: Component = () => {
     <div class="vstack">
       <div class="alert bg-primary">
         <i class="icon fas fa-info-circle" />
-        これらの設定は端末に保存されます。
+        {$t.$settings.$display.alertInfo}
       </div>
       <div class="card">
         <div class="body vstack">
@@ -55,8 +55,9 @@ const SettingsDisplay: Component = () => {
       </div>
       <div class="card">
         <div class="body">
-          <h3>{$t.$settings.$display.accentColor}</h3>
-					<div class="hstack slim wrap mb-2">
+          <h1>{$t.$settings.$display.accentColor}</h1>
+          <h2>{$t.$settings.$display.accentColorDescription}</h2>
+					<div class="hstack slim wrap my-2">
             <For each={designSystemColors} children={c => (
 							<ColorInput class="shadow-2" type="radio" color={c} value={c} checked={c === clientState.accentColor} onChange={e => updateClientState({accentColor: e.currentTarget.value as DesignSystemColor})} />
             )} />

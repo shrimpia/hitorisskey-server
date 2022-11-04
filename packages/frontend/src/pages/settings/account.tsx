@@ -20,10 +20,10 @@ const SettingsAccount: Component = () => {
       </Show>
       <Show when={!isRequiredEmailPassword()}>
         <div class="card pa-2">
-          <h2>メール設定</h2>
-          <p class="text-dimmed mb-1">メールアドレスは既に登録されています。</p>
+          <h2>{$t.$settings.$account.emailSettings}</h2>
+          <p class="text-dimmed mb-1">{$t.$settings.$account.emailAlreadyRegistered}</p>
           <label class="input-field">
-            メールアドレス
+            {$t.email}
             <input type="email" disabled value={session.user?.email ?? ''} />
           </label>
           <div class="alert mt-2 bg-info">

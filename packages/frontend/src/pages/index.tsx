@@ -1,12 +1,11 @@
-import { Component, createEffect, createSignal, Match, Show, Switch } from "solid-js";
+import { Component, createEffect, createSignal, Match, Switch } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 
 import { api } from "../api";
 import { session, setSession } from "../store/session";
 import { clientState } from "../store/client";
 import { $t } from "../text";
-
-import './index.scss';
+import { styled } from "solid-styled-components";
 
 type WelcomeState = 'initial' | 'createNew' | 'loginForm';
 
@@ -41,9 +40,21 @@ const Index: Component = () => {
     }
   });
 
+  const Root = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  `;
+
+  const Inner = styled.div`
+    max-width: 800px;
+    width: 100%;
+  `;
+
   return (
-    <div class="template-index-welcome">
-      <div class="inner pa-2">
+    <Root>
+      <Inner class="pa-2">
         <h1>{$t.hitorisskey}</h1>
         <p class="text-dimmed mb-5">{$t.$welcome.subTitle}</p>
         <Switch>
@@ -86,8 +97,8 @@ const Index: Component = () => {
         <aside class="text-dimmed text-75 mt-5">
           (C)2022 Xeltica Studio
         </aside>
-      </div>
-    </div>
+      </Inner>
+    </Root>
   );
 }
 

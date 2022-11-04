@@ -1,4 +1,4 @@
-import { createSignal, ParentComponent, Show } from "solid-js";
+import { createSignal, onCleanup, onMount, ParentComponent, Show } from "solid-js";
 import { css, styled } from "solid-styled-components";
 import { clientState } from "../../store/client";
 
@@ -7,6 +7,16 @@ import { MainLayoutTitle } from "./MainLayoutTitle";
 
 export const MainLayout: ParentComponent = (p) => {
   const [isDrawerOpen, setDrawerOpen] = createSignal(false);
+  const [isTitlebarVisible, setTitlebarVisible] = createSignal(false);
+
+  const titleObserver = new IntersectionObserver((e) => {
+    console.log(!e[0].isIntersecting);
+    setTitlebarVisible(!e[0].isIntersecting);
+  }, {
+    threshold: 0.5,
+  });
+
+  let titleBarRef: HTMLElement | undefined = undefined;
 
   const SIDEBAR_WIDTH = 256;
 
@@ -29,21 +39,40 @@ export const MainLayout: ParentComponent = (p) => {
     margin-left: ${p => p.isMobile ? 0 : SIDEBAR_WIDTH}px;
   `;
 
-  const Titlebar = styled.div`  
-    position: sticky;
+  const Titlebar = styled.div<{isMobile: boolean}>`  
+    position: fixed;
     z-index: 10000;
-    left: $sidebarWidth;
+    left: ${p => p.isMobile ? 0 : SIDEBAR_WIDTH}px;
     right: 0;
     top: 0;
+    width: 100%;
     border-bottom: 1px solid var(--tone-5);
+    background: var(--hs-titlebar-bg);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    transition: all 0.2s ease-out;
+    opacity: 0;
+    transform: translateY(-100%);
+
+    &.active {
+      transform: none;
+      opacity: 1;
+    }
   `;
 
   const notFullViewStyle = css`
     max-width: 800px;
     margin: 0 auto;
   `;
+
+  onMount(() => {
+    if (!titleBarRef) return;
+    titleObserver.observe(titleBarRef);
+  });
+
+  onCleanup(() => {
+    titleObserver.disconnect();
+  });
 
   return (
     <div class="relative">
@@ -63,7 +92,7 @@ export const MainLayout: ParentComponent = (p) => {
         </Drawer>
       </Show>
       <Main isMobile={clientState.isMobile} class="relative">
-        <Titlebar class="flex">
+        <Titlebar isMobile={clientState.isMobile} class="flex" classList={{active: isTitlebarVisible()}}>
           <Show when={clientState.isMobile}>
             <button class="btn flat ml-2" onClick={() => setDrawerOpen(true)}>
               <i class="fas fa-bars"></i>
@@ -75,7 +104,15 @@ export const MainLayout: ParentComponent = (p) => {
             </h1>
           </div>
         </Titlebar>
-        <div class="container" classList={{[notFullViewStyle]: !clientState.fullView}}>
+        <div class="mt-5 container" classList={{[notFullViewStyle]: !clientState.fullView}}>
+          <h1 ref={titleBarRef} class="text-200 text-bold mb-4">
+            <Show when={clientState.isMobile}>
+              <button class="btn flat text-150 mr-1" style="vertical-align: 0.1em" onClick={() => setDrawerOpen(true)}>
+                <i class="fas fa-bars" />
+              </button>
+            </Show>
+            <MainLayoutTitle />
+          </h1>
           {p.children}
         </div>
       </Main>

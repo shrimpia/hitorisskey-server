@@ -15,6 +15,7 @@ const DebugIndex: Component = () => {
     'popup',
     'post',
     'markup',
+    'path',
   ].map(label => ({
     label,
     iconClass: 'fas fa-chevron-right',

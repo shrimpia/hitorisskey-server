@@ -45,6 +45,7 @@ const GlobalStyle = createGlobalStyles`
     --hs-reaction-fg-active: var(--primary-fg);
     --hs-reaction-bg-hover: var(--gray-3);
     --hs-reaction-bg-active-hover: var(--primary-5);
+    --hs-titlebar-bg: #e8e8e880;
 
     &.dark {
       --hs-reaction-bg: var(--gray-18);
@@ -53,6 +54,7 @@ const GlobalStyle = createGlobalStyles`
       --hs-reaction-fg-active: var(--primary-fg);
       --hs-reaction-bg-hover: var(--gray-16);
       --hs-reaction-bg-active-hover: var(--primary-6);
+      --hs-titlebar-bg: #1a1a1a80;
     }
   }
 `;

@@ -9,7 +9,7 @@ const TitleView: Component<{title: string | TitleObject}> = (p) => {
     &:not(:last-child) {
       color: var(--dimmed);
       &::after {
-        content: '/';
+        content: ' » ';
         margin: 0 4px;
         color: var(--dimmed);
       }

@@ -1,8 +1,9 @@
-import { Component, createEffect, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
+import { Component, createEffect, createMemo, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
 
 import { api } from "../../api";
 import { useEvent } from "../../hooks/use-event";
 import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
+import { session } from "../../store/session";
 import { $t } from "../../text";
 import { PostComposerView } from "./post-composer-view";
 import { PostView } from "./post-view";
@@ -40,6 +41,9 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
     mutate(posts => posts?.map(p => p.id !== id ? p : {...p, ...diff}));
   };
 
+  const noSuchMessage = createMemo(() => p.channel === 'announce' ? $t.$channelView.noSuchAnnouncements : $t.$channelView.noSuchPosts);
+  const isVisibleComposer = createMemo(() => p.channel !== 'announce' || session.user?.role === 'Admin');
+
   useEvent('postUpdate', onUpdatePost);
   useEvent('postDelete', onDeletePost);
 
@@ -57,6 +61,10 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
     if (!p || p.length === 0) return;
     setCursor(p[p.length - 1].id);
   });
+
+  createEffect(() => {
+    console.log(p.channel);
+  });
   
   return (
     <>
@@ -66,16 +74,18 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
               <PostView post={item} />
             )}/>
             <Show when={posts()?.length === 0}>
-              <p class="text-dimmed">{$t.$channelView.noSuchPosts}</p>
+              <p class="text-dimmed">{noSuchMessage()}</p>
             </Show>
         </Suspense>
         <div ref={paginationTriggerRef} class="pa-2">
           <Show when={isPageLoading()}><LoadingView /></Show>
         </div>
       </div>
-      <PostComposerView channel={p.channel} onCreatePost={(p) => {
-        mutate(posts => [p, ...(posts ?? [])]);
-      }} />
+      <Show when={isVisibleComposer()}>
+        <PostComposerView channel={p.channel} onCreatePost={(p) => {
+          mutate(posts => [p, ...(posts ?? [])]);
+        }} />
+      </Show>
     </>
   );
 };

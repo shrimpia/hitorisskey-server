@@ -7,7 +7,7 @@ export type EmojiViewProp = {
 } & JSX.HTMLAttributes<HTMLImageElement>;
 
 export const EmojiView: Component<EmojiViewProp> = (p) => {
-  const url = createMemo(() => `https://twemoji.maxcdn.com/v/latest/svg/${emojiUnicode(p.emoji).replace(/ /g, '-')}.svg`);
+  const url = createMemo(() => `https://twemoji.maxcdn.com/v/latest/svg/${emojiUnicode(p.emoji).replace(/ /g, '-').replace(/-fe0f/g, '')}.svg`);
 
   const Img = styled.img`
     height: 1em;

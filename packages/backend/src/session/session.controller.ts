@@ -46,7 +46,8 @@ export default class SessionController extends ControllerBase {
       id: user.id,
       created_at: user.created_at,
       email: user.email,
-      token: user.token
+      token: user.token,
+      role: user.role,
     };
   }
 }

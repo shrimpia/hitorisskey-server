@@ -7,6 +7,8 @@ export const errors = {
   noSuchChannel: 'NO_SUCH_CHANNEL',
   contentTooLong: 'CONTENT_TOO_LONG',
   notImplemented: 'NOT_IMPLEMENTED',
+  permissionDenied: 'PERMISSION_DENIED',
+  banned: 'YOU_ARE_BANNED',
 } as const;
 
 export type Error = typeof errors[keyof typeof errors];

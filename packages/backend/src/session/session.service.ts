@@ -21,9 +21,13 @@ export default class SessionService {
    */
   static async getUserByTokenAsync(token: string): Promise<User> {
     try {
-      return await prisma.user.findUniqueOrThrow({
+      const user = await prisma.user.findUnique({
         where: {token},
       });
+      if (!user) throw new HitorisskeyError('INVALID_TOKEN');
+      if (user.is_banned) throw new HitorisskeyError('YOU_ARE_BANNED');
+
+      return user;
     } catch (e) {
       throw new HitorisskeyError('INVALID_TOKEN');
     }
@@ -37,10 +41,10 @@ export default class SessionService {
    */
   static async loginAsync(email: string, password: string): Promise<User> {
     const u = await prisma.user.findFirst({where: {email}});
-    if (!u) throw new HitorisskeyError('NOT_FOUND');
-    const hashedPassword = await this.hashPasswordAsync(password);
+    if (!u || !u.email || !u.hashed_password) throw new HitorisskeyError('NOT_FOUND');
+    const hashedPassword = u.hashed_password;
     if (!(await bcrypt.compare(password, hashedPassword))) throw new HitorisskeyError('NOT_FOUND');
-    
+    if (u.is_banned) throw new HitorisskeyError('YOU_ARE_BANNED');
     return u;
   }
 
@@ -61,7 +65,7 @@ export default class SessionService {
 
     return prisma.user.update({
       where: {id: user.id},
-      data: { email, hashedPassword },
+      data: { email, hashed_password: hashedPassword },
     });
   }
 

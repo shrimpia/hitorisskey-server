@@ -3,4 +3,5 @@ export interface User {
   created_at: Date;
   email: string | null;
   token: string;
+  role: 'User' | 'Moderator' | 'Admin';
 }

@@ -61,7 +61,17 @@ export default class PostService {
    */
   static async getPublicChannelPostsAsync(user: User): Promise<PostWithReactions[]> {
     const fetchedPosts = await prisma.post.findMany({
-      where: { channel: 'public' },
+      where: {
+        channel: 'public',
+        author: {
+          OR: [{
+            is_banned: false,
+            is_silenced: false,
+          }, {
+            id: user.id,
+          }],
+        },
+      },
       include: {
         reactions: true,
       },
@@ -80,14 +90,43 @@ export default class PostService {
    * @returns {Promise<Post[]>} 投稿一覧。
    */
   static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
-    // TODO 24時間以内に留める
     const b24h = dayjs().subtract(24, 'h').toDate();
     return prisma.post.findMany({
       where: {
         channel: 'realtime',
+        author: {
+          OR: [{
+            is_banned: false,
+            is_silenced: false,
+          }, {
+            id: user.id,
+          }],
+        },
         created_at: {
           gte: b24h,
         },
+      },
+      include: {
+        reactions: true,
+      },
+      orderBy: { created_at: 'desc' },
+      cursor: cursor ? {id: cursor} : undefined,
+      skip: cursor ? 1 : 0,
+      take: limit,
+    });
+  }
+
+  /**
+   * お知らせチャンネルの投稿を取得します。
+   * @param {User} user - 投稿を取得するユーザー
+   * @param {string} cursor - ページネーションの基点。
+   * @param {number} limit - 取得数。
+   * @returns {Promise<Post[]>} 投稿一覧。
+   */
+  static async getAnnounceChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
+    return prisma.post.findMany({
+      where: {
+        channel: 'announce',
       },
       include: {
         reactions: true,
@@ -111,6 +150,9 @@ export default class PostService {
 
     if (post.content.length === 0) throw new HitorisskeyError('MISSING_PARAMS');
     if (post.content.length > 1024) throw new HitorisskeyError('CONTENT_TOO_LONG');
+    
+    // お知らせチャンネルは管理者以外書けない
+    if (post.channel === this.BUILTIN_CHANNELS.announce && user.role !== 'Admin') throw new HitorisskeyError('PERMISSION_DENIED');
 
     return prisma.post.create({
       data: {
@@ -128,7 +170,8 @@ export default class PostService {
 
   static async deletePostAsync(postId: string, user: User): Promise<void> {
     // これがエラーにならない（=投稿が存在し、userのノートである)→投稿を削除できる
-    await this.getPostAsync(postId, user);
+    const post = await this.getPostAsync(postId, user);
+    if (post.author_id !== user.id) throw new HitorisskeyError('PERMISSION_DENIED');
 
     await prisma.post.delete({
       where: {id: postId}
@@ -180,6 +223,7 @@ export default class PostService {
     private: 'private',
     public: 'public',
     realtime: 'realtime',
+    announce: 'announce',
    } as const;
 
   private static shuffle(arr: unknown[]) {

@@ -28,15 +28,17 @@ export const $t = {
   $channels: {
     public: 'みんなのつぶやき',
     private: 'プライベートルーム',
-    realtime: 'なう！広場'
+    realtime: 'なう！広場',
+    announce: 'お知らせ',
   },
   $channelDescriptions: {
     public: 'このチャンネルでのつぶやきは、誰かのつぶやきと一緒にランダムに表示されます。',
     private: 'このチャンネルでのつぶやきは、あなた以外に表示されません。誰にも見られたくないことを書き残しましょう。',
-    realtime: 'このチャンネルには、24時間以内のリアルタイムなつぶやきを投稿できます。今起きていることについて、リアルタイムに会話しましょう。'
+    realtime: 'このチャンネルには、24時間以内のリアルタイムなつぶやきを投稿できます。今起きていることについて、リアルタイムに会話しましょう。',
   },
   $channelView: {
     noSuchPosts: 'まだつぶやきが投稿されていません。何かつぶやいてみませんか？',
+    noSuchAnnouncements: 'お知らせはありません。',
   },
   $postComposerView: {
     annotation: '注釈',

@@ -3380,6 +3380,11 @@ tar@^6.1.11:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
+terrario@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/terrario/-/terrario-0.7.1.tgz#d9c68f8aad6749726c7399ba2b7b4a9dd011caf6"
+  integrity sha512-WrftpzWpnkti5BnQd3W/b279YNKao03PQKBuje5hyQUPkLR9x84oqLOImVe/+SBIs9rdoxJAT6CMCeHzJ6gdoQ==
+
 thread-stream@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmjs.org/thread-stream/-/thread-stream-2.2.0.tgz"
@@ -3466,6 +3471,11 @@ tsconfig-paths@^4.1.0:
     json5 "^2.2.1"
     minimist "^1.2.6"
     strip-bom "^3.0.0"
+
+twemoji-parser@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/twemoji-parser/-/twemoji-parser-14.0.0.tgz#13dabcb6d3a261d9efbf58a1666b182033bf2b62"
+  integrity sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==
 
 typescript@^4.8.3:
   version "4.8.3"

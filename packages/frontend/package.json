@@ -16,6 +16,8 @@
     "sass": "^1.55.0",
     "solid-js": "^1.6.0",
     "solid-styled-components": "^0.28.5",
+    "terrario": "^0.7.1",
+    "twemoji-parser": "^14.0.0",
     "xeltica-ui": "xeltica/design-system"
   },
   "devDependencies": {

@@ -45,9 +45,9 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
           </NavLink>
         </section> */}
         <section>
-          <NavLink href="/announcements" class="item" activeClass="active">
+          <NavLink href="/c/announce" class="item" activeClass="active">
             <span class="icon i fas fa-bell fa-fw"></span>
-            {$t.announcements}
+            {$t.$channels.announce}
           </NavLink>
           <Show when={IS_DEVELOPMENT}>
             <NavLink href="/_debug" class="item" activeClass="active">

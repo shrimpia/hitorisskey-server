@@ -8,6 +8,7 @@ import { useEvent } from "../../hooks/use-event";
 import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
 import { MenuDefinition } from "../../misc/menu-definition";
 import { openMenu } from "../../store/popup-menu";
+import { session } from "../../store/session";
 import { $t } from "../../text";
 import { EmojiView } from "./primitives/emoji-view";
 import { FormattedTextView } from "./primitives/formatted-text-view";
@@ -71,9 +72,7 @@ export const PostView: Component<PostProp> = (p) => {
       items: [{
         label: $t.$postView.report,
         iconClass: 'fas fa-exclamation-circle fa-fw',
-        onClick() {
-          alert('開発中');
-        },
+        disabled: true,
       }]
     })
     return m;
@@ -148,9 +147,11 @@ export const PostView: Component<PostProp> = (p) => {
           <button class="btn flat" onClick={onClickReact}>
             <i class="far fa-face-smile"></i>
           </button>
-          <button class="btn flat" onClick={onClickMore}>
-            <i class="fas fa-ellipsis"></i>
-          </button>
+          <Show when={p.post.channel !== 'announce' || session.user?.role === 'Admin'}>
+            <button class="btn flat" onClick={onClickMore}>
+              <i class="fas fa-ellipsis"></i>
+            </button>
+          </Show>
         </div>
       </div>
       <ReactionPickerView

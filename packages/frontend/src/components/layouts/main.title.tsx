@@ -4,9 +4,6 @@ import { styled } from "solid-styled-components";
 import { clientState, TitleObject } from "../../store/client";
 
 const TitleView: Component<{title: string | TitleObject}> = (p) => {
-  createEffect(() => {
-    console.log(p.title);
-  });
 
   const Wrapper = styled.span`
     &:not(:last-child) {
@@ -34,10 +31,6 @@ const TitleView: Component<{title: string | TitleObject}> = (p) => {
 };
 
 export const MainLayoutTitle: Component = () => {
-  createEffect(() => {
-    console.log(Array.isArray(clientState.title));
-  });
-
   return (
     <Show when={Array.isArray(clientState.title)} fallback={<TitleView title={clientState.title as any} />}>
       <For each={clientState.title as any[]} children={it => (

@@ -3,6 +3,7 @@ import { Post } from "./models/post";
 import { User } from "./models/user";
 import { $get, $post, $delete } from "./primitives";
 import { AppMeta } from "./models/app-meta";
+import { Invitation } from "./models/invitation";
 
 /**
  * ひとりすきー API。
@@ -92,5 +93,13 @@ export const api = {
        */
       removeAsync: (postId: string) => $delete<Post>(`post/${postId}/reactions`),
     },
+  },
+
+  invitations: {
+    listAsync: () => $get<Invitation[]>('invitations'),
+
+    generateAsync: () => $post<Invitation[]>('invitations'),
+
+    revokeAsync: (code: string) => $delete<Invitation[]>(`invitations/${code}`),
   },
 };

@@ -15,7 +15,7 @@ export const $t = {
   underDevelopment: '開発中',
   save: '保存する',
   $welcome: {
-    subTitle: 'なにかをつぶやきたい。けど、素性は知られたくない。',
+    subTitle: 'ひとりがすき。そんなあなたの、匿名ミニブログ。',
     createNew: '新しくはじめる',
     login: 'ログイン',
     $createNew: {

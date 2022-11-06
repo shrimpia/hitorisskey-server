@@ -11,6 +11,7 @@ export const EmojiView: Component<EmojiViewProp> = (p) => {
 
   const Img = styled.img`
     height: 1em;
+    margin: 0 0.1em;
     vertical-align: -0.12em;
   `;
 

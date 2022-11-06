@@ -2,6 +2,8 @@ import fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import { bootstrap } from 'fastify-decorators';
 
+import { config } from './config.js';
+
 const app = fastify();
 
 app.register(bootstrap, {
@@ -12,8 +14,8 @@ app.register(bootstrap, {
 app.register(fastifyCors);
 
 app.listen({
-    port: 3000,
-    host: '0.0.0.0',
+    host: config.server.host ?? '0.0.0.0',
+    port: config.server.port ?? 3000,
 }).then((address) => {
     console.info(`server listening on ${address}`);
 }, (e) => {

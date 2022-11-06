@@ -76,6 +76,9 @@ export const $t = {
       accentColor: 'アクセントカラー',
       accentColorDescription: 'ボタンやアイコンなど、様々な場所で使われる色を選択します。',
       fontSize: '文字サイズ',
+      customCSS: 'カスタムCSS',
+      customCSSDescription: 'スタイルシートを記述して、より高度にUIをカスタマイズできます。',
+      customCSSWarning: 'CSSに詳しい知識をお持ちでない場合は、本設定を変更しないでください。設定を誤ると、本サービスを正常にご利用いただけなくなります。',
     },
     $account: {
       emailSettings: 'メール設定',

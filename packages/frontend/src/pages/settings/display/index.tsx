@@ -1,9 +1,11 @@
-import { Component, For } from "solid-js";
+import { A } from "@solidjs/router";
+import { Component, For, Show } from "solid-js";
 import { styled } from "solid-styled-components";
+import { IS_DEVELOPMENT } from "../../../global-const";
 
-import { useTitle } from "../../hooks/use-title";
-import { clientState, DesignSystemColor, designSystemColors, ThemeProp, updateClientState } from "../../store/client";
-import { $t } from "../../text";
+import { useTitle } from "../../../hooks/use-title";
+import { clientState, DesignSystemColor, designSystemColors, ThemeProp, updateClientState } from "../../../store/client";
+import { $t } from "../../../text";
 
 
 const SettingsDisplay: Component = () => {
@@ -75,19 +77,6 @@ const SettingsDisplay: Component = () => {
           )} />
         </div>
       </div>
-      <div class="list-form">
-        <div class="item">
-          <div class="body">
-            <h1>Activate Debug Mode</h1>
-          </div>
-          <div class="command">
-          <label class="input-switch">
-            <input type="checkbox" checked={clientState.isDebugMode} onChange={e => updateClientState({isDebugMode: e.currentTarget.checked})}  />
-            <div class="switch"></div>
-          </label>
-          </div>
-        </div>
-      </div>
       <button class="btn primary ml-auto" onClick={() => {
         if (!confirm('この操作を行うと、設定したテーマが失われます。本当に続行しますか？')) return;
         updateClientState({
@@ -96,6 +85,26 @@ const SettingsDisplay: Component = () => {
           theme: 'system',
         });
       }}>{$t.$settings.initialize}</button>
+      <div class="list-form">
+        <A href="/settings/display/css" class="item">
+          <i class="icon fas fa-code fa-fw" />
+          <div class="body">{$t.$settings.$display.customCSS}</div>
+        </A>
+        <Show when={IS_DEVELOPMENT}>
+          <div class="item">
+            <i class="icon fas fa-bug fa-fw" />
+            <div class="body">
+              <h1>Activate Debug Mode</h1>
+            </div>
+            <div class="command">
+            <label class="input-switch">
+              <input type="checkbox" checked={clientState.isDebugMode} onChange={e => updateClientState({isDebugMode: e.currentTarget.checked})}  />
+              <div class="switch"></div>
+            </label>
+            </div>
+          </div>
+        </Show>
+      </div>
     </div>
   );
 };

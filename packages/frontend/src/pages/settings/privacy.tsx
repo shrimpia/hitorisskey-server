@@ -10,7 +10,7 @@ const SettingsPrivacy: Component = () => {
   }, $t.$settings.privacy]);
 
   return (
-    <p>wip</p>
+    <p>{$t.underDevelopment}</p>
   );
 };
 

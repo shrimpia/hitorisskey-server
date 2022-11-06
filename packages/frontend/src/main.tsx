@@ -9,7 +9,7 @@ import { getAppRef } from './misc/ref';
 import { PopupView } from './components/views/PopupView';
 import { closeMenu, popupMenuState } from './store/popup-menu';
 import { MenuView } from './components/views/MenuView';
-import { clientState, updateMobile } from './store/client';
+import { clientState, updateCSS, updateMobile } from './store/client';
 import { useTheme } from './hooks/use-theme';
 import { app } from './store/app';
 import { LoadingView } from './components/views/primitives/LoadingView';
@@ -123,3 +123,8 @@ render(() => (
     <Inner />
   </Router>
 ), getAppRef());
+
+const customCSSTag = document.createElement('style');
+customCSSTag.id = 'customCSS';
+document.head.appendChild(customCSSTag);
+updateCSS();

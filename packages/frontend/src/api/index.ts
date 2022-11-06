@@ -25,7 +25,7 @@ export const api = {
     /**
      * アカウントを新規作成します。
      */
-    startAsync: () => $post<User>('session/start'),
+    startAsync: (invitationCode?: string) => $post<User>('session/start', invitationCode ? { invitationCode } : undefined),
     
     /**
      * メールアドレスとパスワードを用いて、アカウントにログインします。

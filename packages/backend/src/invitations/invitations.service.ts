@@ -27,4 +27,17 @@ export default class InvitationsService {
 
     await prisma.invitation.delete({where: {code}});
   }
+
+  static async tryUseAsync(code: string | null | undefined): Promise<boolean> {
+    if (!code) return false;
+    const invitationCode = await prisma.invitation.findUnique({where: {code}});
+    if (!invitationCode || invitationCode.is_used) return false;
+
+    await prisma.invitation.update({
+      where: {code},
+      data: { is_used: true }
+    });
+
+    return true;
+  }
 }

@@ -7,13 +7,22 @@ import { clientState } from "../store/client";
 import { $t } from "../text";
 import { styled } from "solid-styled-components";
 import { app } from "../store/app";
+import { model } from "../directives/model";
 
-type WelcomeState = 'initial' | 'createNew' | 'loginForm';
+0 && model;
+
+type WelcomeState =
+  | 'initial'
+  | 'createNew'
+  | 'loginForm'
+  | 'invitation'
+  ;
 
 const Index: Component = () => {
   const [state, setState] = createSignal<WelcomeState>('initial');
   const [email, setEmail] = createSignal('');
   const [password, setPassword] = createSignal('');
+  const [code, setCode] = createSignal('');
 
   const navigate = useNavigate();
 
@@ -23,11 +32,25 @@ const Index: Component = () => {
     }
   });
 
-  const startNew = () => api.session.startAsync().then((res) => {
-    setSession({
-      token: res.token,
+  const startNew = () => {
+    if (app.meta?.isClosedBeta) {
+      setState('invitation');
+    } else {
+      api.session.startAsync().then((res) => {
+        setSession({
+          token: res.token,
+        });
+      });
+    }
+  };
+
+  const startNewCode = () => {
+    api.session.startAsync(code()).then((res) => {
+      setSession({
+        token: res.token,
+      });
     });
-  });
+  };
 
   const login = () => api.session.loginAsync(email(), password()).then(res => {
     setSession({
@@ -89,15 +112,23 @@ const Index: Component = () => {
             <div class="mt-2 card pa-2">
               <label class="input-field">
                 {$t.email}
-                <input type="email" value={email()} onInput={e => setEmail(e.currentTarget.value)} />
+                <input type="email" use:model={[email, setEmail]} />
               </label>
               <label class="input-field">
                 {$t.password}
-                <input type="password" value={password()} onInput={e => setPassword(e.currentTarget.value)} />
+                <input type="password" use:model={[password, setPassword]} />
               </label>
               <button class="btn primary mt-4 text-center ml-auto" onClick={login}>{$t.$welcome.$login.ok}</button>
-            </div>            
+            </div>
             <button class="btn outline primary mt-2" onClick={() => setState('initial')}>{$t.$welcome.$login.cancel}</button>
+          </Match>
+          <Match when={state() === 'invitation'}>
+            <p>招待コードを入力してください。</p>
+            <input type="password" class="input-field" autocomplete="off" use:model={[code, setCode]} />
+            <div class="hstack mt-2">
+              <button class="btn primary text-center ml-auto" onClick={startNewCode}>新規作成</button>
+              <button class="btn outline primary" onClick={() => setState('initial')}>{$t.$welcome.$login.cancel}</button>
+            </div>
           </Match>
         </Switch>
         <aside class="text-dimmed text-75 mt-5">

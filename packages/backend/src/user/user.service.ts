@@ -3,6 +3,9 @@ import { User } from '@prisma/client';
 
 import prisma from "@/prisma.js";
 import SessionService from '@/session/session.service.js';
+import { config } from '@/config.js';
+import InvitationsService from '@/invitations/invitations.service.js';
+import { HitorisskeyError } from '@/error.js';
 
 /**
  * ユーザーアカウントの取得・作成を担当します。
@@ -10,9 +13,15 @@ import SessionService from '@/session/session.service.js';
 export default class UserService {
   /**
    * ユーザーを作成します。
+   * @param {string | null | undefined} code 招待コード
    * @return {Promise<User>} 作成したユーザー。
    */
-  static createUserAsync(): Promise<User> {
+  static async createUserAsync(code?: string | null): Promise<User> {
+    if (config.is_closed_beta) {
+      if (!(await InvitationsService.tryUseAsync(code))) {
+        throw new HitorisskeyError('INVITATION_CODE_REQUIRED');
+      }
+    }
     const token = SessionService.generateToken();
     return prisma.user.create({
       data: {

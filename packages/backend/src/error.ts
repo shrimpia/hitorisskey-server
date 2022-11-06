@@ -9,6 +9,7 @@ export const errors = {
   notImplemented: 'NOT_IMPLEMENTED',
   permissionDenied: 'PERMISSION_DENIED',
   banned: 'YOU_ARE_BANNED',
+  invitationCodeRequired: 'INVITATION_CODE_REQUIRED',
 } as const;
 
 export type Error = typeof errors[keyof typeof errors];

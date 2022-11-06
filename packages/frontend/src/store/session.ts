@@ -8,6 +8,12 @@ const [session, setSession] = createStore({
   user: null as User | null,
 });
 
+export const isAdmin = () => session.user?.role === 'Admin';
+
+export const isModerator = () => session.user?.role === 'Admin';
+
+export const isAdminOrModerator = () => isAdmin() || isModerator();
+
 export const refetchUser = async () => {
   try {
     const user = await api.session.readAsync();

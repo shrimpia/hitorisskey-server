@@ -11,6 +11,9 @@ export const $t = {
   register: '登録する',
   reload: '再読み込み',
   about: 'ひとりすきーについて',
+  adminTools: '管理ツール',
+  underDevelopment: '開発中',
+  save: '保存する',
   $welcome: {
     subTitle: 'なにかをつぶやきたい。けど、素性は知られたくない。',
     createNew: '新しくはじめる',
@@ -84,10 +87,12 @@ export const $t = {
       emailSettings: 'メール設定',
       emailSettingsDescription: 'メールアドレスとパスワードの登録がなくてもひとりすきーをご利用いただけますが、登録することで、他の端末からログインしたり、ブラウザのデータを消去した場合にアカウントを復元したりできます。',
       emailAlreadyRegistered: 'メールアドレスは既に登録されています。',
-
     },
-    $email: {
-      
+    $admin: {
+      settings: 'サーバー設定',
+      invitations: '招待コード',
+      reports: '通報',
+      punishees: '処罰者管理',
     },
   },
 } as const;

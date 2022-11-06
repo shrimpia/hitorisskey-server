@@ -4,6 +4,7 @@ import { styled } from "solid-styled-components";
 import { IS_DEVELOPMENT } from "../../global-const";
 import { app } from "../../store/app";
 import { clientState } from "../../store/client";
+import { isAdminOrModerator } from "../../store/session";
 import { $t } from "../../text";
 
 export type MainLayoutSidebarProp = {
@@ -73,6 +74,27 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
             {$t.settings}
           </NavLink>
         </section>
+        <Show when={isAdminOrModerator()}>
+          <section>
+            <h1>{$t.adminTools}</h1>
+            <NavLink href="/admin/settings" class="item" activeClass="active">
+              <span class="icon i fas fa-toolbox fa-fw"></span>
+              {$t.$settings.$admin.settings}
+            </NavLink>
+            <NavLink href="/admin/invitations" class="item" activeClass="active">
+              <span class="icon i fas fa-ticket fa-fw"></span>
+              {$t.$settings.$admin.invitations}
+            </NavLink>
+            <NavLink href="/admin/reports" class="item" activeClass="active">
+              <span class="icon i fas fa-flag fa-fw"></span>
+              {$t.$settings.$admin.reports}
+            </NavLink>
+            <NavLink href="/admin/punishees" class="item" activeClass="active">
+              <span class="icon i fas fa-ban fa-fw"></span>
+              {$t.$settings.$admin.punishees}
+            </NavLink>
+          </section>
+        </Show>
       </div>
     </>
   );

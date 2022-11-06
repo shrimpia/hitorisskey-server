@@ -1,9 +1,13 @@
 import { Component, createSignal, onMount, onCleanup, batch } from "solid-js";
 
 import { PopupView } from "../../components/views/PopupView";
+import { IS_DEVELOPMENT } from "../../global-const";
 import { useTitle } from "../../hooks/use-title";
+import NotFound from "../[...all]";
 
 const DebugPopup: Component = () => {
+  if (!IS_DEVELOPMENT) return <NotFound />
+
   useTitle([{
     label: 'Debug',
     link: '/_debug',

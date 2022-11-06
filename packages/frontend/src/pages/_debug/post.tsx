@@ -1,9 +1,13 @@
 import { Component } from "solid-js";
 import { Post } from "../../api/models/post";
 import { PostView } from "../../components/views/PostView";
+import { IS_DEVELOPMENT } from "../../global-const";
 import { useTitle } from "../../hooks/use-title";
+import NotFound from "../[...all]";
 
 const DebugNote: Component = () => {
+  if (!IS_DEVELOPMENT) return <NotFound />
+
   useTitle([{
     label: 'Debug',
     link: '/_debug',

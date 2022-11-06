@@ -2,12 +2,16 @@ import { Component, createMemo, createSignal } from "solid-js";
 import { FormattedTextView } from "../../components/views/primitives/FormattedTextView";
 
 import { model } from "../../directives/model";
+import { IS_DEVELOPMENT } from "../../global-const";
 import { useTitle } from "../../hooks/use-title";
 import { parse } from "../../misc/markup";
+import NotFound from "../[...all]";
 
 0 && model;
 
 const DebugMarkup: Component = () => {
+  if (!IS_DEVELOPMENT) return <NotFound />
+
   useTitle([{
     label: 'Debug',
     link: '/_debug',

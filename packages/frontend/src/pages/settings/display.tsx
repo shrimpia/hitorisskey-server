@@ -75,6 +75,19 @@ const SettingsDisplay: Component = () => {
           )} />
         </div>
       </div>
+      <div class="list-form">
+        <div class="item">
+          <div class="body">
+            <h1>Activate Debug Mode</h1>
+          </div>
+          <div class="command">
+          <label class="input-switch">
+            <input type="checkbox" checked={clientState.isDebugMode} onChange={e => updateClientState({isDebugMode: e.currentTarget.checked})}  />
+            <div class="switch"></div>
+          </label>
+          </div>
+        </div>
+      </div>
       <button class="btn primary ml-auto" onClick={() => {
         if (!confirm('この操作を行うと、設定したテーマが失われます。本当に続行しますか？')) return;
         updateClientState({

@@ -22,7 +22,7 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 	const pcStyle = css`
 		max-width: 640px;
 		width: calc(100% - 48px);
-		z-index: 1000000;
+		z-index: 10000;
 	`;
 	
 	const Textarea = styled.textarea`

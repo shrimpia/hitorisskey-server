@@ -104,10 +104,10 @@ export const MainLayout: ParentComponent = (p) => {
             </h1>
           </div>
         </Titlebar>
-        <div class="mt-5 container" classList={{[notFullViewStyle]: !clientState.fullView}}>
-          <h1 ref={titleBarRef} class="text-200 text-bold mb-4">
+        <div class="container" classList={{[notFullViewStyle]: !clientState.fullView, 'mt-5': !clientState.isMobile}}>
+          <h1 ref={titleBarRef} class="text-bold mb-2" classList={{'text-200': !clientState.isMobile, 'text-150': clientState.isMobile}}>
             <Show when={clientState.isMobile}>
-              <button class="btn flat text-150 mr-1" style="vertical-align: 0.1em" onClick={() => setDrawerOpen(true)}>
+              <button class="btn flat text-150 mr-1" style={`vertical-align: ${clientState.isMobile ? 0 : 0.1}em`} onClick={() => setDrawerOpen(true)}>
                 <i class="fas fa-bars" />
               </button>
             </Show>

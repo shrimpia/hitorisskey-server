@@ -49,7 +49,7 @@ export const PostComposerView: Component<PostComposerView> = (p) => {
 	};
 
 	const onKeyPressTextArea = (e: KeyboardEvent) => {
-		if ((e.key !== 'Enter' || !(e.ctrlKey || e.metaKey))) return;
+		if (!canPost() || e.key !== 'Enter' || !(e.ctrlKey || e.metaKey)) return;
 		post();
 	}; 
 

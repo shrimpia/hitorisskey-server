@@ -58,10 +58,10 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
               Debug
             </NavLink>
           </Show>
-          <NavLink href="/about" class="item" activeClass="active">
+          {/* <NavLink href="/about" class="item" activeClass="active">
             <span class="icon i fas fa-info-circle fa-fw"></span>
             {$t.about}
-          </NavLink>
+          </NavLink> */}
           <Show when={app.meta?.isClosedBeta}>
             <NavLink href="/beta/feedback" class="item" activeClass="active">
               <span class="icon i fas fa-laugh fa-fw"></span>

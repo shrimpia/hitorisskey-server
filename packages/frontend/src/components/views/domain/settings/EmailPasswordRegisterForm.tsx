@@ -62,7 +62,6 @@ export const EmailPasswordRegisterForm: Component = () => {
       </p>
       <label class="input-field">
         {$t.email}
-        { /* Note: use:model がエラーになってるけど動く 私は悪くないので放置します */ }
         <input type="email" autocomplete="email" use:model={[email, setEmail]} disabled={isRegistering()} />
       </label>
       <label class="input-field">

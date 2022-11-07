@@ -1,6 +1,7 @@
+import { API_ENDPOINT as ENV_API_ENDPOINT } from "../global-const";
 import { session } from "../store/session";
 
-const API_ENDPOINT = 'http://localhost:3000/v1/';
+const API_ENDPOINT = ENV_API_ENDPOINT + '/v1/';
 
 const $handle = async (res: Response) => {
   if (!res.ok) throw new Error((await res.json()).error);

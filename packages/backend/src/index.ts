@@ -1,8 +1,11 @@
 import fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import { bootstrap } from 'fastify-decorators';
+import { config as dotenvConfig } from 'dotenv';
 
 import { config } from './config.js';
+
+dotenvConfig();
 
 const app = fastify();
 

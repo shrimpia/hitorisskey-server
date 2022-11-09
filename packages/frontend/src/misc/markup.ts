@@ -15,8 +15,8 @@ const lang = T.createLanguage({
     r.emoji,
     r.text,
   ]),
-  newLine: r => T.alt([T.crlf, T.cr, T.lf]).map(() => ({ type: 'newLine' })),
-  url: r => T.str(/^https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+$/).map(url => ({ type: 'url', url })),
+  newLine: r => T.newline.map(() => ({ type: 'newLine' })),
+  url: r => T.str(/https?:\/\/[\w/:%#\$&\?\(\)~\.=\+\-]+/).map(url => ({ type: 'url', url })),
   emoji: r => T.str(emoji).map(emoji => ({ type: 'emoji', emoji })),
   text: r => T.char,
 });

@@ -79,7 +79,7 @@ export default class PostService {
       take: 100,
     });
     this.shuffle(fetchedPosts);
-    return fetchedPosts.slice(0, 20);
+    return fetchedPosts.slice(0, 10);
   }
 
   /**

@@ -2,6 +2,7 @@ import { Component, createMemo, createSignal, Show } from 'solid-js';
 import { api } from '../../../../api';
 import { model } from '../../../../directives/model';
 import { isNotEmpty, isNotEmptyAll } from '../../../../misc/is-not-empty';
+import { refetchUser } from '../../../../store/session';
 import { $t } from '../../../../text';
 
 // やらないとmodelがtree-shakingされてしまい、ディレクティブが動かない
@@ -46,6 +47,7 @@ export const EmailPasswordRegisterForm: Component = () => {
     setRegistering(true);
     try {
       await api.session.signupAsync(email(), password());
+      await refetchUser();
       alert('登録が完了しました！');
     } catch (e) {
       alert((e as Error).message ?? e);

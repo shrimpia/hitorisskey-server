@@ -19,8 +19,10 @@ const Mypage: Component = () => {
         <Show when={!session.user?.email}>
             <div class="alert bg-warn">
                 <i class="icon fas fa-exclamation-triangle fa-fw" />
-                メールアドレスおよびパスワードが登録されていません。<br/>
-                <A href="/settings/account">登録する</A>
+                <span>
+                    メールアドレスおよびパスワードが登録されていません。<br/>
+                    <A href="/settings/account">登録する</A>
+                </span>
             </div>
         </Show>
         <div class="card">

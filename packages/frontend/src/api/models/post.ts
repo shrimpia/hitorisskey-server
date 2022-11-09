@@ -7,4 +7,5 @@ export interface Post {
   annotation: string | null;
   reactions: Reaction[];
   isMine: boolean;
+  created_at?: Date;
 }

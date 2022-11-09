@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Component, createMemo, createSignal, For, Show } from 'solid-js';
 import { styled } from 'solid-styled-components';
 
@@ -26,6 +27,7 @@ type GroupedReaction = Reaction & {
 export const PostView: Component<PostProp> = (p) => {
   const [isVisibleReactionPicker, setVisibleReactionPicker] = createSignal(false);
   const [reactionViewLocation, setReactionViewLocation] = createSignal([0, 0]);
+  const [isVisibleBody, setVisibleBody] = createSignal(false);
 
   const ReactionView = styled.button<{active: boolean}>`
     border-radius: var(--radius);
@@ -43,7 +45,18 @@ export const PostView: Component<PostProp> = (p) => {
     }
   `;
 
-  const body = () => <FormattedTextView children={p.post.content}/>;
+  const CwButton = styled.button`
+    border-radius: 3px;
+    padding: 4px 8px;
+    margin-left: 4px;
+    background: var(--tone-5);
+    color: var(--tone-20);
+    font-size: 0.8em;
+
+    &:hover {
+      background: var(--tone-8);
+    }
+  `;
 
   const menu = () => {
     const m: MenuDefinition = [];
@@ -129,16 +142,21 @@ export const PostView: Component<PostProp> = (p) => {
   return (
     <div class="card hs-post">
       <div class="body">
-        <div class="mb-1">
-          <Show when={p.post.annotation} fallback={body()}>
-            <details>
-              <summary><FormattedTextView inline children={p.post.annotation} /></summary>
-              {body()}
-            </details>
+        <div class="ml-1 mb-1">
+          <Show when={p.post.annotation}>
+            <div class="mb-1">
+              <FormattedTextView inline children={p.post.annotation} />
+              <CwButton class="clickable" onClick={() => setVisibleBody(f => !f)}>
+                {isVisibleBody() ? '閉じる' : '続きを読む'}
+              </CwButton>
+            </div>
+          </Show>
+          <Show when={!p.post.annotation || isVisibleBody()}>
+            <FormattedTextView children={p.post.content}/>
           </Show>
         </div>
         <Show when={p.showChannelName}>
-          <aside class="text-75 text-dimmed mb-1"><i class="fas fa-hashtag fa-fw" /> {getChannelNameLocalized(p.post.channel)}</aside>
+          <aside class="text-75 text-dimmed mb-1 ml-1"><i class="fas fa-hashtag fa-fw" /> {getChannelNameLocalized(p.post.channel)}</aside>
         </Show>
         <Show when={p.post.reactions.length > 0}>
           <div class="hstack slim mt-2 mb-1">
@@ -157,6 +175,11 @@ export const PostView: Component<PostProp> = (p) => {
             <button class="btn flat" onClick={onClickMore}>
               <i class="fas fa-ellipsis" />
             </button>
+          </Show>
+          <Show when={p.post.created_at}>
+            <div class="ml-auto my-auto text-dimmed">
+              {dayjs(p.post.created_at).fromNow()}
+            </div>
           </Show>
         </div>
       </div>

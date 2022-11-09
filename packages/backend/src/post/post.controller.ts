@@ -29,25 +29,25 @@ export default class PostController extends ControllerBase {
       const q = paginationQuery.safeParse(req.query);
       if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
       const {cursor, limit} = q.data;
-      return (await PostService.getPrivateChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      return (await PostService.getPrivateChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session, true));
     }
     case 'realtime': {
       const q = paginationQuery.safeParse(req.query);
       if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
       const {cursor, limit} = q.data;
-      return (await PostService.getRealtimeChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      return (await PostService.getRealtimeChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session, true));
     }
     case 'announce': {
       const q = paginationQuery.safeParse(req.query);
       if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
       const {cursor, limit} = q.data;
-      return (await PostService.getAnnounceChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      return (await PostService.getAnnounceChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session, true));
     }
     case 'myself': {
       const q = paginationQuery.safeParse(req.query);
       if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
       const {cursor, limit} = q.data;
-      return (await PostService.getMyPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+      return (await PostService.getMyPostsAsync(session, cursor, limit)).map(p => this.filter(p, session, true));
     }
     default: {
       // TODO: カスタムチャンネルをサポートする
@@ -96,7 +96,7 @@ export default class PostController extends ControllerBase {
     return this.filter(await PostService.getPostAsync(req.params.id, session), session);
   }
 
-  private filter(post: PostWithReactions, user?: User | null) {
+  private filter(post: PostWithReactions, user?: User | null, includesCreateAt?: boolean) {
     return {
       id: post.id,
       channel: post.channel,
@@ -107,6 +107,7 @@ export default class PostController extends ControllerBase {
         isMine: user != null && user.id === r.author_id,
       })),
       isMine: user != null && user.id === post.author_id,
+      created_at: includesCreateAt ? post.created_at : undefined,
     };
   }
 }

@@ -1,9 +1,8 @@
-import { Component, createEffect, createMemo, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from 'solid-js';
+import { Component, createEffect, createMemo, createResource, createSignal, Index, onCleanup, onMount, Show, Suspense } from 'solid-js';
 
 import { api } from '../../api';
 import { useEvent } from '../../hooks/use-event';
 import { HitorisskeyEvent } from '../../misc/event';
-import { session } from '../../store/session';
 import { $t } from '../../text';
 import { PostComposerView } from './PostComposerView';
 import { PostView } from './PostView';
@@ -85,8 +84,8 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
           </button>
         </Show>
         <Suspense fallback={<LoadingView />}>
-          <For each={posts()} children={item => (
-            <PostView post={item} showChannelName={p.channel === 'myself'} />
+          <Index each={posts()} children={item => (
+            <PostView post={item()} showChannelName={p.channel === 'myself'} />
           )}/>
           <Show when={posts()?.length === 0}>
             <p class="text-dimmed">{noSuchMessage()}</p>

@@ -1,9 +1,9 @@
-import { createSignal, onCleanup, onMount, ParentComponent, Show } from "solid-js";
-import { css, styled } from "solid-styled-components";
-import { clientState } from "../../store/client";
+import { createSignal, onCleanup, onMount, ParentComponent, Show } from 'solid-js';
+import { css, styled } from 'solid-styled-components';
+import { clientState } from '../../store/client';
 
-import { MainLayoutSidebar } from "./MainLayoutSidebar";
-import { MainLayoutTitle } from "./MainLayoutTitle";
+import { MainLayoutSidebar } from './MainLayoutSidebar';
+import { MainLayoutTitle } from './MainLayoutTitle';
 
 export const MainLayout: ParentComponent = (p) => {
   const [isDrawerOpen, setDrawerOpen] = createSignal(false);
@@ -16,7 +16,7 @@ export const MainLayout: ParentComponent = (p) => {
     threshold: 0.5,
   });
 
-  let titleBarRef: HTMLElement | undefined = undefined;
+  const titleBarRef: HTMLElement | undefined = undefined;
 
   const SIDEBAR_WIDTH = 256;
 
@@ -77,13 +77,13 @@ export const MainLayout: ParentComponent = (p) => {
   return (
     <div class="relative">
       <Show when={!clientState.isMobile}>
-        <SidebarColumn style={`width: ${SIDEBAR_WIDTH}px`}>
+        <SidebarColumn style={{width: SIDEBAR_WIDTH + 'px'}}>
           <MainLayoutSidebar width={SIDEBAR_WIDTH} />
         </SidebarColumn>
       </Show>
       <Show when={clientState.isMobile}>
         <Drawer class={`drawer-container ${isDrawerOpen() ? 'active' : ''}`} onClick={() => setDrawerOpen(false)}>
-          <div class="backdrop"></div>
+          <div class="backdrop" />
           <div class="drawer">
             <div class="pa-2">
               <MainLayoutSidebar width={SIDEBAR_WIDTH} />
@@ -95,7 +95,7 @@ export const MainLayout: ParentComponent = (p) => {
         <Titlebar isMobile={clientState.isMobile} class="flex" classList={{active: isTitlebarVisible()}}>
           <Show when={clientState.isMobile}>
             <button class="btn flat ml-2" onClick={() => setDrawerOpen(true)}>
-              <i class="fas fa-bars"></i>
+              <i class="fas fa-bars" />
             </button>
           </Show>
           <div class="pa-2">
@@ -107,7 +107,7 @@ export const MainLayout: ParentComponent = (p) => {
         <div class="container" classList={{[notFullViewStyle]: !clientState.fullView, 'mt-5': !clientState.isMobile}}>
           <h1 ref={titleBarRef} class="text-bold mb-2" classList={{'text-200': !clientState.isMobile, 'text-150': clientState.isMobile}}>
             <Show when={clientState.isMobile}>
-              <button class="btn flat text-150 mr-1" style={`vertical-align: ${clientState.isMobile ? 0 : 0.1}em`} onClick={() => setDrawerOpen(true)}>
+              <button class="btn flat text-150 mr-1" style={{'vertical-align': clientState.isMobile ? '0' : '0.1em'}} onClick={() => setDrawerOpen(true)}>
                 <i class="fas fa-bars" />
               </button>
             </Show>

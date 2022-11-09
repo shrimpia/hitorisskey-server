@@ -1,10 +1,10 @@
-import type { FastifyRequest } from "fastify";
-import { Controller, DELETE, GET, POST } from "fastify-decorators";
+import type { FastifyRequest } from 'fastify';
+import { Controller, DELETE, GET, POST } from 'fastify-decorators';
 
-import { ControllerBase } from "@/controller-base.js";
-import InvitationsService from "./invitations.service.js";
-import { HitorisskeyError } from "@/error.js";
-import { Invitation } from "@prisma/client";
+import { ControllerBase } from '@/controller-base.js';
+import InvitationsService from './invitations.service.js';
+import { HitorisskeyError } from '@/error.js';
+import { Invitation } from '@prisma/client';
 
 @Controller('/invitations')
 export default class InvitationController extends ControllerBase {

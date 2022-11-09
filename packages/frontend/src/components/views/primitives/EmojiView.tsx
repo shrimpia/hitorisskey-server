@@ -1,6 +1,6 @@
-import { Component, createMemo, JSX, Show } from "solid-js";
-import { styled } from "solid-styled-components";
-import emojiUnicode from "emoji-unicode";
+import { Component, createMemo, JSX } from 'solid-js';
+import { styled } from 'solid-styled-components';
+import emojiUnicode from 'emoji-unicode';
 
 export type EmojiViewProp = {
   emoji: string;

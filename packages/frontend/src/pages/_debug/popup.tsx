@@ -1,13 +1,10 @@
-import { Component, createSignal, onMount, onCleanup, batch } from "solid-js";
+import { Component, createSignal, onMount, onCleanup, batch } from 'solid-js';
 
-import { PopupView } from "../../components/views/PopupView";
-import { IS_DEVELOPMENT } from "../../global-const";
-import { useTitle } from "../../hooks/use-title";
-import NotFound from "../[...all]";
+import { ShowWhenDev } from '../../components/util/ShowWhenDev';
+import { PopupView } from '../../components/views/PopupView';
+import { useTitle } from '../../hooks/use-title';
 
 const DebugPopup: Component = () => {
-  if (!IS_DEVELOPMENT) return <NotFound />
-
   useTitle([{
     label: 'Debug',
     link: '/_debug',
@@ -35,12 +32,12 @@ const DebugPopup: Component = () => {
   });
 
   return (
-    <div>
+    <ShowWhenDev>
       <p>画面上の任意位置をSHIFT+クリック</p>
       <PopupView x={x()} y={y()} show={show()} onClose={() => setShow(false)}>
         <p class="pa-2"><button class="btn" onClick={() => alert('ほに')}>ほに</button></p>
       </PopupView>
-    </div>
+    </ShowWhenDev>
   );
 };
 

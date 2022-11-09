@@ -1,10 +1,9 @@
-import { useParams } from "@solidjs/router";
-import { Component, createEffect, createMemo, Show } from "solid-js";
+import { useParams } from '@solidjs/router';
+import { Component, Show } from 'solid-js';
 
-import { ChannelView } from "../../components/views/ChannelView";
-import { useTitle } from "../../hooks/use-title";
-import { updateClientState } from "../../store/client";
-import { $t } from "../../text";
+import { ChannelView } from '../../components/views/ChannelView';
+import { useTitle } from '../../hooks/use-title';
+import { $t } from '../../text';
 
 const Channel: Component = () => {
   const param = useParams();

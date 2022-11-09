@@ -1,17 +1,17 @@
-import { NavLink } from "@solidjs/router";
-import { Component, Show } from "solid-js";
-import { styled } from "solid-styled-components";
-import { IS_DEVELOPMENT } from "../../global-const";
-import { app } from "../../store/app";
-import { clientState } from "../../store/client";
-import { isAdminOrModerator } from "../../store/session";
-import { $t } from "../../text";
+import { NavLink } from '@solidjs/router';
+import { Component, Show } from 'solid-js';
+import { styled } from 'solid-styled-components';
+import { IS_DEVELOPMENT } from '../../global-const';
+import { app } from '../../store/app';
+import { clientState } from '../../store/client';
+import { isAdminOrModerator } from '../../store/session';
+import { $t } from '../../text';
 
 export type MainLayoutSidebarProp = {
   width: number;
 };
 
-export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
+export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = () => {
   const SidebarTitle = styled.h1`
     font-size: 150%;
     color: var(--dimmed);
@@ -30,15 +30,15 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
         <section>
           <h1>{$t.channels}</h1>
           <NavLink href="/c/public" end class="item" activeClass="active">
-            <span class="icon i fas fa-home fa-fw"></span>
+            <span class="icon i fas fa-home fa-fw" />
             {$t.$channels.public}
           </NavLink>
           <NavLink href="/c/private" end class="item" activeClass="active">
-            <span class="icon i fas fa-lock fa-fw"></span>
+            <span class="icon i fas fa-lock fa-fw" />
             {$t.$channels.private}
           </NavLink>
           <NavLink href="/c/realtime" end class="item" activeClass="active">
-            <span class="icon i fas fa-tower-broadcast fa-fw"></span>
+            <span class="icon i fas fa-tower-broadcast fa-fw" />
             {$t.$channels.realtime}
           </NavLink>
         </section>
@@ -50,12 +50,12 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
         </section> */}
         <section>
           <NavLink href="/c/announce" class="item" activeClass="active">
-            <span class="icon i fas fa-bell fa-fw"></span>
+            <span class="icon i fas fa-bell fa-fw" />
             {$t.$channels.announce}
           </NavLink>
           <Show when={IS_DEVELOPMENT && clientState.isDebugMode}>
             <NavLink href="/_debug" class="item" activeClass="active">
-              <span class="icon i fas fa-wand-sparkles fa-fw"></span>
+              <span class="icon i fas fa-wand-sparkles fa-fw" />
               Debug
             </NavLink>
           </Show>
@@ -65,12 +65,12 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
           </NavLink> */}
           <Show when={app.meta?.isClosedBeta}>
             <NavLink href="/beta/feedback" class="item" activeClass="active">
-              <span class="icon i fas fa-laugh fa-fw"></span>
+              <span class="icon i fas fa-laugh fa-fw" />
               フィードバック
             </NavLink>
           </Show>
           <NavLink href="/settings" class="item" activeClass="active">
-            <span class="icon i fas fa-cog fa-fw"></span>
+            <span class="icon i fas fa-cog fa-fw" />
             {$t.settings}
           </NavLink>
         </section>
@@ -78,19 +78,19 @@ export const MainLayoutSidebar: Component<MainLayoutSidebarProp> = (p) => {
           <section>
             <h1>{$t.adminTools}</h1>
             <NavLink href="/admin/settings" class="item" activeClass="active">
-              <span class="icon i fas fa-toolbox fa-fw"></span>
+              <span class="icon i fas fa-toolbox fa-fw" />
               {$t.$settings.$admin.settings}
             </NavLink>
             <NavLink href="/admin/invitations" class="item" activeClass="active">
-              <span class="icon i fas fa-ticket fa-fw"></span>
+              <span class="icon i fas fa-ticket fa-fw" />
               {$t.$settings.$admin.invitations}
             </NavLink>
             <NavLink href="/admin/reports" class="item" activeClass="active">
-              <span class="icon i fas fa-flag fa-fw"></span>
+              <span class="icon i fas fa-flag fa-fw" />
               {$t.$settings.$admin.reports}
             </NavLink>
             <NavLink href="/admin/punishees" class="item" activeClass="active">
-              <span class="icon i fas fa-ban fa-fw"></span>
+              <span class="icon i fas fa-ban fa-fw" />
               {$t.$settings.$admin.punishees}
             </NavLink>
           </section>

@@ -1,12 +1,11 @@
-import { Component } from "solid-js";
-import { Post } from "../../api/models/post";
-import { PostView } from "../../components/views/PostView";
-import { IS_DEVELOPMENT } from "../../global-const";
-import { useTitle } from "../../hooks/use-title";
-import NotFound from "../[...all]";
+import { Component } from 'solid-js';
+
+import { Post } from '../../api/models/post';
+import { ShowWhenDev } from '../../components/util/ShowWhenDev';
+import { PostView } from '../../components/views/PostView';
+import { useTitle } from '../../hooks/use-title';
 
 const DebugNote: Component = () => {
-  if (!IS_DEVELOPMENT) return <NotFound />
 
   useTitle([{
     label: 'Debug',
@@ -23,17 +22,19 @@ const DebugNote: Component = () => {
   };
 
   return (
-    <div class="vgroup">
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-      <PostView post={p}/>
-    </div>
+    <ShowWhenDev>
+      <div class="vgroup">
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+        <PostView post={p}/>
+      </div>
+    </ShowWhenDev>
   );
 };
 

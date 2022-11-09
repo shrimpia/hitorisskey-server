@@ -1,14 +1,14 @@
-import type { FastifyRequest } from "fastify";
-import { Controller, DELETE, GET, POST } from "fastify-decorators";
-import { Post, User } from "@prisma/client";
+import type { FastifyRequest } from 'fastify';
+import { Controller, DELETE, GET, POST } from 'fastify-decorators';
+import { User } from '@prisma/client';
 
-import { ControllerBase } from "@/controller-base.js";
-import PostService from "@/post/post.service.js";
-import { HitorisskeyError } from "@/error.js";
-import { createPostParam, CreatePostParam } from "@/post/models/create-post-param.js";
-import { paginationQuery, PaginationQuery } from "./models/pagination-query.js";
-import { addReactionParam, AddReactionParam } from "./models/add-reaction-param.js";
-import { PostWithReactions } from "./models/post-with-reactions.js";
+import { ControllerBase } from '@/controller-base.js';
+import PostService from '@/post/post.service.js';
+import { HitorisskeyError } from '@/error.js';
+import { createPostParam, CreatePostParam } from '@/post/models/create-post-param.js';
+import { paginationQuery, PaginationQuery } from './models/pagination-query.js';
+import { addReactionParam, AddReactionParam } from './models/add-reaction-param.js';
+import { PostWithReactions } from './models/post-with-reactions.js';
 
 @Controller('/post')
 export default class PostController extends ControllerBase {
@@ -22,31 +22,31 @@ export default class PostController extends ControllerBase {
   async readChannelPostsAsync(req: FastifyRequest<{Params: {channel: string}, Querystring: PaginationQuery}>) {
     const session = await this.getSessionUserAsync(req, true);
     switch (req.params.channel) {
-      case 'public': {
-        return (await PostService.getPublicChannelPostsAsync(session)).map(p => this.filter(p, session));
-      }
-      case 'private': {
-        const q = paginationQuery.safeParse(req.query);
-        if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
-        const {cursor, limit} = q.data;
-        return (await PostService.getPrivateChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
-      }
-      case 'realtime': {
-        const q = paginationQuery.safeParse(req.query);
-        if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
-        const {cursor, limit} = q.data;
-        return (await PostService.getRealtimeChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
-      }
-      case 'announce': {
-        const q = paginationQuery.safeParse(req.query);
-        if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
-        const {cursor, limit} = q.data;
-        return (await PostService.getAnnounceChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
-      }
-      default: {
-        // TODO: カスタムチャンネルをサポートする
-        throw new HitorisskeyError('MISSING_PARAMS');
-      }
+    case 'public': {
+      return (await PostService.getPublicChannelPostsAsync(session)).map(p => this.filter(p, session));
+    }
+    case 'private': {
+      const q = paginationQuery.safeParse(req.query);
+      if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+      const {cursor, limit} = q.data;
+      return (await PostService.getPrivateChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+    }
+    case 'realtime': {
+      const q = paginationQuery.safeParse(req.query);
+      if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+      const {cursor, limit} = q.data;
+      return (await PostService.getRealtimeChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+    }
+    case 'announce': {
+      const q = paginationQuery.safeParse(req.query);
+      if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+      const {cursor, limit} = q.data;
+      return (await PostService.getAnnounceChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+    }
+    default: {
+      // TODO: カスタムチャンネルをサポートする
+      throw new HitorisskeyError('MISSING_PARAMS');
+    }
     }
   }
 

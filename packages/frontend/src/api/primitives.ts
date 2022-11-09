@@ -1,5 +1,5 @@
-import { API_ENDPOINT as ENV_API_ENDPOINT } from "../global-const";
-import { session } from "../store/session";
+import { API_ENDPOINT as ENV_API_ENDPOINT } from '../global-const';
+import { session } from '../store/session';
 
 const API_ENDPOINT = ENV_API_ENDPOINT + '/v1/';
 
@@ -8,7 +8,7 @@ const $handle = async (res: Response) => {
   return res.json();
 };
 
-const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: string): Promise<any> => {
+const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: string): Promise<unknown> => {
   const q = Object.entries(query).filter(([_, v]) => v).map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`).join('&');
   const url = API_ENDPOINT + endpoint + (q ? '?' + q : '');
   const headers: HeadersInit = {
@@ -23,7 +23,7 @@ const $fetchQuery = (endpoint: string, query: Record<string, unknown>, method: s
   }).then($handle);
 };
 
-const $fetchBody = (endpoint: string, body: Record<string, unknown>, method: string): Promise<any> => {
+const $fetchBody = (endpoint: string, body: Record<string, unknown>, method: string): Promise<unknown> => {
   const bodyJson = JSON.stringify(body);
   const url = API_ENDPOINT + endpoint;
   const headers: HeadersInit = {
@@ -39,7 +39,7 @@ const $fetchBody = (endpoint: string, body: Record<string, unknown>, method: str
   }).then($handle);
 };
 
-export const $get = <T = unknown>(endpoint: string, query: Record<string, unknown> = {}): Promise<T> => $fetchQuery(endpoint, query, 'GET');
-export const $post = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'POST');
-export const $delete = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'DELETE');
-export const $put = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'PUT');
+export const $get = <T = unknown>(endpoint: string, query: Record<string, unknown> = {}): Promise<T> => $fetchQuery(endpoint, query, 'GET') as Promise<T>;
+export const $post = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'POST') as Promise<T>;
+export const $delete = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'DELETE') as Promise<T>;
+export const $put = <T = unknown>(endpoint: string, body: Record<string, unknown> = {}): Promise<T> => $fetchBody(endpoint, body, 'PUT') as Promise<T>;

@@ -1,18 +1,17 @@
-import { Component, createEffect, createMemo, createSignal, For, onMount, Show } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component, createMemo, createSignal, For, Show } from 'solid-js';
+import { styled } from 'solid-styled-components';
 
-import { api } from "../../api";
-import { Post } from "../../api/models/post";
-import { Reaction } from "../../api/models/Reaction";
-import { useEvent } from "../../hooks/use-event";
-import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
-import { MenuDefinition } from "../../misc/menu-definition";
-import { openMenu } from "../../store/popup-menu";
-import { session } from "../../store/session";
-import { $t } from "../../text";
-import { EmojiView } from "./primitives/EmojiView";
-import { FormattedTextView } from "./primitives/FormattedTextView";
-import { ReactionPickerView } from "./ReactionPickerView";
+import { api } from '../../api';
+import { Post } from '../../api/models/post';
+import { Reaction } from '../../api/models/Reaction';
+import { HitorisskeyEvent, hitorisskeyEventTarget } from '../../misc/event';
+import { MenuDefinition } from '../../misc/menu-definition';
+import { openMenu } from '../../store/popup-menu';
+import { session } from '../../store/session';
+import { $t } from '../../text';
+import { EmojiView } from './primitives/EmojiView';
+import { FormattedTextView } from './primitives/FormattedTextView';
+import { ReactionPickerView } from './ReactionPickerView';
 
 export type PostProp = {
   post: Post;
@@ -74,7 +73,7 @@ export const PostView: Component<PostProp> = (p) => {
         iconClass: 'fas fa-exclamation-circle fa-fw',
         disabled: true,
       }]
-    })
+    });
     return m;
   };
 
@@ -101,7 +100,7 @@ export const PostView: Component<PostProp> = (p) => {
         },
       },
     }));
-  }
+  };
 
   const onClickReact = (e: MouseEvent) => {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -145,11 +144,11 @@ export const PostView: Component<PostProp> = (p) => {
         </Show>
         <div class="hstack">
           <button class="btn flat" onClick={onClickReact}>
-            <i class="far fa-face-smile"></i>
+            <i class="far fa-face-smile" />
           </button>
           <Show when={p.post.channel !== 'announce' || session.user?.role === 'Admin'}>
             <button class="btn flat" onClick={onClickMore}>
-              <i class="fas fa-ellipsis"></i>
+              <i class="fas fa-ellipsis" />
             </button>
           </Show>
         </div>
@@ -160,7 +159,7 @@ export const PostView: Component<PostProp> = (p) => {
         show={isVisibleReactionPicker()}
         onClose={() => setVisibleReactionPicker(false)}
         onChoose={onChooseEmoji}
-        />
+      />
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { CreatePostParam } from "./params/create-post";
-import { Post } from "./models/post";
-import { User } from "./models/user";
-import { $get, $post, $delete } from "./primitives";
-import { AppMeta } from "./models/app-meta";
-import { Invitation } from "./models/invitation";
+import { CreatePostParam } from './params/create-post';
+import { Post } from './models/post';
+import { User } from './models/user';
+import { $get, $post, $delete } from './primitives';
+import { AppMeta } from './models/app-meta';
+import { Invitation } from './models/invitation';
 
 /**
  * ひとりすきー API。

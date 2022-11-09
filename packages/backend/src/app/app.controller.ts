@@ -1,14 +1,13 @@
-import { config } from "@/config.js";
-import type { FastifyReply, FastifyRequest } from "fastify";
-import { Controller, GET } from "fastify-decorators";
+import { config } from '@/config.js';
+import { Controller, GET } from 'fastify-decorators';
 
-import { ControllerBase } from "../controller-base.js";
+import { ControllerBase } from '../controller-base.js';
 
 
 @Controller('/app')
 export default class AppController extends ControllerBase {
   @GET('/meta')
-  async readMetaAsync(req: FastifyRequest, reply: FastifyReply) {
+  async readMetaAsync() {
     return {
       emojis: config.reaction_emojis,
       isClosedBeta: config.is_closed_beta,

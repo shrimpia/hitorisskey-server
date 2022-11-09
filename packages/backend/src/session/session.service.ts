@@ -1,9 +1,9 @@
-import { User } from "@prisma/client";
-import rndstr from "rndstr";
+import { User } from '@prisma/client';
+import rndstr from 'rndstr';
 import * as bcrypt from 'bcrypt';
 
-import prisma from "@/prisma.js";
-import { HitorisskeyError } from "@/error.js";
+import prisma from '@/prisma.js';
+import { HitorisskeyError } from '@/error.js';
 
 export default class SessionService {
   /**

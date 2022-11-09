@@ -1,4 +1,4 @@
-import { Reaction } from "./Reaction";
+import { Reaction } from './Reaction';
 
 export interface Post {
   id: string;

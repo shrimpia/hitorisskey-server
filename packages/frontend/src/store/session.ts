@@ -1,4 +1,3 @@
-import { createEffect } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { api } from '../api';
 import { User } from '../api/models/user';

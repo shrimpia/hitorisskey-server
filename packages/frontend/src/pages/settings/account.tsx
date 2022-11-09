@@ -1,9 +1,9 @@
-import { Component, createMemo, Show } from "solid-js";
-import { EmailPasswordRegisterForm } from "../../components/views/domain/settings/EmailPasswordRegisterForm";
+import { Component, createMemo, Show } from 'solid-js';
+import { EmailPasswordRegisterForm } from '../../components/views/domain/settings/EmailPasswordRegisterForm';
 
-import { useTitle } from "../../hooks/use-title";
-import { session } from "../../store/session";
-import { $t } from "../../text";
+import { useTitle } from '../../hooks/use-title';
+import { session } from '../../store/session';
+import { $t } from '../../text';
 
 const SettingsAccount: Component = () => {
   useTitle([{

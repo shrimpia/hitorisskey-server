@@ -1,6 +1,6 @@
-import fs from "fs";
-import path from "path";
-import url from "url";
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
 
 const basePath = path.dirname(url.fileURLToPath(import.meta.url));
 const configPath = basePath + '/../config.json';

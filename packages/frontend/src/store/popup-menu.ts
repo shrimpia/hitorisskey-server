@@ -1,5 +1,5 @@
-import { createStore } from "solid-js/store";
-import { MenuDefinition } from "../misc/menu-definition";
+import { createStore } from 'solid-js/store';
+import { MenuDefinition } from '../misc/menu-definition';
 
 const [popupMenuState, updatePopupMenuState] = createStore({
   x: 0,

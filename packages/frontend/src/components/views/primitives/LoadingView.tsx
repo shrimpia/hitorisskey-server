@@ -1,4 +1,4 @@
-import { Component } from 'solid-js';
+import { Component, createMemo } from 'solid-js';
 import { keyframes, styled } from 'solid-styled-components';
 
 const DURATION = 1.5;
@@ -12,7 +12,7 @@ export type LoadingViewProp = {
 };
 
 export const LoadingView: Component<LoadingViewProp> = (p) => {
-  const size = !p.size ? undefined : typeof p.size === 'string' ? p.size : p.size + 'px';
+  const size = createMemo(() => !p.size ? undefined : typeof p.size === 'string' ? p.size : p.size + 'px');
 
   type WrapperProp = {
     size?: string,
@@ -63,11 +63,11 @@ export const LoadingView: Component<LoadingViewProp> = (p) => {
     animation: ${scaleOut} ${DURATION.toString()}s infinite ease-out calc(${() => DELAY}s * 4);
   `;
 
-return (
-    <Wrapper size={size}>
-      <Part1 size={size} color={p.color}/>
-      <Part2 size={size} color={p.color}/>
-      <Part3 size={size} color={p.color}/>
+  return (
+    <Wrapper size={size()}>
+      <Part1 size={size()} color={p.color}/>
+      <Part2 size={size()} color={p.color}/>
+      <Part3 size={size()} color={p.color}/>
     </Wrapper>
   );
 };

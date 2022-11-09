@@ -1,12 +1,12 @@
-import { Component, createSignal, onCleanup, onMount } from "solid-js";
-import { styled } from "solid-styled-components";
-import { LoadingView } from "../../components/views/primitives/LoadingView";
-import { useTitle } from "../../hooks/use-title";
+import { Component } from 'solid-js';
+import { styled } from 'solid-styled-components';
+import { LoadingView } from '../../components/views/primitives/LoadingView';
+import { useTitle } from '../../hooks/use-title';
 
 const BetaFeedback: Component = () => {
   const FORMS_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSff4QLsrfF2_CAMt35cPkWADP_hNpJfQaip4oqBX6d7ddGg1Q/viewform';
 
-const StyledFrame = styled.iframe`
+  const StyledFrame = styled.iframe`
     width: 100%;
     height: 2000px;
     border: none;

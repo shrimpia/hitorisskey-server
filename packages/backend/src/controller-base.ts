@@ -1,9 +1,9 @@
-import { User } from "@prisma/client";
-import type { FastifyReply, FastifyRequest } from "fastify";
-import { ErrorHandler } from "fastify-decorators";
+import { User } from '@prisma/client';
+import type { FastifyReply, FastifyRequest } from 'fastify';
+import { ErrorHandler } from 'fastify-decorators';
 
-import { HitorisskeyError } from "./error.js";
-import SessionService from "./session/session.service.js";
+import { HitorisskeyError } from './error.js';
+import SessionService from './session/session.service.js';
 
 export abstract class ControllerBase {
   async getSessionUserAsync<T extends boolean>(req: FastifyRequest, throws: T) : Promise<T extends true ? User : User | null> {
@@ -12,7 +12,7 @@ export abstract class ControllerBase {
       if (throws) {
         throw new HitorisskeyError('MISSING_TOKEN');
       } else {
-        return null as any;
+        return null as never;
       }
     }
     const token = authorization.slice('Bearer '.length);

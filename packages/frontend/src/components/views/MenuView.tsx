@@ -1,8 +1,8 @@
-import { Link } from "@solidjs/router";
-import { Component, For, Show } from "solid-js";
-import { Dynamic } from "solid-js/web";
+import { Link } from '@solidjs/router';
+import { Component, For, Show } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
 
-import { MenuDefinition, MenuGroup, MenuItem } from "../../misc/menu-definition.js";
+import { MenuDefinition, MenuGroup, MenuItem } from '../../misc/menu-definition.js';
 
 export type MenuViewProp = {
   items: MenuDefinition;

@@ -1,11 +1,11 @@
-import { Post, Reaction, User } from "@prisma/client";
-import { ulid } from "ulid";
-import dayjs from "dayjs";
+import { Reaction, User } from '@prisma/client';
+import { ulid } from 'ulid';
+import dayjs from 'dayjs';
 
-import prisma from "@/prisma.js";
-import { HitorisskeyError } from "@/error.js";
-import { CreatePostParam } from "./models/create-post-param.js";
-import { PostWithReactions } from "./models/post-with-reactions.js";
+import prisma from '@/prisma.js';
+import { HitorisskeyError } from '@/error.js';
+import { CreatePostParam } from './models/create-post-param.js';
+import { PostWithReactions } from './models/post-with-reactions.js';
 
 export default class PostService {
   /**
@@ -38,7 +38,7 @@ export default class PostService {
    * @param {number} limit - 取得数。
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getPrivateChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
+  static async getPrivateChannelPostsAsync(user: User, cursor?: string, limit = 10): Promise<PostWithReactions[]> {
     return prisma.post.findMany({
       where: {
         channel: 'private',
@@ -89,7 +89,7 @@ export default class PostService {
    * @param {number} limit - 取得数。
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
+  static async getRealtimeChannelPostsAsync(user: User, cursor?: string, limit = 10): Promise<PostWithReactions[]> {
     const b24h = dayjs().subtract(24, 'h').toDate();
     return prisma.post.findMany({
       where: {
@@ -123,7 +123,7 @@ export default class PostService {
    * @param {number} limit - 取得数。
    * @returns {Promise<Post[]>} 投稿一覧。
    */
-  static async getAnnounceChannelPostsAsync(user: User, cursor?: string, limit: number = 10): Promise<PostWithReactions[]> {
+  static async getAnnounceChannelPostsAsync(user: User, cursor?: string, limit = 10): Promise<PostWithReactions[]> {
     return prisma.post.findMany({
       where: {
         channel: 'announce',
@@ -224,7 +224,7 @@ export default class PostService {
     public: 'public',
     realtime: 'realtime',
     announce: 'announce',
-   } as const;
+  } as const;
 
   private static shuffle(arr: unknown[]) {
     for (let i = arr.length - 1; i >= 0; i--) {

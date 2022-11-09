@@ -1,15 +1,11 @@
-import { Component } from "solid-js";
-import { MenuView } from "../../components/views/MenuView";
+import { Component } from 'solid-js';
+import { ShowWhenDev } from '../../components/util/ShowWhenDev';
+import { MenuView } from '../../components/views/MenuView';
 
-import { EmojiView } from "../../components/views/primitives/EmojiView";
-import { IS_DEVELOPMENT } from "../../global-const";
-import { useTitle } from "../../hooks/use-title";
-import { MenuDefinition } from "../../misc/menu-definition";
-import NotFound from "../[...all]";
+import { useTitle } from '../../hooks/use-title';
+import { MenuDefinition } from '../../misc/menu-definition';
 
 const DebugIndex: Component = () => {
-  if (!IS_DEVELOPMENT) return <NotFound />
-
   useTitle('Debug');
 
   const items: MenuDefinition = [
@@ -27,7 +23,9 @@ const DebugIndex: Component = () => {
   }));
 
   return (
-    <MenuView items={items} />
+    <ShowWhenDev>
+      <MenuView items={items} />
+    </ShowWhenDev>
   );
 };
 

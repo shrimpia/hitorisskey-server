@@ -1,8 +1,8 @@
-import { Component, createMemo, For, Match, Switch } from "solid-js";
-import { Dynamic } from "solid-js/web";
-import { parse } from "../../../misc/markup";
-import { EmojiView } from "./EmojiView";
-import { UrlView } from "./UrlView";
+import { Component, createMemo, For, Match, Switch } from 'solid-js';
+import { Dynamic } from 'solid-js/web';
+import { parse } from '../../../misc/markup';
+import { EmojiView } from './EmojiView';
+import { UrlView } from './UrlView';
 
 export type FormattedTextViewProp = {
   children: string | null;
@@ -16,9 +16,9 @@ const Markup: Component<{input: string}> = (p) => {
     <For each={parsed()} children={node => (
       <Switch>
         <Match when={node.type === 'newLine'}><br/></Match>
-        <Match when={node.type === 'emoji'}><EmojiView emoji={((node as any).emoji)} /></Match>
-        <Match when={node.type === 'url'}><UrlView url={((node as any).url)} /></Match>
-        <Match when={node.type === 'text'}>{((node as any).text)}</Match>
+        <Match when={node.type === 'emoji'}><EmojiView emoji={((node as Record<string, string>).emoji)} /></Match>
+        <Match when={node.type === 'url'}><UrlView url={((node as Record<string, string>).url)} /></Match>
+        <Match when={node.type === 'text'}>{((node as Record<string, string>).text)}</Match>
       </Switch>
     )} />
   );

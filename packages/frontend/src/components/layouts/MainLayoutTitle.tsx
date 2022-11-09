@@ -1,7 +1,7 @@
-import { Link } from "@solidjs/router";
-import { Component, createEffect, createMemo, For, Match, Show, Switch } from "solid-js";
-import { styled } from "solid-styled-components";
-import { clientState, TitleObject } from "../../store/client";
+import { Link } from '@solidjs/router';
+import { Component, For, Show } from 'solid-js';
+import { styled } from 'solid-styled-components';
+import { clientState, TitleObject } from '../../store/client';
 
 const TitleView: Component<{title: string | TitleObject}> = (p) => {
 
@@ -32,9 +32,9 @@ const TitleView: Component<{title: string | TitleObject}> = (p) => {
 
 export const MainLayoutTitle: Component = () => {
   return (
-    <Show when={Array.isArray(clientState.title)} fallback={<TitleView title={clientState.title as any} />}>
-      <For each={clientState.title as any[]} children={it => (
-          <TitleView title={it} />
+    <Show when={Array.isArray(clientState.title)} fallback={<TitleView title={clientState.title as string} />}>
+      <For each={clientState.title as []} children={it => (
+        <TitleView title={it} />
       )}/>
     </Show>
   );

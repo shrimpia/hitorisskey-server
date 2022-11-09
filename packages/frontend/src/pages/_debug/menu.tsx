@@ -1,14 +1,11 @@
-import { Component } from "solid-js";
+import { Component } from 'solid-js';
 
-import { MenuView } from "../../components/views/MenuView";
-import { IS_DEVELOPMENT } from "../../global-const";
-import { useTitle } from "../../hooks/use-title";
-import { MenuDefinition } from "../../misc/menu-definition";
-import NotFound from "../[...all]";
+import { ShowWhenDev } from '../../components/util/ShowWhenDev';
+import { MenuView } from '../../components/views/MenuView';
+import { useTitle } from '../../hooks/use-title';
+import { MenuDefinition } from '../../misc/menu-definition';
 
 const DebugMenu: Component = () => {
-  if (!IS_DEVELOPMENT) return <NotFound />
-
   useTitle([{
     label: 'Debug',
     link: '/_debug',
@@ -40,7 +37,9 @@ const DebugMenu: Component = () => {
   }];
 
   return (
-    <MenuView items={items} />
+    <ShowWhenDev>
+      <MenuView items={items} />
+    </ShowWhenDev>
   );
 };
 

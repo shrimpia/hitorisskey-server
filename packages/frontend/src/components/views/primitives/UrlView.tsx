@@ -1,5 +1,5 @@
-import { Component, JSX } from "solid-js";
-import { A } from "@solidjs/router";
+import { Component, JSX } from 'solid-js';
+import { A } from '@solidjs/router';
 
 export type EmojiViewProp = {
   url: string;

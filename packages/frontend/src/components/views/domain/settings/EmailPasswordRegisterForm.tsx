@@ -1,8 +1,8 @@
-import { Component, createMemo, createSignal, Show } from "solid-js";
-import { api } from "../../../../api";
-import { model } from "../../../../directives/model";
-import { isNotEmpty, isNotEmptyAll } from "../../../../misc/is-not-empty";
-import { $t } from "../../../../text";
+import { Component, createMemo, createSignal, Show } from 'solid-js';
+import { api } from '../../../../api';
+import { model } from '../../../../directives/model';
+import { isNotEmpty, isNotEmptyAll } from '../../../../misc/is-not-empty';
+import { $t } from '../../../../text';
 
 // やらないとmodelがtree-shakingされてしまい、ディレクティブが動かない
 0 && model;

@@ -1,11 +1,11 @@
-import { Component, createResource, For, Show, Suspense } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component, createResource, For, Show, Suspense } from 'solid-js';
+import { styled } from 'solid-styled-components';
 
-import { api } from "../../api";
-import { Invitation } from "../../api/models/invitation";
-import { LoadingView } from "../../components/views/primitives/LoadingView";
-import { useTitle } from "../../hooks/use-title";
-import { $t } from "../../text";
+import { api } from '../../api';
+import { Invitation } from '../../api/models/invitation';
+import { LoadingView } from '../../components/views/primitives/LoadingView';
+import { useTitle } from '../../hooks/use-title';
+import { $t } from '../../text';
 
 const AdminInvitations: Component = () => {
   const [list, {mutate}] = createResource(() => api.invitations.listAsync());

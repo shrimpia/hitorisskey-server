@@ -1,11 +1,11 @@
-import { A } from "@solidjs/router";
-import { Component, For, Show } from "solid-js";
-import { styled } from "solid-styled-components";
-import { IS_DEVELOPMENT } from "../../../global-const";
+import { A } from '@solidjs/router';
+import { Component, For, Show } from 'solid-js';
+import { styled } from 'solid-styled-components';
+import { IS_DEVELOPMENT } from '../../../global-const';
 
-import { useTitle } from "../../../hooks/use-title";
-import { clientState, DesignSystemColor, designSystemColors, ThemeProp, updateClientState } from "../../../store/client";
-import { $t } from "../../../text";
+import { useTitle } from '../../../hooks/use-title';
+import { clientState, DesignSystemColor, designSystemColors, ThemeProp, updateClientState } from '../../../store/client';
+import { $t } from '../../../text';
 
 
 const SettingsDisplay: Component = () => {
@@ -59,11 +59,11 @@ const SettingsDisplay: Component = () => {
         <div class="body">
           <h1>{$t.$settings.$display.accentColor}</h1>
           <h2>{$t.$settings.$display.accentColorDescription}</h2>
-					<div class="hstack slim wrap my-2">
+          <div class="hstack slim wrap my-2">
             <For each={designSystemColors} children={c => (
-							<ColorInput class="shadow-2" type="radio" color={c} value={c} checked={c === clientState.accentColor} onChange={e => updateClientState({accentColor: e.currentTarget.value as DesignSystemColor})} />
+              <ColorInput class="shadow-2" type="radio" color={c} value={c} checked={c === clientState.accentColor} onChange={e => updateClientState({accentColor: e.currentTarget.value as DesignSystemColor})} />
             )} />
-					</div>
+          </div>
         </div>
       </div>
       <div class="card">
@@ -72,7 +72,7 @@ const SettingsDisplay: Component = () => {
           <For each={sizes} children={size => (
             <label class="input-check">
               <input type="radio" value={size.toString()} checked={size === clientState.fontSize} onChange={e => updateClientState({fontSize: Number(e.currentTarget.value)})} />
-              <span style={`font-size: ${size}px`}>{size}px</span>
+              <span style={{'font-size': size + 'px'}}>{size}px</span>
             </label>
           )} />
         </div>
@@ -97,10 +97,10 @@ const SettingsDisplay: Component = () => {
               <h1>Activate Debug Mode</h1>
             </div>
             <div class="command">
-            <label class="input-switch">
-              <input type="checkbox" checked={clientState.isDebugMode} onChange={e => updateClientState({isDebugMode: e.currentTarget.checked})}  />
-              <div class="switch"></div>
-            </label>
+              <label class="input-switch">
+                <input type="checkbox" checked={clientState.isDebugMode} onChange={e => updateClientState({isDebugMode: e.currentTarget.checked})}  />
+                <div class="switch" />
+              </label>
             </div>
           </div>
         </Show>

@@ -1,6 +1,6 @@
-import { createEffect, ErrorBoundary } from 'solid-js';
+import { createEffect, ErrorBoundary, Show } from 'solid-js';
 import { createGlobalStyles } from 'solid-styled-components';
-import { render, Show } from 'solid-js/web';
+import { render,  } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from '@solidjs/router';
 
 import { MainLayout } from './components/layouts/MainLayout';

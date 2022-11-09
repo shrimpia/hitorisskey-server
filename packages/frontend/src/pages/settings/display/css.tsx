@@ -1,9 +1,9 @@
-import { Component, createMemo, createSignal } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component, createMemo, createSignal } from 'solid-js';
+import { styled } from 'solid-styled-components';
 
-import { useTitle } from "../../../hooks/use-title";
-import { clientState, updateClientState } from "../../../store/client";
-import { $t } from "../../../text";
+import { useTitle } from '../../../hooks/use-title';
+import { clientState, updateClientState } from '../../../store/client';
+import { $t } from '../../../text';
 
 const SettingsDisplayCss: Component = () => {
   const [css, setCSS] = createSignal(clientState.css);

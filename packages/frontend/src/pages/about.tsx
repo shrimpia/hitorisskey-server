@@ -1,6 +1,6 @@
-import { Component } from "solid-js";
-import { useTitle } from "../hooks/use-title";
-import { $t } from "../text";
+import { Component } from 'solid-js';
+import { useTitle } from '../hooks/use-title';
+import { $t } from '../text';
 
 const BottleMail: Component = () => {
   useTitle($t.about);

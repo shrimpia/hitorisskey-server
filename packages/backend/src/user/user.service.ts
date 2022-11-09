@@ -1,7 +1,7 @@
 import { ulid } from 'ulid';
 import { User } from '@prisma/client';
 
-import prisma from "@/prisma.js";
+import prisma from '@/prisma.js';
 import SessionService from '@/session/session.service.js';
 import { config } from '@/config.js';
 import InvitationsService from '@/invitations/invitations.service.js';

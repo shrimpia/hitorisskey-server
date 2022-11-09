@@ -1,13 +1,13 @@
-import { Component, createEffect, createSignal, Match, Show, Switch } from "solid-js";
-import { useNavigate } from "@solidjs/router";
+import { Component, createEffect, createSignal, Match, Show, Switch } from 'solid-js';
+import { useNavigate } from '@solidjs/router';
 
-import { api } from "../api";
-import { session, setSession } from "../store/session";
-import { clientState } from "../store/client";
-import { $t } from "../text";
-import { styled } from "solid-styled-components";
-import { app } from "../store/app";
-import { model } from "../directives/model";
+import { api } from '../api';
+import { session, setSession } from '../store/session';
+import { clientState } from '../store/client';
+import { $t } from '../text';
+import { styled } from 'solid-styled-components';
+import { app } from '../store/app';
+import { model } from '../directives/model';
 
 0 && model;
 
@@ -137,6 +137,6 @@ const Index: Component = () => {
       </Inner>
     </Root>
   );
-}
+};
 
 export default Index;

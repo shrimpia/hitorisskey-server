@@ -1,10 +1,10 @@
-import { Link } from "@solidjs/router";
-import { Component, Show } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Link } from '@solidjs/router';
+import { Component, Show } from 'solid-js';
+import { styled } from 'solid-styled-components';
 
-import { useTitle } from "../../hooks/use-title";
-import { session, setSession } from "../../store/session";
-import { $t } from "../../text";
+import { useTitle } from '../../hooks/use-title';
+import { session, setSession } from '../../store/session';
+import { $t } from '../../text';
 
 const Settings: Component = () => {
   useTitle($t.settings);

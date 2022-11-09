@@ -1,8 +1,8 @@
-import rndstr from "rndstr";
-import { Invitation } from "@prisma/client";
+import rndstr from 'rndstr';
+import { Invitation } from '@prisma/client';
 
-import prisma from "@/prisma.js";
-import { HitorisskeyError } from "@/error.js";
+import prisma from '@/prisma.js';
+import { HitorisskeyError } from '@/error.js';
 
 export default class InvitationsService {
   static async generateAsync(): Promise<void> {

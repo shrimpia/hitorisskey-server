@@ -1,9 +1,9 @@
-import { Component } from "solid-js";
-import { model } from "../../directives/model";
+import { Component } from 'solid-js';
+import { model } from '../../directives/model';
 
-import { useTitle } from "../../hooks/use-title";
-import { app } from "../../store/app";
-import { $t } from "../../text";
+import { useTitle } from '../../hooks/use-title';
+import { app } from '../../store/app';
+import { $t } from '../../text';
 
 0 && model;
 
@@ -25,10 +25,10 @@ const AdminSettings: Component = () => {
               <p class="desc">一部機能がベータテスト用の仕様となります。</p>
             </div>
             <div class="command">
-            <label class="input-switch">
-              <input type="checkbox" checked={app.meta?.isClosedBeta ?? false} disabled />
-              <div class="switch"></div>
-            </label>
+              <label class="input-switch">
+                <input type="checkbox" checked={app.meta?.isClosedBeta ?? false} disabled />
+                <div class="switch" />
+              </label>
             </div>
           </div>
         </div>

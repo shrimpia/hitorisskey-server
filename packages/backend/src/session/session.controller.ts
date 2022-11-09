@@ -1,24 +1,24 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
-import { Controller, GET, POST } from "fastify-decorators";
-import { User } from "@prisma/client";
+import type { FastifyRequest } from 'fastify';
+import { Controller, GET, POST } from 'fastify-decorators';
+import { User } from '@prisma/client';
 
-import { ControllerBase } from "@/controller-base.js";
-import { HitorisskeyError } from "@/error.js";
-import SessionService from "@/session/session.service.js";
-import UserService from "@/user/user.service.js";
-import { emailPasswordParam, EmailPasswordParam } from "./models/email-password-param.js";
-import { startParam, StartParam } from "./models/start-param.js";
+import { ControllerBase } from '@/controller-base.js';
+import { HitorisskeyError } from '@/error.js';
+import SessionService from '@/session/session.service.js';
+import UserService from '@/user/user.service.js';
+import { emailPasswordParam, EmailPasswordParam } from './models/email-password-param.js';
+import { startParam, StartParam } from './models/start-param.js';
 
 @Controller('/session')
 export default class SessionController extends ControllerBase {
   @GET()
-  async readAsync(req: FastifyRequest, reply: FastifyReply) {
+  async readAsync(req: FastifyRequest) {
     const user = await this.getSessionUserAsync(req, true);
     return this.filter(user);
   }
 
   @POST('/start')
-  async startAsync(req: FastifyRequest<{Body: StartParam}>, reply: FastifyReply) {
+  async startAsync(req: FastifyRequest<{Body: StartParam}>) {
     const body = startParam.safeParse(req.body);
     if (!body.success) throw new HitorisskeyError('MISSING_PARAMS');
 
@@ -27,7 +27,7 @@ export default class SessionController extends ControllerBase {
   }
 
   @POST('/login')
-  async loginAsync(req: FastifyRequest<{Body: EmailPasswordParam}>, reply: FastifyReply) {
+  async loginAsync(req: FastifyRequest<{Body: EmailPasswordParam}>) {
     const body = emailPasswordParam.safeParse(req.body);
     if (!body.success) throw new HitorisskeyError('MISSING_PARAMS');
 
@@ -36,7 +36,7 @@ export default class SessionController extends ControllerBase {
   }
 
   @POST('/signup')
-  async signupAsync(req: FastifyRequest<{Body: EmailPasswordParam}>, reply: FastifyReply) {
+  async signupAsync(req: FastifyRequest<{Body: EmailPasswordParam}>) {
     const user = await this.getSessionUserAsync(req, true);
     const body = emailPasswordParam.safeParse(req.body);
     if (!body.success) throw new HitorisskeyError('MISSING_PARAMS');

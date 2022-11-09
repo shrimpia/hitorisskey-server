@@ -1,9 +1,9 @@
-import { Component } from "solid-js";
-import { styled } from "solid-styled-components";
+import { Component } from 'solid-js';
+import { styled } from 'solid-styled-components';
 
-import { useTitle } from "../hooks/use-title";
-import { PostView } from "../components/views/PostView";
-import { Post } from "../api/models/post";
+import { useTitle } from '../hooks/use-title';
+import { PostView } from '../components/views/PostView';
+import { Post } from '../api/models/post';
 
 const NotFound: Component = () => {
   useTitle('Not Found');
@@ -40,6 +40,6 @@ const NotFound: Component = () => {
       <PostView post={fakePost}/>
     </Wrapper>
   );
-}
+};
 
 export default NotFound;

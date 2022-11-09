@@ -1,13 +1,13 @@
-import { Component, createEffect, createMemo, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from "solid-js";
+import { Component, createEffect, createMemo, createResource, createSignal, For, onCleanup, onMount, Show, Suspense } from 'solid-js';
 
-import { api } from "../../api";
-import { useEvent } from "../../hooks/use-event";
-import { HitorisskeyEvent, hitorisskeyEventTarget } from "../../misc/event";
-import { session } from "../../store/session";
-import { $t } from "../../text";
-import { PostComposerView } from "./PostComposerView";
-import { PostView } from "./PostView";
-import { LoadingView } from "./primitives/LoadingView";
+import { api } from '../../api';
+import { useEvent } from '../../hooks/use-event';
+import { HitorisskeyEvent } from '../../misc/event';
+import { session } from '../../store/session';
+import { $t } from '../../text';
+import { PostComposerView } from './PostComposerView';
+import { PostView } from './PostView';
+import { LoadingView } from './primitives/LoadingView';
 
 export type ChannelViewProp = {
   channel: string;
@@ -18,7 +18,7 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   const [isPageLoading, setPageLoading] = createSignal(false);
   const [refetchTimer, setRefetchTimer] = createSignal(0);
   const [cursor, setCursor] = createSignal<string | undefined>(undefined);
-  let paginationTriggerRef: HTMLDivElement | undefined = undefined;
+  const paginationTriggerRef: HTMLDivElement | undefined = undefined;
 
   const paginationObserver = new IntersectionObserver((e) => {
     if (p.channel === 'public') return;
@@ -81,12 +81,12 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
           {refetchTimer() > 0 ? refetchTimer() : $t.reload}
         </button>
         <Suspense fallback={<LoadingView />}>
-            <For each={posts()} children={item => (
-              <PostView post={item} />
-            )}/>
-            <Show when={posts()?.length === 0}>
-              <p class="text-dimmed">{noSuchMessage()}</p>
-            </Show>
+          <For each={posts()} children={item => (
+            <PostView post={item} />
+          )}/>
+          <Show when={posts()?.length === 0}>
+            <p class="text-dimmed">{noSuchMessage()}</p>
+          </Show>
         </Suspense>
         <div ref={paginationTriggerRef} class="pa-2">
           <Show when={isPageLoading()}><LoadingView /></Show>

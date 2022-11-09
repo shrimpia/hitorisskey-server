@@ -1,11 +1,9 @@
-import { Component, createSignal } from "solid-js";
-import { IS_DEVELOPMENT } from "../../global-const";
+import { Component, createSignal } from 'solid-js';
 
-import { useTitle } from "../../hooks/use-title";
-import NotFound from "../[...all]";
+import { ShowWhenDev } from '../../components/util/ShowWhenDev';
+import { useTitle } from '../../hooks/use-title';
 
 const DebugPath: Component = () => {
-  if (!IS_DEVELOPMENT) return <NotFound />
 
   const [path, setPath] = createSignal([{
     label: 'Debug',
@@ -14,11 +12,11 @@ const DebugPath: Component = () => {
   useTitle(path);
 
   return (
-    <div>
+    <ShowWhenDev>
       <button class="btn primary" onClick={() => {
         setPath(p => [ ...p, 'A' ]);
       }}>Add path element</button>
-    </div>
+    </ShowWhenDev>
   );
 };
 

@@ -1,5 +1,5 @@
-import { onCleanup, onMount } from "solid-js";
-import { HitorisskeyEvent, HitorisskeyEventMap, hitorisskeyEventTarget } from "../misc/event";
+import { onCleanup, onMount } from 'solid-js';
+import { HitorisskeyEvent, HitorisskeyEventMap, hitorisskeyEventTarget } from '../misc/event';
 
 export const useEvent = <T extends keyof HitorisskeyEventMap>(key: T, event: (e: HitorisskeyEvent<T>) => void) => {
   onMount(() => {

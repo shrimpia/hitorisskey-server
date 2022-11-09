@@ -43,6 +43,12 @@ export default class PostController extends ControllerBase {
       const {cursor, limit} = q.data;
       return (await PostService.getAnnounceChannelPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
     }
+    case 'myself': {
+      const q = paginationQuery.safeParse(req.query);
+      if (!q.success) throw new HitorisskeyError('MISSING_PARAMS');
+      const {cursor, limit} = q.data;
+      return (await PostService.getMyPostsAsync(session, cursor, limit)).map(p => this.filter(p, session));
+    }
     default: {
       // TODO: カスタムチャンネルをサポートする
       throw new HitorisskeyError('MISSING_PARAMS');

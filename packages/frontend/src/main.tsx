@@ -1,7 +1,9 @@
 import { createEffect, ErrorBoundary, Show } from 'solid-js';
 import { createGlobalStyles } from 'solid-styled-components';
-import { render,  } from 'solid-js/web';
+import { render } from 'solid-js/web';
 import { Router, useLocation, useNavigate, useRoutes } from '@solidjs/router';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 import { MainLayout } from './components/layouts/MainLayout';
 import { refetchUser, session } from './store/session';
@@ -19,6 +21,11 @@ import routes from '~solid-pages';
 
 import 'xeltica-ui/dist/css/xeltica-ui.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import 'dayjs/locale/ja';
+
+
+dayjs.locale('ja');
+dayjs.extend(relativeTime);
 
 const GlobalStyle = createGlobalStyles`
   html {

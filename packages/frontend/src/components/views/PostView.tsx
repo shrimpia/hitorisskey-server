@@ -5,6 +5,7 @@ import { api } from '../../api';
 import { Post } from '../../api/models/post';
 import { Reaction } from '../../api/models/Reaction';
 import { HitorisskeyEvent, hitorisskeyEventTarget } from '../../misc/event';
+import { getChannelNameLocalized } from '../../misc/get-channel-name-localized';
 import { MenuDefinition } from '../../misc/menu-definition';
 import { openMenu } from '../../store/popup-menu';
 import { session } from '../../store/session';
@@ -15,6 +16,7 @@ import { ReactionPickerView } from './ReactionPickerView';
 
 export type PostProp = {
   post: Post;
+  showChannelName?: boolean;
 };
 
 type GroupedReaction = Reaction & {
@@ -126,15 +128,20 @@ export const PostView: Component<PostProp> = (p) => {
 
   return (
     <div class="card hs-post">
-      <div class="body vstack">
-        <Show when={p.post.annotation} fallback={body()}>
-          <details>
-            <summary><FormattedTextView inline children={p.post.annotation} /></summary>
-            {body()}
-          </details>
+      <div class="body">
+        <div class="mb-1">
+          <Show when={p.post.annotation} fallback={body()}>
+            <details>
+              <summary><FormattedTextView inline children={p.post.annotation} /></summary>
+              {body()}
+            </details>
+          </Show>
+        </div>
+        <Show when={p.showChannelName}>
+          <aside class="text-75 text-dimmed mb-1"><i class="fas fa-hashtag fa-fw" /> {getChannelNameLocalized(p.post.channel)}</aside>
         </Show>
         <Show when={p.post.reactions.length > 0}>
-          <div class="hstack slim">
+          <div class="hstack slim mt-2 mb-1">
             <For each={reactions()} children={r => (
               <ReactionView class="clickable" active={r.isMine} onClick={() => onClickReactionButton(r)}>
                 <EmojiView emoji={r.emoji} /> {r.count}

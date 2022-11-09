@@ -138,6 +138,28 @@ export default class PostService {
     });
   }
 
+  /**
+   * 自分の投稿を取得します。
+   * @param {User} user - 投稿を取得するユーザー
+   * @param {string} cursor - ページネーションの基点。
+   * @param {number} limit - 取得数。
+   * @returns {Promise<Post[]>} 投稿一覧。
+   */
+  static async getMyPostsAsync(user: User, cursor?: string, limit = 10): Promise<PostWithReactions[]> {
+    return prisma.post.findMany({
+      where: {
+        author_id: user.id
+      },
+      include: {
+        reactions: true,
+      },
+      orderBy: { created_at: 'desc' },
+      cursor: cursor ? {id: cursor} : undefined,
+      skip: cursor ? 1 : 0,
+      take: limit,
+    });
+  }
+
   static async createPostAsync(user: User, post: CreatePostParam): Promise<PostWithReactions> {
     const channels: string[] = Object.values(this.BUILTIN_CHANNELS);
     // カスタムチャンネルの一覧も流し込む

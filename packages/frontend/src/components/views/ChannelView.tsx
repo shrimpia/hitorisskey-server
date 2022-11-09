@@ -11,6 +11,8 @@ import { LoadingView } from './primitives/LoadingView';
 
 export type ChannelViewProp = {
   channel: string;
+  showComposer?: boolean;
+  showReloadButton?: boolean;
 };
 
 export const ChannelView: Component<ChannelViewProp> = (p) => {
@@ -54,7 +56,6 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   };
 
   const noSuchMessage = createMemo(() => p.channel === 'announce' ? $t.$channelView.noSuchAnnouncements : $t.$channelView.noSuchPosts);
-  const isVisibleComposer = createMemo(() => p.channel !== 'announce' || session.user?.role === 'Admin');
 
   useEvent('postUpdate', onUpdatePost);
   useEvent('postDelete', onDeletePost);
@@ -77,13 +78,15 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   return (
     <>
       <div class="vstack slim">
-        <button class="btn link ml-auto" disabled={posts.loading || refetchTimer() > 0} onClick={onClickRefetchButton}>
-          <i class="fas fa-rotate fa-fw mr-1" />
-          {refetchTimer() > 0 ? refetchTimer() : $t.reload}
-        </button>
+        <Show when={p.showReloadButton}>
+          <button class="btn link ml-auto" disabled={posts.loading || refetchTimer() > 0} onClick={onClickRefetchButton}>
+            <i class="fas fa-rotate fa-fw mr-1" />
+            {refetchTimer() > 0 ? refetchTimer() : $t.reload}
+          </button>
+        </Show>
         <Suspense fallback={<LoadingView />}>
           <For each={posts()} children={item => (
-            <PostView post={item} />
+            <PostView post={item} showChannelName={p.channel === 'myself'} />
           )}/>
           <Show when={posts()?.length === 0}>
             <p class="text-dimmed">{noSuchMessage()}</p>
@@ -93,7 +96,7 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
           <Show when={isPageLoading()}><LoadingView /></Show>
         </div>
       </div>
-      <Show when={isVisibleComposer()}>
+      <Show when={p.showComposer}>
         <PostComposerView channel={p.channel} onCreatePost={(p) => {
           mutate(posts => [p, ...(posts ?? [])]);
         }} />

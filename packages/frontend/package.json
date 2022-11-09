@@ -11,6 +11,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@solidjs/router": "^0.5.0",
+    "dayjs": "^1.11.6",
     "emoji-regex": "^10.2.1",
     "emoji-unicode": "^2.0.1",
     "sass": "^1.55.0",

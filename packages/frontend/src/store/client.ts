@@ -39,6 +39,7 @@ const [clientState, updateClientState] = createStore({
   fontSize: Number(localStorage.getItem('fontSize') ?? '16'),
   isDebugMode: Boolean(localStorage.getItem('debug')),
   css: (localStorage.getItem('css') ?? ''),
+  isOpenPostComposer: Boolean(localStorage.getItem('isOpenPostComposer')),
 });
 
 export const updateMobile = () => {
@@ -57,6 +58,7 @@ createEffect(() => localStorage.setItem('theme', clientState.theme));
 createEffect(() => localStorage.setItem('accentColor', clientState.accentColor));
 createEffect(() => localStorage.setItem('fontSize', clientState.fontSize.toString()));
 createEffect(() => localStorage.setItem('debug', clientState.isDebugMode.toString()));
+createEffect(() => localStorage.setItem('isOpenPostComposer', clientState.isOpenPostComposer.toString()));
 createEffect(() => {
   localStorage.setItem('css', clientState.css);
   updateCSS();

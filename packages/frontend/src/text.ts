@@ -14,6 +14,7 @@ export const $t = {
   adminTools: '管理ツール',
   underDevelopment: '開発中',
   save: '保存する',
+  createPost: 'つぶやく',
   $welcome: {
     subTitle: 'ひとりがすき。そんなあなたの、匿名ミニブログ。',
     createNew: '新しくはじめる',

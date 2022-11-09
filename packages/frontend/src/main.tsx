@@ -46,6 +46,9 @@ const GlobalStyle = createGlobalStyles`
     --hs-reaction-bg-hover: var(--gray-3);
     --hs-reaction-bg-active-hover: var(--primary-5);
     --hs-titlebar-bg: #e8e8e880;
+    --hs-bg-post-button: var(--primary-5);
+    --hs-fg-post-button: var(--primary-fg);
+    --hs-border-post-button: var(--primary-5);
 
     &.dark {
       --hs-reaction-bg: var(--gray-18);
@@ -55,7 +58,14 @@ const GlobalStyle = createGlobalStyles`
       --hs-reaction-bg-hover: var(--gray-16);
       --hs-reaction-bg-active-hover: var(--primary-6);
       --hs-titlebar-bg: #1a1a1a80;
+      --hs-bg-post-button: var(--primary-10);
+      --hs-fg-post-button: var(--primary-5);
+      --hs-border-post-button: var(--primary-5);
     }
+  }
+
+  a {
+    overflow-wrap: anywhere;
   }
 `;
 

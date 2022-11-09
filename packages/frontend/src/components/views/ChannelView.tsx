@@ -18,7 +18,8 @@ export const ChannelView: Component<ChannelViewProp> = (p) => {
   const [isPageLoading, setPageLoading] = createSignal(false);
   const [refetchTimer, setRefetchTimer] = createSignal(0);
   const [cursor, setCursor] = createSignal<string | undefined>(undefined);
-  const paginationTriggerRef: HTMLDivElement | undefined = undefined;
+
+  let paginationTriggerRef: HTMLDivElement | undefined = undefined;
 
   const paginationObserver = new IntersectionObserver((e) => {
     if (p.channel === 'public') return;

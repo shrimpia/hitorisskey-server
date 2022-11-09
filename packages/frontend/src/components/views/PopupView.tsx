@@ -12,7 +12,7 @@ export type PopupViewProp = {
 };
 
 export const PopupView: ParentComponent<PopupViewProp> = (p) => {
-  const cardRef: HTMLElement | undefined = undefined;
+  let cardRef: HTMLElement | undefined = undefined;
   const PADDING = 8;
   // 画面外対策用に内部でx, yを管理している
   const [internalX, setX] = createSignal(0);

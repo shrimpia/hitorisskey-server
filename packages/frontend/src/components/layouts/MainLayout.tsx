@@ -10,13 +10,12 @@ export const MainLayout: ParentComponent = (p) => {
   const [isTitlebarVisible, setTitlebarVisible] = createSignal(false);
 
   const titleObserver = new IntersectionObserver((e) => {
-    console.log(!e[0].isIntersecting);
     setTitlebarVisible(!e[0].isIntersecting);
   }, {
     threshold: 0.5,
   });
 
-  const titleBarRef: HTMLElement | undefined = undefined;
+  let titleBarRef: HTMLElement | undefined = undefined;
 
   const SIDEBAR_WIDTH = 256;
 

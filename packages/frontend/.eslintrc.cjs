@@ -35,6 +35,7 @@ module.exports = {
     'semi': [
       'error',
       'always'
-    ]
+    ],
+    'prefer-const': false
   }
 };
